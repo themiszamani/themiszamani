@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>ARGO Availability and Reliability Monitoring - EGI connectors | ARGO</title>
+  <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures. ">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ARGO Availability and Reliability Monitoring" />
+    <meta property="og:description" content="ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures." />
+    <meta property="og:url" content="http://argoeu.github.io/" />
+    <meta property="og:site_name" content="ARGO Documentation" />
+    <meta property="article:publisher" content="ARGO Team" />
+    <meta property="og:image" content="http://argoeu.github.io/shared/images/argo-logo.png" />
+  <meta name="author" content="">
+  <link rel="icon" href="/shared/favicon.ico">
+  <!-- Bootstrap core CSS -->
+  <link href="/shared/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/shared/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/shared/css/font-beba.css">
+
+  <link href="/shared/css/custom.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="documentation">
+  <!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		    <span class="sr-only">Toggle navigation</span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="/index.html"><img src='/shared/images/argo-logo.png' alt='ARGO'  /></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav navbar-right">
+		    <li class="active"><a href="/index.html">Home</a></li>
+		    <li><a href="/index.html#what">About</a></li>
+		    <li><a href="/index.html#features">Features</a></li>
+		    <li><a href="/use-cases/">Use cases</a></li>
+		    <li class="dropdown">
+		      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documentation <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+			<li><a href="/overview/"><em class="fa fa-file-text-o"></em>  Overview</a></li>
+			<li><a href="/guides/installation/"><em class="fa fa-file-text-o"></em>  Installation</a></li>
+			<li><a href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a></li>
+			<li><a href="/guides/poem/"><em class="fa fa-check-square-o"></em>  Poem service</a></li>
+			<li><a href="/guides/consumer/"><em class="fa fa-send-o"></em>  Consumer</a></li>
+			<li><a href="/guides/compute/"><em class="fa fa-cog"></em>  Compute Engine</a></li>
+			<li><a href="/guides/webui/"><em class="fa fa-connectdevelop"></em>  Web UI</a></li>
+			<li class="divider"></li>
+			<li class="dropdown-header">Developers</li>
+			<li><a href="/guides/api/"><em class="fa fa-cogs"></em>  API </a></li>
+			<li><a href="#"><em class="fa fa-github-alt"></em>  Github</a></li>
+		      </ul>
+		    </li>
+		  </ul>
+		</div><!--/.nav-collapse -->
+	</div><!--container-->
+</nav>
+
+  <div class='container-fluid' >
+    <div class='row'>
+        <div class="col-md-2 sidebar">
+                   <div class="list-group" >	
+            <a class="list-group-item disabled blue" href="/overview/">Documentation</a>
+          
+            <a class="list-group-item" href="/overview/">Overview</a>
+          
+            <a class="list-group-item disabled blue" href="/guides/installation/">Installation</a>
+          
+            <a class="list-group-item" href="/guides/installation/"><em class="fa fa-terminal"></em> Standalone</a>
+          
+          
+            <a class="list-group-item" href="/guides/installation_cluster/"><em class="fa fa-sitemap"></em> Cluster Mode</a>
+          
+            <a class="list-group-item disabled blue" href="/guides/sync/">Components</a>
+          	
+            <a class="list-group-item active" href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+          
+          
+            <a class="list-group-item" href="/guides/poem/"><em class="fa fa-check-square-o"></em> Poem service</a>
+          
+          
+            <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
+          
+            
+            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+          
+  	  <div id='caret-data1'>
+            
+              <a class="list-group-item-level2"  href="/guides/compute/compute-input/">
+            
+            <em class="fa fa-cog"></em> Compute Engine Input </a>
+ 	    
+              <a class="list-group-item-level2"  href="/guides/compute/compute-job-configuration/">
+            
+            <em class="fa fa-cog"></em> Compute engine job configurations </a>
+
+ 
+ 	    
+              <a class="list-group-item-level2"  href="/guides/compute/cli-interaction/">
+            
+            <em class="fa fa-cog"></em> Compute Engine CLI </a>
+
+
+	  </div>
+          
+            <a class="list-group-item" href="/guides/api/" id='caretclick' data-caret='open'> 
+          
+          <em class="fa fa-cogs"></em> API <span class="caret" ></span></a>
+
+          <div id='caret-data'>
+            
+              <a class="list-group-item-level2"  href="/guides/api/status-results/">
+            
+            <em class="fa fa-cogs"></em> API - Status results</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/avail-reliab/">
+            
+            <em class="fa fa-cogs"></em> API - Availabilities & Reliabilities</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/recalculationrequests/">
+            
+            <em class="fa fa-cogs"></em> Recalculation Requests</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/availabilityprofs/">
+            
+            <em class="fa fa-cogs"></em> API - Availability Profiles</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/poemprofiles/">
+            
+            <em class="fa fa-cogs"></em> API - POEM Profiles</a>
+
+        </div>
+          
+            <a class="list-group-item" href="/guides/webui/"><em class="fa fa-connectdevelop"></em> Web UI</a>
+          
+          </div> <!--list group-->
+          <p>&nbsp;</p>
+
+          
+
+
+
+        </div>
+        <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-refresh'></i> 
+            
+            EGI connectors</h1>
+          
+          <p class="lead"> This document describes the available connectors for data in EGI infrastructure.</p>
+          
+<h2 id="description">Description</h2>
+
+<p><code>argo-egi-connectors</code> is a bundle of connectors/sync components for various data sources established in EGI infrastructure, most notably GOCDB (EGI topology, downtimes), but there’s also support for fetching alternative EGI topology via various VO feeds, weights information via GStat service and POEM metric profiles.</p>
+
+<p>Bundle consists of the following connectors: </p>
+
+<ul>
+  <li>
+<code>topology-gocdb-connector.py</code> </li>
+  <li>
+<code>topology-vo-connector.py</code> </li>
+  <li>
+<code>downtimes-gocdb-connector.py</code> </li>
+  <li>
+<code>weights-gstat-connector.py</code> </li>
+  <li><code>poem-connector.py</code></li>
+  <li>
+<code>prefilter-egy.py</code>: component whose role is to filter out the messages coming from the <code>argo-egi-consumer</code>.</li>
+</ul>
+
+<p>Connectors are syncing data on a daily basis. They are aware of the certain customer, associated jobs and their attributes and are generating and placing files into appropriate job folders. Data is written in a binary avro formated file which is suitable for processing at compute side. Topology, downtimes, weights and POEM profile information all together with a prefiltered metric results (status messages), represents an input for <code>argo-compute-engine</code>.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Installation narrows down to simply installing the package:</p>
+
+<pre><code>`yum -y install argo-egi-connectors`
+</code></pre>
+
+<p><strong><code>Components require avro package to be installed/available.</code></strong></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>File Types</td>
+      <td>Destination</td>
+    </tr>
+    <tr>
+      <td>Configuration files</td>
+      <td><code>/etc/argo-egi-connectors</code></td>
+    </tr>
+    <tr>
+      <td>Components</td>
+      <td><code>/usr/libexec/argo-egi-connectors</code></td>
+    </tr>
+    <tr>
+      <td>Cronjobs (configured to be executed once per day)</td>
+      <td><code>/etc/cron.d</code></td>
+    </tr>
+    <tr>
+      <td>Directory where components will put their files</td>
+      <td><code>/var/lib/argo-connectors/EGI</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Configuration of all components is centered around two configuration files: <code>global.conf</code> and <code>customer.conf</code>. Those files contains some shared config options and sections and are <em>read by every component</em>. There’s also a third one <code>poem-connector.conf</code>, specific only for <code>poem-connector.py</code> because it needs some special treatment not available in first two’s.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Configuration file</td>
+      <td>Description</td>
+      <td>Shortcut</td>
+    </tr>
+    <tr>
+      <td><code>global.conf</code></td>
+      <td>Config file is read by every component because every component needs to fetch host certificate to authenticate to a peer and to find correct avro schema.</td>
+      <td><a href="#sync1">Description</a></td>
+    </tr>
+    <tr>
+      <td><code>customer.conf</code></td>
+      <td>This configuration file lists all EGI jobs, their attributes and also all VOes and theirs set of jobs and attributes.</td>
+      <td><a href="#sync2">Description</a></td>
+    </tr>
+    <tr>
+      <td><code>poem-connector.conf</code></td>
+      <td>This configuration file is central configuration for poem-connector.py</td>
+      <td><a href="#sync3">Description</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="sync1"></a></p>
+
+<h3 id="globalconf">global.conf</h3>
+
+<p>Config file is read by <em>every</em> component because every component needs to, at least, fetch host certificate to authenticate to a peer and to find correct avro schema. Additionally, some connectors have default sources of data specified that can be overidden in a next configuration file. Config options are case insensitive and whole config file is splitted into a few sections:</p>
+
+<pre><code>[DEFAULT]
+SchemaDir = /etc/argo-egi-connectors/schemas/
+</code></pre>
+
+<p>Every component generates output file in an avro binary format. This section points to a directory that holds all avro schemas. </p>
+
+<pre><code>[Authentication]
+HostKey = /etc/grid-security/hostkey.pem
+HostCert = /etc/grid-security/hostcert.pem
+</code></pre>
+
+<p>Each component that talks to GOCDB or POEM peer authenticates itself with a host certificate.</p>
+
+<pre><code>[AvroSchemas]
+Downtimes = %(SchemaDir)s/downtimes.avsc
+Poem = %(SchemaDir)s/metric_profiles.avsc
+Prefilter = %(SchemaDir)s/metric_data.avsc
+TopologyGroupOfEndpoints = %(SchemaDir)s/group_endpoints.avsc
+TopologyGroupOfGroups = %(SchemaDir)s/group_groups.avsc
+Weights = %(SchemaDir)s/weight_sites.avsc
+</code></pre>
+
+<p>This section, together with a <code>[DEFAULT]</code> section, constitutes the full path of avro schema file for each component. Avro schema files define the format of the data that each component is writing. <code>Topology*</code> schemas are common to <code>topology-gocdb-connector.py</code> and <code>topology-vo-connector.py</code> because there is a need of compute side to not make a difference between two topologies. <code>Prefilter</code> schema is taken from <code>argo-egi-consumer</code> since <code>prefilter-egi.py</code> filters its metric results and needs to write them in the same format.</p>
+
+<pre><code>[Output]
+Downtimes = downtimes_%s.avro
+Poem = poem_sync_%s.avro
+Prefilter = prefilter_%s.avro
+PrefilterConsumerFilePath = /var/lib/ar-consumer/ar-consumer_log_%s.avro
+PrefilterPoem = poem_sync_%s.out
+PrefilterPoemNameMapping = poem_name_mapping.cfg
+TopologyGroupOfEndpoints = group_endpoints_%s.avro
+TopologyGroupOfGroups = group_groups_%s.avro
+Weights = weights_%s.avro
+</code></pre>
+
+<p>Section lists all the filenames that each component is generating. Directory is purposely omitted because it’s implicitly found in next configuration file. Exception is a <code>PrefilterConsumerFilePath</code> and <code>PrefilterPoem</code> options that tells the <code>prefilter-egi.py</code> where to look for its input files. <code>%s</code> is a string placeholder that will be replaced by the date timestamp in format <code>year_month_day</code>.</p>
+
+<p><a id="sync2"></a></p>
+
+<h3 id="customerconf">customer.conf</h3>
+
+<p>This configuration file lists all customers, their jobs and appropriate attributes. Job is presented to <code>argo-compute-engine</code> as a folder with a set of files that are generated each day and that directs compute engine what metric results to take into account and do calculations upon them. </p>
+
+<h4 id="directory-structure">Directory structure</h4>
+
+<p>Job folders for each customer are placed under the customer’s <code>OutputDir</code> directory and appropriate directory names are read from the config file. Segment of configuration file that reflects the creation of directories is for example: </p>
+
+<pre><code>[CUSTOMER_C1]
+OutputDir = /var/lib/argo-connectors/Customer1
+Jobs = JOB_Test1, JOB_Test2
+
+[JOB_Test1]
+Dirname = C1Testing1
+
+[JOB_Test2]
+Dirname = C2Testing2
+
+
+[CUSTOMER_C2]
+OutputDir = /var/lib/argo-connectors/Customer2
+Jobs = Job_Test3, JOB_Test4
+
+[JOB_Test3]
+Dirname = C2Testing1
+
+[JOB_Test4]
+Dirname = C2Testing2
+</code></pre>
+
+<p>This will result in the following jobs directories:</p>
+
+<pre><code>/var/lib/argo-connectors/Customer1/C1Testing1
+/var/lib/argo-connectors/Customer1/C1Testing2
+/var/lib/argo-connectors/Customer2/C2Testing1
+/var/lib/argo-connectors/Customer2/C2Testing2
+</code></pre>
+
+<p>So there are two customers, C1 and C2, each one identified with its <code>[CUSTOMER_*]</code> section. <code>CUSTOMER_</code> is a section keyword and must be specified when one wants to define a new customer. Each customer has two mandatory options: <code>OutputDir</code> and <code>Jobs</code>. With <code>OutputDir</code> option, customer defines his directory where he’ll write job folders and other data. Customer must also specify set of jobs listed in <code>Jobs</code> options since it can not exist without associated jobs. The name of the job folder is specified with <code>Dirname</code> option of the certain job so <code>JOB\_Test1</code>, identified with <code>[JOB_Test1]</code> section, will be named <code>C1Testing1</code> and it will be placed under customer’s <code>/var/lib/argo-connectors/Customer1/</code> directory. Each component will firstly try to create described directory structure if it doesn’t exist yet. Only afterward it will write its data. </p>
+
+<p>Every connector reads this configuration file because it needs to find out how many customers are there and what are theirs customer and job directory names where they will lay down its files. So <code>poem-connector.py</code>, <code>downtimes-gocdb-connector.py</code>, <code>weights-gstat-connector.py</code>, all of them are writing theirs data in each job directory for each customer. Topology for EGI (fetched from GOCDB) is different than one for the VO so exceptions to this are <code>topology-gocdb-connector.py</code> and <code>topology-vo-connector.py</code>. They are writing data for a job based on the job’s topology type specified with <code>TopoType</code> attribute.</p>
+
+<h4 id="job-attributes">Job attributes</h4>
+
+<p>Besides <code>Dirname</code> option that is common for all connectors, some of them have job attributes that are relevant only for them and upon which they are changing their behaviour. Some of those attributes are <em>mandatory</em> like <code>Profiles</code> and <code>TopoType</code> and the other ones like <code>TopoSelect*</code> attributes are optional. Furthermore, as there are two kind of topologies, there are also two set of job attributes and values.</p>
+
+<h5 id="gocdb-topology">GOCDB topology</h5>
+
+<pre><code>[JOB_EGICloudmon]
+Dirname = EGI_Cloudmon
+Profiles = CLOUD-MON
+TopoType = GOCDB
+TopoFeed = https://goc.egi.eu/gocdbpi/
+TopoFetchType = ServiceGroups
+TopoSelectGroupOfEndpoints = Monitored:Y, Scope:EGI, Production:Y
+TopoSelectGroupOfGroups = Monitored:Y, Scope:EGI
+</code></pre>
+
+<p>This is an example of the job that fetchs topology from GOCDB since <code>TopoType</code> attribute is set to <code>GOCDB</code>. <code>Profiles</code> is an attribute relevant to <code>poem-connector.py</code> so for this job <code>poem-connector.py</code> will write CLOUD-MON profile in EGI_Cloudmon job folder under /EGI directory. <code>Topo*</code> attributes are relevant for <code>topology-gocdb-connector.py</code>. <code>TopoFeed</code> attribute in the context of the GOCDB topology is optional. If it’s specified, it will override default source of topology which is https://goc.egi.eu/gocdbpi/</p>
+
+<p>Topology is separated in two abstracts:</p>
+
+<ul>
+  <li>group of groups</li>
+  <li>group of service endpoints</li>
+</ul>
+
+<p>Service endpoints are grouped either by the means of <em>Sites</em> or <em>Service groups</em>. Those are listed and represented as an upper level abstract of group of service endpoints - group of groups. Customer can fetch either <em>Sites</em> and their corresponding endpoints or <em>Service groups</em> and their corresponding endpoints per job, but not both of them. What is being fetched is specified with <code>TopoFetchType</code> option/job attribute. For each abstract there will be written <code>TopologyGroupOfGroups</code> and <code>TopologyGroupOfEndpoints</code> filenames (specified in <code>global.conf</code>) into appropriate job folder. <code>TopoSelectGroupOfGroups</code> and <code>TopoSelectGroupOfEndpoints</code> options are used for further filtering. Values are set of tags used for picking up matching entity existing in the given abstract. Tags for group of groups are different for Sites and Service groups. In contrary, set of tags for groups of endpoints remains the same no matter what type of fetch customer specified.</p>
+
+<p>So, in a <code>TopoFetchType</code> option customer can either specify:</p>
+
+<ul>
+  <li>
+<code>ServiceGroups</code> - to fetch Service groups</li>
+  <li>
+<code>Sites</code> - to fetch Sites</li>
+</ul>
+
+<h6 id="tags">Tags</h6>
+
+<p>Tags represent a fine-grained control of what is being written in output files. It’s a convenient way of selecting only certain entities, being it Sites, Service groups or Service endpoints based on appropriate criteria. Tags are optional so if a certain tag for a corresponding entity is omitted, than filtering is not done. In that case, it can be considered that entity is fetched for all its values of an omitted tag.</p>
+
+<p>Group of group tags are different for a different type of fetch. Tags and values for a different entities are:</p>
+
+<p><strong>Sites</strong></p>
+
+<ul>
+  <li>Certification = <code>{Certified, Uncertified, Closed, Suspended, Candidate}</code>
+</li>
+  <li>Infrastructure = <code>{Production, Test}</code>
+</li>
+  <li>Scope = <code>{EGI, Local}</code>
+</li>
+</ul>
+
+<p><strong>ServiceGroups</strong></p>
+
+<ul>
+  <li>Monitored = <code>{Y, N}</code>
+</li>
+  <li>Scope = <code>{EGI, Local}</code>
+</li>
+</ul>
+
+<p>Tags for selecting group of endpoints are:</p>
+
+<p><strong>Service Endpoints</strong></p>
+
+<ul>
+  <li>Production = <code>{Y, N}</code>
+</li>
+  <li>Monitored = <code>{Y, N}</code>
+</li>
+  <li>Scope = <code>{EGI, Local}</code>
+</li>
+</ul>
+
+<h5 id="vo-topology">VO topology</h5>
+
+<pre><code>[DEFAULT]
+BioMed = http://kosjenka.srce.hr/~eimamagi/ops.feed.xml
+
+[JOB_BioMedCritical]
+Dirname = BioMed_Critical
+Profiles = ROC_CRITICAL
+TopoType = VOFeed
+TopoFeed = %(BioMed)s
+TopoSelectGroupOfGroups = Type:(OPS_Tier, OPS_Site)
+</code></pre>
+
+<p>This is an example of the job that is fetching topology from provided VO feed since <code>TopoType</code> attribute is set to <code>VOFeed</code>. Again, <code>Profiles</code> attribute is mandatory and is relevant to <code>poem-connector.py</code> which will write ROC_CRITICAL profile in BioMed_Critical job folder. <code>Topo*</code> attributes are relevant for <code>topology-vo-connector.py</code>. Contrary to GOCDB topology jobs, <code>TopoFeed</code> attribute for jobs dealing with the VO topology is <em>mandatory</em> and must be specified. Although same topology feed can be specified across multiple jobs, internally, data from one feed is fetched only once and is further filtered and written for every job. </p>
+
+<p>VO topology is also separated and written in two abstracts, group of groups and group of service endpoints, but there are no tags since VO itself filters and handles what sites and service endpoints to take into account and defines the VO groups they belong to. With that being said, there is a <code>TopoSelectGroupOfGroups</code> option available which is used to pick up VO groups based on their type. VO groups are entities existing in the group of group abstract of topology. In the example above, <code>topology-vo-connector.py</code> will pick up VO groups that match <code>OPS_Site</code> and <code>OPS_Tier</code> types and write them into <code>TopologyGroupOfGroups</code> file. Endpoints are written in <code>TopologyGroupOfEndpoints</code> file.</p>
+
+<h5 id="data-feeds">Data feeds</h5>
+
+<p>Source of the data for other connectors like <code>weights-gstat-connector.py</code> and <code>downtimes-gocdb-connector.py</code> are optional and can be specified per job. If specified, they will override their default source of data. Example:</p>
+
+<pre><code>[JOB_BioMedCritical]
+Dirname = BioMed_Critical
+Profiles = ROC_CRITICAL
+TopoType = VOFeed
+TopoFeed = %(BioMed)s
+TopoSelectGroupOfGroups = Type:(OPS_Tier, OPS_Site)
+WeightsFeed = http://gstat2.grid.sinica.edu.tw/gstat/summary/json/ 
+DowntimesFeed = https://goc.egi.eu/gocdbpi/
+</code></pre>
+
+<p><code>WeightsFeed</code> and <code>DowntimesFeed</code> are alternative data feeds for this job for connectors <code>weights-gstat-connector.py</code> and <code>downtimes-gocdb-connector.py</code>, respectively.</p>
+
+<p><a id="sync3"></a></p>
+
+<h3 id="poem-connectorconf">poem-connector.conf</h3>
+
+<p>This configuration file is central configuration for <code>poem-connector.py</code> whose role is:</p>
+
+<ul>
+  <li>fetch all defined POEM profiles from each POEM server specified</li>
+  <li>prepare and layout data needed for <code>prefilter-egi.py</code>
+</li>
+</ul>
+
+<h4 id="poem-profiles-fetch">POEM profiles fetch</h4>
+
+<p>Config file is splitted into a few sections:</p>
+
+<pre><code>[PoemServer]
+Host = snf-624922.vm.okeanos.grnet.gr
+VO = ops
+</code></pre>
+
+<p>This section defines the URL where POEM server is located and all VOes for which POEM profiles will be fetched. Multiple POEM servers can be specified by defining multiple POEM server sections:</p>
+
+<pre><code>[PoemServer1]
+Host = poem1
+VO = vo1, vo2
+
+[PoemServer2]
+Host = poem2
+VO = vo3, vo4
+</code></pre>
+
+<p>Same POEM profile can be defined on multiple POEM servers. Each POEM server can further extend it with a custom combinations of metrics and service flavours. To distinguish POEM profile defined on multiple POEM servers, namespace must be used. One must be aware of the namespace that POEM server exposes and specify it in <code>FetchProfiles</code> section:</p>
+
+<pre><code>[FetchProfiles]
+List = CH.CERN.SAM.ROC, CH.CERN.SAM.ROC_OPERATORS, CH.CERN.SAM.ROC_CRITICAL, CH.CERN.SAM.OPS_MONITOR, CH.CERN.SAM.OPS_MONITOR_CRITICAL, CH.CERN.SAM.GLEXEC, CH.CERN.SAM.CLOUD-MON
+</code></pre>
+
+<h4 id="prefilter-data">Prefilter data</h4>
+
+<p><code>poem-connector.py</code> also generates plaintext <code>PrefilterPoem</code> file (specified in <code>global.conf</code>) on a daily basis for each customer and places it under customer’s directory. Content of the file is controlled in <code>[PrefilterData]</code> section:</p>
+
+<pre><code>[PrefilterData]
+AllowedNGI = http://mon.egi.eu/nagios-roles.conf
+AllowedNGIProfiles = ch.cern.sam.ROC, ch.cern.sam.ROC_OPERATORS, ch.cern.sam.ROC_CRITICAL, ch.cern.sam.GLEXEC
+AllNGI1 = opsmon.egi.eu
+AllNGIProfiles1 = ch.cern.sam.OPS_MONITOR, ch.cern.sam.OPS_MONITOR_CRITICAL
+AllNGI2 = cloudmon.egi.eu
+AllNGIProfiles2 = ch.cern.sam.CLOUD-MON
+</code></pre>
+
+<p><code>AllowedNGI</code> option defines remote config file that states all allowed NGIes and corresponding nagios boxes. All of them will be expanded and listed together with the information from <code>AllowedNGIProfiles</code> POEM profiles (metrics, service flavours, VOes). </p>
+
+<p><code>AllNGI1</code> option is similar in sense that it will extended specified nagios box (monitoring instance) with the information from <code>AllNGIProfiles1</code> POEM profiles. Multiple <code>AllNGI*</code> options can be specified and they must come in pair fashion so for every <code>AllNGI[n]</code> option, there must exist <code>AllNGIProfiles[n]</code> option that is related to it.</p>
+
+<p>With all these informations written in <code>PrefilterPoem</code> file, <code>prefilter-egi.py</code> can do its work, so it will filter consumer messages if:</p>
+
+<ul>
+  <li>message that enter into broker network doesn’t come from allowed NGI or nagios box for certain NGI is incorrectly specified</li>
+  <li>metric result is response to metric not found in a fetched service flavour</li>
+  <li>metric result’s service flavour is not registered in any fetched POEM profile</li>
+  <li>metric result is registered for different VO, not specified in <code>VO</code> option of any <code>[PoemServer]</code> section</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#customer.conf" aria-controls="customer.conf" role="tab" data-toggle="tab">customer.conf</a></li>
+    <li role="presentation"><a href="#customer-jobs" aria-controls="customer-jobs" role="tab" data-toggle="tab">Customer jobs</a></li>
+    <li role="presentation"><a href="#prefilterdata" aria-controls="prefilterdata" role="tab" data-toggle="tab">Prefilter data</a></li>
+    <li role="presentation"><a href="#JOB_Critical" aria-controls="JOB_Critical" role="tab" data-toggle="tab">EGI JOB_Critical</a></li>
+    <li role="presentation"><a href="#JOB_Cloudmon" aria-controls="JOB_Cloudmon" role="tab" data-toggle="tab">EGI JOB_Cloudmon</a></li>
+    <li role="presentation"><a href="#JOB_BioMedCritical" aria-controls="JOB_BioMedCritical" role="tab" data-toggle="tab">JOB_BioMedCritical</a></li>
+    <li role="presentation"><a href="#JOB_BioMedCloudmon" aria-controls="JOB_BioMedCloudmon" role="tab" data-toggle="tab">VO JOB_BioMedCloudmon</a></li>
+    <li role="presentation"><a href="#downtimes" aria-controls="downtimes" role="tab" data-toggle="tab">Downtimes</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="customer.conf">
+<p> </p>
+<strong>customer.conf:</strong>
+<p> </p>
+<pre>
+	[DEFAULT]
+	BioMed = http://kosjenka.srce.hr/~eimamagi/ops.feed.xml
+
+	[DIR]
+	OutputDir = /var/lib/argo-connectors/EGI/
+
+	[CUSTOMER_EGI]
+	Jobs = JOB_EGICritical, JOB_EGICloudmon, JOB_BioMedCloudmon, JOB_BioMedCritical
+
+	[JOB_EGICritical]
+	Dirname = EGI_Critical
+	Profiles = ROC_CRITICAL
+	TopoType = GOCDB
+	TopoFetchType = Sites
+	#TopoSelectGroupOfEndpoints = Production:Y, Monitored:Y, Scope:EGI
+	TopoSelectGroupOfGroups = Certification:Uncertified, Infrastructure:Test, Scope:EGI
+
+	[JOB_EGICloudmon]
+	Dirname = EGI_Cloudmon
+	Profiles = CLOUD-MON
+	TopoType = GOCDB
+	TopoFetchType = ServiceGroups
+	TopoSelectGroupOfEndpoints = Monitored:Y, Scope:EGI, Production:N
+	#TopoSelectGroupOfGroups = Monitored:Y, Scope:EGI
+
+	[JOB_BioMedCritical]
+	Dirname = BioMed_Critical
+	Profiles = ROC_CRITICAL
+	TopoType = VOFeed
+	TopoFeed = %(BioMed)s
+	TopoSelectGroupOfGroups = Type:OPS_Site
+
+	[JOB_BioMedCloudmon]
+	Dirname = BioMed_Cloudmon
+	Profiles = CLOUD-MON
+	TopoType = VOFeed
+	TopoFeed = %(BioMed)s
+	#TopoSelectGroupOfGroups = Type:OPS_Tier
+</pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="customer-jobs">
+
+<p> </p>
+<strong>Customer jobs:</strong>
+<p> </p>
+<pre>
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/group_endpoints_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/group_groups_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/poem_sync_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/weights_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/group_endpoints_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/group_groups_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/poem_sync_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/weights_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/group_endpoints_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/group_groups_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/poem_sync_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/weights_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/group_endpoints_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/group_groups_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/poem_sync_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/weights_2015_04_07.avro
+</pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="prefilterdata">
+
+<p> </p>
+
+<strong>Prefilter data:</strong>
+
+<p> </p>
+<pre>
+
+	/var/lib/argo-connectors/EGI/poem_sync_2015_04_07.out
+	/var/lib/argo-connectors/EGI/prefilter_2015_04_07.avro
+
+</pre>
+</div>
+ <div role="tabpanel" class="tab-pane" id="JOB_Critical">
+
+<p> </p>
+For customer's job JOB_EGICritical, we are selecting only those sites that match `Certification:Uncertified`,  `Infrastructure:Test` and `Scope:EGI`, so in `TopologyGroupOfGroups` file there will be only those sites listed:
+<p> </p>
+<pre>
+	 % avro cat /var/lib/argo-connectors/EGI/EGI_Critical/group_groups_2015_04_07.avro | tail -n 1
+	 {"group": "Russia", "tags": {"scope": "EGI", "infrastructure": "Test", "certification": "Uncertified"}, "type": "NGI", "subgroup": "SU-Protvino-IHEP"}
+</pre>
+<p> </p>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="JOB_Cloudmon">
+<p> </p>
+ For customer's JOB_EGICloudmon, we are selecting only those service endpoints that match `Monitored:Y`, `Scope:EGI`, `Production:N`:
+
+<p> </p>
+
+<pre>	 % avro cat /var/lib/argo-connectors/EGI/EGI_Cloudmon/group_endpoints_2015_04_07.avro
+	 {"group": "ROC_RU_SERVICE", "hostname": "ce.ngc6475.ihep.su", "type": "SERVICEGROUPS", "service": "Top-BDII", "tags": {"scope": "EGI", "production": 0, "monitored": 1}}
+</pre>
+
+<p> </p>
+</div>
+    <div role="tabpanel" class="tab-pane" id="JOB_BioMedCritical">
+<p> </p>
+JOB_BioMedCritical is taking into account only OPS\_Site VO groups:
+<p> </p>
+<pre>
+	% avro cat /var/lib/argo-connectors/EGI/BioMed_Critical/group_groups_2015_04_07.avro | tail -n 5
+	{"group": "SAMPA", "tags": null, "type": "OPS_Site", "subgroup": "SAMPA"}
+	{"group": "UPJS-Kosice", "tags": null, "type": "OPS_Site", "subgroup": "UPJS-Kosice"}
+	{"group": "GR-06-IASA", "tags": null, "type": "OPS_Site", "subgroup": "GR-06-IASA"}
+	{"group": "FI_HIP_T2", "tags": null, "type": "OPS_Site", "subgroup": "FI_HIP_T2"}
+	{"group": "UKI-SOUTHGRID-RALPP", "tags": null, "type": "OPS_Site", "subgroup": "UKI-SOUTHGRID-RALPP"}
+
+</pre>
+<p> </p>
+</div>
+   <div role="tabpanel" class="tab-pane" id="JOB_BioMedCloudmon">
+<p> </p>
+JOB_BioMedCloudmon requires only CLOUD-MON POEM profile so in `Poem` file you have:
+<p> </p>
+<pre>
+	 % avro cat  /var/lib/argo-connectors/EGI/BioMed_Cloudmon/poem_sync_2015_04_07.avro | tail -n 5
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "eu.egi.cloud.Perun-Check", "service": "egi.Perun", "tags": {"fqan": "", "vo": "ops"}}
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "eu.egi.cloud.APEL-Pub", "service": "eu.egi.cloud.accounting", "tags": {"fqan": "", "vo": "ops"}}
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.compss", "tags": {"fqan": "", "vo": "ops"}}
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.proprietary.slipstream", "tags": {"fqan": "", "vo": "ops"}}
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.vmdirac", "tags": {"fqan": "", "vo": "ops"}}
+</pre>
+<p> </p>
+</div>
+
+<div role="tabpanel" class="tab-pane" id="downtimes">
+<p> </p>
+<strong>Downtimes:</strong>
+<p> </p>
+<pre>
+	% /usr/libexec/argo-egi-connectors/downtimes-gocdb-connector.py -d 2015-04-07
+	% find /var/lib/argo-connectors -name '*downtimes*'
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/downtimes_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/downtimes_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/downtimes_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/downtimes_2015_04_07.avro
+</pre>
+</div>
+  </div>
+
+</div>
+
+<h2 id="links">Links</h2>
+
+<p>Connectors are using following GOCDB PI methods:</p>
+
+<ul>
+  <li><a href="https://wiki.egi.eu/wiki/GOCDB/PI/get_downtime_method">GOCDB - get_downtime_method</a></li>
+  <li><a href="https://wiki.egi.eu/wiki/GOCDB/PI/get_service_endpoint_method">GOCDB - get_service_endpoint_method</a></li>
+  <li><a href="https://wiki.egi.eu/wiki/GOCDB/PI/get_service_group">GOCDB - get_service_group</a></li>
+  <li><a href="https://wiki.egi.eu/wiki/GOCDB/PI/get_site_method">GOCDB - get_site_method</a></li>
+</ul>
+
+<p><a href="https://twiki.cern.ch/twiki/bin/view/Main/ATPVOFeeds">Construction of VO feeds</a></p>
+
+        </div><!--col-md-8-->
+        <div class="col-md-2">&nbsp;</div>
+      </div><!--row-->
+    </div><!--container fluid-->
+    <!-- from -->
+<div class="jumbotron">
+    <div class="container" style='padding-left:40px;'>
+      <a href='https://www.grnet.gr/en' target='blank'><img src='/shared/images/grnet_transparent.png' style='padding-left:40px;' alt='GRNET S.A - Greek Research & Technology Network' title='GRNET S.A - Greek Research & Technology Network'/></a>
+      <a href='http://www.cnrs.fr/' target='blank'><img src='/shared/images/cnrs.png' style='padding-left:40px;' alt='Centre national de la recherche scientifique' title='Centre national de la recherche scientifique'/></a>
+      <a href='http://www.srce.unizg.hr/en/' target='blank'><img src='/shared/images/srce.png' style='padding-left:40px;' alt='SCRE - Web stranice Sveučilišnog računskog centra' title='SCRE - Web stranice Sveučilišnog računskog centra'/></a>
+      <a href='http://www.egi.eu' target='blank'><img src='/shared/images/egi2.png' style='padding-left:40px;margin-top:-20px;' alt='European Grid Infrastructure' title='European Grid Infrastructure'/></a>
+    </div> <!-- /container -->
+</div> <!-- jumbotron -->
+<!-- from-->
+
+
+  
+<!--footer -->
+    <footer  id="footer" class="footer">
+	<div class='footer_top'>       
+	<div class="row ">
+       </div>
+       <div class="row ">
+	
+        <div class=" col-md-offset-1 col-md-3">
+		<p><img src='/shared/images/argo-logo.png' alt='Argo'  /></p>		
+		<p>ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures. </p>
+   	</div>
+	 <div class="col-md-offset-1 col-md-3">
+		<h4>Contact Us</h4>
+		<address>
+ 		<strong>Email</strong><br>
+      <a href="mailto:argoeu-project@googlegroups.com" style='color:white;'>argoeu-project[AT]googlegroups.com</a>
+		</address>
+   	</div>
+ 	<div class="col-md-3">
+		<h4>Open development </h4>
+    <p> We follow an open development process. All the repositories of ARGO are hosted on Github under the ARGOeu organization.</p>
+   	</div>
+    <div class="col-md-1"></div>
+      </div>
+      </div><!--footer_top-->
+      <div class="footer_bottom_holder">
+	<div class="footer_bottom">
+    <div class="textwidget"><span>Copyright &copy; 2014 - 2015 GRNET S.A. </span>
+    </div>
+  <div class="textwidget"><span>
+      <a href='http://validator.w3.org/check?uri=referer' target='blank'>
+        <img src='/shared/images/validated.png' alt='HTML5 - CSS3 - W3C Validated' title='HTML5 - CSS3 - W3C Validated' height="30"/>
+       </a>
+    </span>
+  </div>
+	</div>
+     </div>	
+    </footer>
+    <a href="#" class="back-to-top" style="display: inline;">
+      <i class="fa fa-arrow-circle-up"></i>
+    </a>
+<!--/footer -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/shared/js/jquery.min.js"></script>
+    <script src="/shared/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/shared/js/ie10-viewport-bug-workaround.js"></script>
+      <script src="/shared/js/jquery.easing.1.3.js"></script>
+  <script src="/shared/js/jquery.animate-enhanced.min.js"></script>
+  <script src="/shared/js/jquery.superslides.min.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    $(function() {
+    
+
+      $('#slides').superslides({
+        hashchange: false,
+        play: 10000
+      });
+
+        var offset = 250;
+        var duration = 300;
+        jQuery(window).scroll(function() {
+          if (jQuery(this).scrollTop() > offset) {
+            jQuery('.back-to-top').fadeIn(duration);
+          } else {
+            jQuery('.back-to-top').fadeOut(duration);
+          }
+        });
+        jQuery('.back-to-top').click(function(event) {
+          event.preventDefault();
+          jQuery('html, body').animate({scrollTop: 0}, duration);
+          return false;
+        })
+      });
+
+  </script>
+
+</body>
+</html>

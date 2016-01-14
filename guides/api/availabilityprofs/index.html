@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>ARGO Availability and Reliability Monitoring - API documentation | ARGO</title>
+  <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures. ">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ARGO Availability and Reliability Monitoring" />
+    <meta property="og:description" content="ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures." />
+    <meta property="og:url" content="http://argoeu.github.io/" />
+    <meta property="og:site_name" content="ARGO Documentation" />
+    <meta property="article:publisher" content="ARGO Team" />
+    <meta property="og:image" content="http://argoeu.github.io/shared/images/argo-logo.png" />
+  <meta name="author" content="">
+  <link rel="icon" href="/shared/favicon.ico">
+  <!-- Bootstrap core CSS -->
+  <link href="/shared/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/shared/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/shared/css/font-beba.css">
+
+  <link href="/shared/css/custom.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="documentation">
+  <!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		    <span class="sr-only">Toggle navigation</span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="/index.html"><img src='/shared/images/argo-logo.png' alt='ARGO'  /></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav navbar-right">
+		    <li class="active"><a href="/index.html">Home</a></li>
+		    <li><a href="/index.html#what">About</a></li>
+		    <li><a href="/index.html#features">Features</a></li>
+		    <li><a href="/use-cases/">Use cases</a></li>
+		    <li class="dropdown">
+		      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documentation <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+			<li><a href="/overview/"><em class="fa fa-file-text-o"></em>  Overview</a></li>
+			<li><a href="/guides/installation/"><em class="fa fa-file-text-o"></em>  Installation</a></li>
+			<li><a href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a></li>
+			<li><a href="/guides/poem/"><em class="fa fa-check-square-o"></em>  Poem service</a></li>
+			<li><a href="/guides/consumer/"><em class="fa fa-send-o"></em>  Consumer</a></li>
+			<li><a href="/guides/compute/"><em class="fa fa-cog"></em>  Compute Engine</a></li>
+			<li><a href="/guides/webui/"><em class="fa fa-connectdevelop"></em>  Web UI</a></li>
+			<li class="divider"></li>
+			<li class="dropdown-header">Developers</li>
+			<li><a href="/guides/api/"><em class="fa fa-cogs"></em>  API </a></li>
+			<li><a href="#"><em class="fa fa-github-alt"></em>  Github</a></li>
+		      </ul>
+		    </li>
+		  </ul>
+		</div><!--/.nav-collapse -->
+	</div><!--container-->
+</nav>
+
+  <div class='container-fluid' >
+    <div class='row'>
+        <div class="col-md-2 sidebar">
+                   <div class="list-group" >	
+            <a class="list-group-item disabled blue" href="/overview/">Documentation</a>
+          
+            <a class="list-group-item" href="/overview/">Overview</a>
+          
+            <a class="list-group-item disabled blue" href="/guides/installation/">Installation</a>
+          
+            <a class="list-group-item" href="/guides/installation/"><em class="fa fa-terminal"></em> Standalone</a>
+          
+          
+            <a class="list-group-item" href="/guides/installation_cluster/"><em class="fa fa-sitemap"></em> Cluster Mode</a>
+          
+            <a class="list-group-item disabled blue" href="/guides/sync/">Components</a>
+          
+            <a class="list-group-item" href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+          
+          
+            <a class="list-group-item" href="/guides/poem/"><em class="fa fa-check-square-o"></em> Poem service</a>
+          
+          
+            <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
+          
+            
+            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+          
+  	  <div id='caret-data1'>
+            
+              <a class="list-group-item-level2"  href="/guides/compute/compute-input/">
+            
+            <em class="fa fa-cog"></em> Compute Engine Input </a>
+ 	    
+              <a class="list-group-item-level2"  href="/guides/compute/compute-job-configuration/">
+            
+            <em class="fa fa-cog"></em> Compute engine job configurations </a>
+
+ 
+ 	    
+              <a class="list-group-item-level2"  href="/guides/compute/cli-interaction/">
+            
+            <em class="fa fa-cog"></em> Compute Engine CLI </a>
+
+
+	  </div>
+          
+            <a class="list-group-item active" href="/guides/api/" id='caretclick' data-caret='open'>
+          
+          <em class="fa fa-cogs"></em> API <span class="caret" ></span></a>
+
+          <div id='caret-data'>
+            
+              <a class="list-group-item-level2"  href="/guides/api/status-results/">
+            
+            <em class="fa fa-cogs"></em> API - Status results</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/avail-reliab/">
+            
+            <em class="fa fa-cogs"></em> API - Availabilities & Reliabilities</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/recalculationrequests/">
+            
+            <em class="fa fa-cogs"></em> Recalculation Requests</a>
+
+            
+              <a class="list-group-item-level2 active"  href="/guides/api/availabilityprofs/">
+            
+            <em class="fa fa-cogs"></em> API - Availability Profiles</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/poemprofiles/">
+            
+            <em class="fa fa-cogs"></em> API - POEM Profiles</a>
+
+        </div>
+          
+            <a class="list-group-item" href="/guides/webui/"><em class="fa fa-connectdevelop"></em> Web UI</a>
+          
+          </div> <!--list group-->
+          <p>&nbsp;</p>
+
+          
+
+
+
+        </div>
+        <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cogs'></i> 
+            
+            API - Availability Profiles</h1>
+          
+          <p class="lead"> API Calls for managing Availability Profiles</p>
+          <h2 id="api-data">API Data</h2>
+
+<table>
+<tbody>
+<tr>
+<td>Base URL</td>
+<td><code>https://host:port/api/v1/</code></td>
+</tr>
+<tr>
+<td><strong>Default Port</strong></td>
+<td><code>443</code></td>
+</tr>
+<tr>
+<td><strong>Central instance of the ARGO production service</strong></td>
+<td><code>https://snf-629551.vm.okeanos.grnet.gr/api/v1/</code></td>
+</tr>
+</tbody>
+</table>
+
+
+          
+<h2 id="api-calls">API Calls</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Shortcut</td>
+    </tr>
+    <tr>
+      <td>GET: List Availability Profiles</td>
+      <td>This method can be used to retrieve a list of current Availability profiles used by the Compute Engine.</td>
+      <td><a href="#1"> Description</a></td>
+    </tr>
+    <tr>
+      <td>POST: Create a new availability profile</td>
+      <td>This method can be used to insert a new Availability Profile onto the Compute Engine.</td>
+      <td><a href="#2"> Description</a></td>
+    </tr>
+    <tr>
+      <td>PUT: Update an existing Availability Profile</td>
+      <td>This method can be used to update an existing Availability Profile onto the Compute Engine.</td>
+      <td><a href="#3"> Description</a></td>
+    </tr>
+    <tr>
+      <td>DELETE: Delete an availability profile</td>
+      <td>This method can be used to delete an existing Availability Profile.</td>
+      <td><a href="#4"> Description</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="1"></a></p>
+
+<h2 id="get-list-availability-profiles">GET: List Availability Profiles</h2>
+
+<p>This method can be used to retrieve a list of current Availability profiles used by the Compute Engine.</p>
+
+<h3 id="input">Input</h3>
+
+<pre><code>/AP?[name]&amp;[namespace]
+</code></pre>
+
+<h3 id="parameters">Parameters</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+      <td>Default value</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td>Profile name (both name and namespace are needed)</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>namespace</code></td>
+      <td>Profile namespace (both name and namespace are needed)</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="response">Response</h3>
+
+<p>Headers: <code>Status: 200 OK</code></p>
+
+<h4 id="response-body">Response body</h4>
+
+<pre><code>&lt;root&gt;
+  &lt;profile id="some_id" name="name" namespace="namespace" poems="poem_name"&gt;
+    &lt;AND&gt;
+      &lt;OR&gt;
+        &lt;Group service_flavor="A_FLAVOR"/&gt;
+        &lt;Group service_flavor="B_FLAVOR"/&gt;
+        &lt;Group service_flavor="C_FLAVOR"/&gt;
+        &lt;Group service_flavor="D_FLAVOR"/&gt;
+        &lt;Group service_flavor="E_FLAVOR"/&gt;
+      &lt;/OR&gt;
+      &lt;OR&gt;
+        &lt;Group service_flavor="F_FLAVOR"/&gt;
+        &lt;Group service_flavor="G_FLAVOR"/&gt;
+      &lt;/OR&gt;
+      &lt;OR&gt;
+        &lt;Group service_flavor="H_FLAVOR"/&gt;
+      &lt;/OR&gt;
+    &lt;/AND&gt;
+  &lt;/profile&gt;
+  .
+  .
+&lt;/root&gt;
+</code></pre>
+
+<p><a id="2"></a></p>
+
+<h2 id="post-create-a-new-availability-profile">POST: Create a new availability profile</h2>
+
+<p>This method can be used to insert a new Availability Profile onto the Compute Engine.</p>
+
+<h3 id="input-1">Input</h3>
+
+<pre><code>/AP
+</code></pre>
+
+<h4 id="request-headers">Request headers</h4>
+
+<pre><code>x-api-key: "shared_key_value"
+Content-Type: application/json
+</code></pre>
+
+<h4 id="parameters-json-formatted-string">Parameters (Json formatted string)</h4>
+
+<pre><code>{ 
+  "name" : &lt;name&gt;, 
+  "namespace" :&lt;namespace&gt;, 
+  "poems" : [&lt;POEM profile&gt;],
+  "groups" : [ [&lt;flavor1&gt;, &lt;flavor2&gt;,... ],...,[&lt;flavorN&gt;] ]
+}
+</code></pre>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+      <td>Default value</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td>Profile name (both name and namespace are needed)</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>namespace</code></td>
+      <td>Profile namespace (both name and namespace are needed)</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>poems</code></td>
+      <td>Low level profile matching checks with service flavors</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>groups</code></td>
+      <td>Group of service flavors groups</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example">Example</h4>
+
+<p>This example creates a new availability profile <code>ap-test-2</code> for the <code>someRI</code> tenant. The fictional service flavors <code>Torque</code>, <code>Slurm</code> and <code>Moab</code> are logically <strong>ORed</strong> in the calculation of this service group as they more or less represent a similar functionality (lets name this <strong>the compute resource scheduling capability of the RI</strong>). Likewise the fictional <code>iRods</code> and <code>GridFTP</code> service flavors are logically <strong>ORed</strong> in the calculation as they respresent in this context a <strong>storage capability</strong> of the given RI. Finally a valuable resource that is taken in consideration is the fictional IS service flavor which provides the <strong>information service capability</strong> for the given RI. There is only one flavor of that kind on the whole RI Tier hence it makes sense to leave it alone in the A/R calculation. The overall A/R metrics are deduced by grouping these three capabilities ( compute resource scheduling, storage and information service) with a logical <strong>AND</strong> operation. The check (probe) results that are taken into consideration within this calculation are defined within the poem profile, which is extracted via a connector from the POEM endpoint of the RI. </p>
+
+<pre><code>{  
+  "name":"ap-test-2",
+  "namespace":"someRI",
+  "groups":[  
+    [  
+      "Torque",
+      "Slurm",
+      "Moab"
+    ],
+    [  
+      "iRods",
+      "GridFTP"
+    ],
+    [  
+      "IS"
+    ]
+  ],
+  "poems":[  
+    "someRI.root.CRITICAL"
+  ]
+}
+</code></pre>
+
+<h3 id="response-1">Response</h3>
+
+<p>Headers: <code>Status: 200 OK</code></p>
+
+<h4 id="response-body-1">Response body</h4>
+
+<h5 id="successful-creation-of-profile">Successful creation of profile</h5>
+
+<pre><code>&lt;root&gt;
+   &lt;Message&gt;Availability Profile record successfully created&lt;/Message&gt;
+&lt;/root&gt;
+</code></pre>
+
+<h5 id="profile-exists">Profile exists</h5>
+
+<pre><code>&lt;root&gt;
+   &lt;Message&gt;An availability profile with that name already exists&lt;/Message&gt;
+&lt;/root&gt;
+</code></pre>
+
+<p><a id="3"></a></p>
+
+<h2 id="put-update-an-existing-availability-profile">PUT: Update an existing Availability Profile</h2>
+
+<p>This method can be used to update an existing Availability Profile onto the Compute Engine.</p>
+
+<h3 id="input-2">Input</h3>
+
+<pre><code>/AP/{id}
+</code></pre>
+
+<h4 id="request-headers-1">Request headers</h4>
+
+<pre><code>x-api-key: "shared_key_value"
+Content-Type: application/json
+</code></pre>
+
+<h4 id="parameters--json-formatted-string">Parameters ( Json formatted string)</h4>
+
+<pre><code>{ 
+  "name" : &lt;name&gt;, 
+  "namespace" :&lt;namespace&gt;, 
+  "poems" : [&lt;POEM profile&gt;],
+  "groups" : [ [&lt;flavor1&gt;, &lt;flavor2&gt;,... ],...,[&lt;flavorN&gt;] ]
+}
+</code></pre>
+
+<h4 id="input-parameters">Input parameters</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+      <td>Default value</td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td>The availability profile id</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="json-parameters">JSON parameters</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+      <td>Default value</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td>Profile name (both name and namespace are needed)</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>namespace</code></td>
+      <td>Profile namespace (both name and namespace are needed)</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>poems</code></td>
+      <td>Low level profile matching checks with service flavors</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>groups</code></td>
+      <td>Group of service flavors groups</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Check the POST: Create a new availability profile example. </p>
+
+<h3 id="response-2">Response</h3>
+
+<p>Headers: <code>Status: 200 OK</code></p>
+
+<h4 id="response-body-2">Response body</h4>
+
+<h5 id="successful-update">Successful update</h5>
+
+<pre><code>&lt;root&gt;
+   &lt;Message&gt;Update successful&lt;/Message&gt;
+&lt;/root&gt;
+</code></pre>
+
+<h5 id="profile-does-not-exist">Profile does not exist</h5>
+
+<pre><code>&lt;root&gt;
+   &lt;Message&gt;No profile matching the requested id&lt;/Message&gt;
+&lt;/root&gt;
+</code></pre>
+
+<p><a id="4"></a></p>
+
+<h2 id="delete-delete-an-availability-profile">DELETE: Delete an availability profile</h2>
+
+<p>This method can be used to delete an existing Availability Profile.</p>
+
+<h3 id="input-3">Input</h3>
+
+<pre><code>/AP/{id}
+</code></pre>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+      <td>Default value</td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td>The availability profile id</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="request-headers-2">Request headers</h4>
+
+<pre><code>x-api-key: "shared_key_value"
+</code></pre>
+
+<h3 id="response-3">Response</h3>
+
+<p>Headers: <code>Status: 200 OK</code></p>
+
+<h4 id="response-body-3">Response body</h4>
+
+<h5 id="successful-delete">Successful delete</h5>
+
+<pre><code>&lt;root&gt;
+   &lt;Message&gt;Delete successful&lt;/Message&gt;
+&lt;/root&gt;
+</code></pre>
+
+<h5 id="profile-does-not-exist-1">Profile does not exist</h5>
+
+<pre><code>&lt;root&gt;
+   &lt;Message&gt;No profile matching the requested id&lt;/Message&gt;
+&lt;/root&gt;
+</code></pre>
+
+
+        </div><!--col-md-8-->
+        <div class="col-md-2">&nbsp;</div>
+      </div><!--row-->
+    </div><!--container fluid-->
+    <!-- from -->
+<div class="jumbotron">
+    <div class="container" style='padding-left:40px;'>
+      <a href='https://www.grnet.gr/en' target='blank'><img src='/shared/images/grnet_transparent.png' style='padding-left:40px;' alt='GRNET S.A - Greek Research & Technology Network' title='GRNET S.A - Greek Research & Technology Network'/></a>
+      <a href='http://www.cnrs.fr/' target='blank'><img src='/shared/images/cnrs.png' style='padding-left:40px;' alt='Centre national de la recherche scientifique' title='Centre national de la recherche scientifique'/></a>
+      <a href='http://www.srce.unizg.hr/en/' target='blank'><img src='/shared/images/srce.png' style='padding-left:40px;' alt='SCRE - Web stranice Sveučilišnog računskog centra' title='SCRE - Web stranice Sveučilišnog računskog centra'/></a>
+      <a href='http://www.egi.eu' target='blank'><img src='/shared/images/egi2.png' style='padding-left:40px;margin-top:-20px;' alt='European Grid Infrastructure' title='European Grid Infrastructure'/></a>
+    </div> <!-- /container -->
+</div> <!-- jumbotron -->
+<!-- from-->
+
+
+  
+<!--footer -->
+    <footer  id="footer" class="footer">
+	<div class='footer_top'>       
+	<div class="row ">
+       </div>
+       <div class="row ">
+	
+        <div class=" col-md-offset-1 col-md-3">
+		<p><img src='/shared/images/argo-logo.png' alt='Argo'  /></p>		
+		<p>ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures. </p>
+   	</div>
+	 <div class="col-md-offset-1 col-md-3">
+		<h4>Contact Us</h4>
+		<address>
+ 		<strong>Email</strong><br>
+      <a href="mailto:argoeu-project@googlegroups.com" style='color:white;'>argoeu-project[AT]googlegroups.com</a>
+		</address>
+   	</div>
+ 	<div class="col-md-3">
+		<h4>Open development </h4>
+    <p> We follow an open development process. All the repositories of ARGO are hosted on Github under the ARGOeu organization.</p>
+   	</div>
+    <div class="col-md-1"></div>
+      </div>
+      </div><!--footer_top-->
+      <div class="footer_bottom_holder">
+	<div class="footer_bottom">
+    <div class="textwidget"><span>Copyright &copy; 2014 - 2015 GRNET S.A. </span>
+    </div>
+  <div class="textwidget"><span>
+      <a href='http://validator.w3.org/check?uri=referer' target='blank'>
+        <img src='/shared/images/validated.png' alt='HTML5 - CSS3 - W3C Validated' title='HTML5 - CSS3 - W3C Validated' height="30"/>
+       </a>
+    </span>
+  </div>
+	</div>
+     </div>	
+    </footer>
+    <a href="#" class="back-to-top" style="display: inline;">
+      <i class="fa fa-arrow-circle-up"></i>
+    </a>
+<!--/footer -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/shared/js/jquery.min.js"></script>
+    <script src="/shared/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/shared/js/ie10-viewport-bug-workaround.js"></script>
+      <script src="/shared/js/jquery.easing.1.3.js"></script>
+  <script src="/shared/js/jquery.animate-enhanced.min.js"></script>
+  <script src="/shared/js/jquery.superslides.min.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    $(function() {
+    
+
+      $('#slides').superslides({
+        hashchange: false,
+        play: 10000
+      });
+
+        var offset = 250;
+        var duration = 300;
+        jQuery(window).scroll(function() {
+          if (jQuery(this).scrollTop() > offset) {
+            jQuery('.back-to-top').fadeIn(duration);
+          } else {
+            jQuery('.back-to-top').fadeOut(duration);
+          }
+        });
+        jQuery('.back-to-top').click(function(event) {
+          event.preventDefault();
+          jQuery('html, body').animate({scrollTop: 0}, duration);
+          return false;
+        })
+      });
+
+  </script>
+
+</body>
+</html>

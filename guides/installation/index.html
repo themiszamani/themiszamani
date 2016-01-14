@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>ARGO Availability and Reliability Monitoring - Installation | ARGO</title>
+  <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures. ">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ARGO Availability and Reliability Monitoring" />
+    <meta property="og:description" content="ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures." />
+    <meta property="og:url" content="http://argoeu.github.io/" />
+    <meta property="og:site_name" content="ARGO Documentation" />
+    <meta property="article:publisher" content="ARGO Team" />
+    <meta property="og:image" content="http://argoeu.github.io/shared/images/argo-logo.png" />
+  <meta name="author" content="">
+  <link rel="icon" href="/shared/favicon.ico">
+  <!-- Bootstrap core CSS -->
+  <link href="/shared/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/shared/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/shared/css/font-beba.css">
+
+  <link href="/shared/css/custom.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="documentation">
+  <!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		    <span class="sr-only">Toggle navigation</span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="/index.html"><img src='/shared/images/argo-logo.png' alt='ARGO'  /></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav navbar-right">
+		    <li class="active"><a href="/index.html">Home</a></li>
+		    <li><a href="/index.html#what">About</a></li>
+		    <li><a href="/index.html#features">Features</a></li>
+		    <li><a href="/use-cases/">Use cases</a></li>
+		    <li class="dropdown">
+		      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documentation <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+			<li><a href="/overview/"><em class="fa fa-file-text-o"></em>  Overview</a></li>
+			<li><a href="/guides/installation/"><em class="fa fa-file-text-o"></em>  Installation</a></li>
+			<li><a href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a></li>
+			<li><a href="/guides/poem/"><em class="fa fa-check-square-o"></em>  Poem service</a></li>
+			<li><a href="/guides/consumer/"><em class="fa fa-send-o"></em>  Consumer</a></li>
+			<li><a href="/guides/compute/"><em class="fa fa-cog"></em>  Compute Engine</a></li>
+			<li><a href="/guides/webui/"><em class="fa fa-connectdevelop"></em>  Web UI</a></li>
+			<li class="divider"></li>
+			<li class="dropdown-header">Developers</li>
+			<li><a href="/guides/api/"><em class="fa fa-cogs"></em>  API </a></li>
+			<li><a href="#"><em class="fa fa-github-alt"></em>  Github</a></li>
+		      </ul>
+		    </li>
+		  </ul>
+		</div><!--/.nav-collapse -->
+	</div><!--container-->
+</nav>
+
+  <div class='container-fluid' >
+    <div class='row'>
+        <div class="col-md-2 sidebar">
+                   <div class="list-group" >	
+            <a class="list-group-item disabled blue" href="/overview/">Documentation</a>
+          
+            <a class="list-group-item" href="/overview/">Overview</a>
+          
+            <a class="list-group-item disabled blue" href="/guides/installation/">Installation</a>
+          	
+            <a class="list-group-item active" href="/guides/installation/"><em class="fa fa-terminal"></em> Standalone</a>
+          
+          
+            <a class="list-group-item" href="/guides/installation_cluster/"><em class="fa fa-sitemap"></em> Cluster Mode</a>
+          
+            <a class="list-group-item disabled blue" href="/guides/sync/">Components</a>
+          
+            <a class="list-group-item" href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+          
+          
+            <a class="list-group-item" href="/guides/poem/"><em class="fa fa-check-square-o"></em> Poem service</a>
+          
+          
+            <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
+          
+            
+            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+          
+  	  <div id='caret-data1'>
+            
+              <a class="list-group-item-level2"  href="/guides/compute/compute-input/">
+            
+            <em class="fa fa-cog"></em> Compute Engine Input </a>
+ 	    
+              <a class="list-group-item-level2"  href="/guides/compute/compute-job-configuration/">
+            
+            <em class="fa fa-cog"></em> Compute engine job configurations </a>
+
+ 
+ 	    
+              <a class="list-group-item-level2"  href="/guides/compute/cli-interaction/">
+            
+            <em class="fa fa-cog"></em> Compute Engine CLI </a>
+
+
+	  </div>
+          
+            <a class="list-group-item" href="/guides/api/" id='caretclick' data-caret='open'> 
+          
+          <em class="fa fa-cogs"></em> API <span class="caret" ></span></a>
+
+          <div id='caret-data'>
+            
+              <a class="list-group-item-level2"  href="/guides/api/status-results/">
+            
+            <em class="fa fa-cogs"></em> API - Status results</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/avail-reliab/">
+            
+            <em class="fa fa-cogs"></em> API - Availabilities & Reliabilities</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/recalculationrequests/">
+            
+            <em class="fa fa-cogs"></em> Recalculation Requests</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/availabilityprofs/">
+            
+            <em class="fa fa-cogs"></em> API - Availability Profiles</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/poemprofiles/">
+            
+            <em class="fa fa-cogs"></em> API - POEM Profiles</a>
+
+        </div>
+          
+            <a class="list-group-item" href="/guides/webui/"><em class="fa fa-connectdevelop"></em> Web UI</a>
+          
+          </div> <!--list group-->
+          <p>&nbsp;</p>
+
+          	
+          <div class="bg-info" style='background-color:#eee;'>
+            <a  href="https://github.com/ARGOeu/argo-ansible" target='blank' ><em class='fa fa-github-alt' style='font-size:40px;padding-top:-10px;margin-top:-50px;color:#123f7c;'></em></a>
+            <p class="text-muted" style='padding:10px;'><a  href="https://github.com/ARGOeu/argo-ansible" target='blank' >Fork the github repository and install ARGO via Ansible playbook.</a></p>
+          </div>
+          
+
+
+
+        </div>
+        <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-terminal'></i> 
+            
+            Installation - Standalone</h1>
+          
+          <p class="lead"> This document will guide you through the standalone installation process.</p>
+          
+<h1 id="installation">Installation</h1>
+
+<p>This document will guide you through the installation process. The ARGO components covered include the following items:</p>
+
+<ul>
+  <li>Sync Components</li>
+  <li>Consumer service</li>
+  <li>Compute Engine</li>
+  <li>API service</li>
+  <li>Web UI service</li>
+</ul>
+
+<p>These can be co-located on a single machine or more. Note that with respect to the Compute Engine component operation there are two options, either to use the <em>standalone</em> version or the <em>distributed</em> version. The latter one requires an interconnection with a working Hadoop cluster. </p>
+
+<p>The minimum requirements to meet in case of a single VM (standalone version) are the following:</p>
+
+<ul>
+  <li>4 CPUs</li>
+  <li>8 GB RAM</li>
+  <li>&gt;100 GB Disk</li>
+</ul>
+
+<p>For a production scale environment we propose two VMs and a Hadoop cluster (distributed version). The proposed setup in this case is the following:</p>
+
+<p><strong>Node 1 (Sync components, Consumer service and Hadoop client)</strong></p>
+
+<ul>
+  <li>2 CPUs</li>
+  <li>4GB RAM</li>
+  <li>100 GB Disk</li>
+</ul>
+
+<p><strong>Node 2 (API and Web UI services)</strong></p>
+
+<ul>
+  <li>2 CPUs</li>
+  <li>4GB RAM</li>
+  <li>100 GB Disk</li>
+</ul>
+
+<h2 id="standalone-mode">Standalone mode</h2>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<ul>
+  <li>You will need a RHEL 6.x or similar OS (base installation) to proceed. Note that the following instructions have been tested against CentOS 6.x OSes. </li>
+  <li>Make sure that on your host an ntp client service is configured properly. </li>
+  <li>Configure the OS firewall to accept incoming <code>tcp</code> connections to port <code>443</code>.</li>
+</ul>
+
+<h3 id="software-repositories">Software Repositories</h3>
+
+<p>The first step is to install (as root user) the <code>epel</code> and <code>argo</code> release packages via yum:</p>
+
+<pre><code># yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+# yum install http://rpm.hellasgrid.gr/mash/centos6-arstats/i386/ar-release-1.0.0-3.el6.noarch.rpm
+</code></pre>
+
+<p>These packages will configure on the host the necessary repository files under <code>/etc/yum.repos.d</code>.</p>
+
+<p>You will also need to install the cloudera repository for Hadoop components to be retrieved (although you will not install any Hadoop cluster, some libraries from the Hadoop ecosystem are needed). Under a file named <code>/etc/yum.repos.d/cloudera-cdh4.repo</code> place the following contents:</p>
+
+<pre><code>[cloudera-cdh4]
+name=Cloudera's Distribution for Hadoop, Version 4
+baseurl=http://archive.cloudera.com/cdh4/redhat/6/$basearch/cdh/4/
+gpgkey = http://archive.cloudera.com/cdh4/redhat/6/$basearch/cdh/RPM-GPG-KEY-cloudera
+gpgcheck = 1
+enabled = 1
+</code></pre>
+
+<p>You will also need to install the EGI trust-anchors repository (this is required on the host for communicating with topology providing services). Under a file named <code>/etc/yum.repos.d/EGI-trustanchors.repo</code> place the following contents:</p>
+
+<pre><code>[EGI-trustanchors]
+name=EGI-trustanchors
+baseurl=http://repository.egi.eu/sw/production/cas/1/current/
+enabled=1
+gpgcheck=1
+gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
+</code></pre>
+
+<p>You will finally need to add a MongoDB repository. The name of the file should be <code>/etc/yum.repos.d/mongodb.repo</code> and its contents should be:</p>
+
+<pre><code>[mongodb]
+name=MongoDB Repository
+baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/
+gpgcheck=0
+enabled=1
+</code></pre>
+
+<h3 id="before-proceeding">Before proceeding</h3>
+
+<p>Install the <code>ca-policy-egi-core</code> meta-rpm with the following command:</p>
+
+<pre><code># yum install ca-policy-egi-core
+</code></pre>
+
+<p>As a next step you should request and obtain an x509 host certificate from your national IGTF (Grid-related) approved CA and place the key/certificate pair under <code>/etc/grid-security/</code> folder with the following names and permissions:</p>
+
+<ul>
+  <li>Key file: <code>/etc/grid-security/hostkey.pem</code> and permissions: 0400</li>
+  <li>Certificate file: <code>/etc/grid-security/hostcert.pem</code> and permissions: 0644</li>
+</ul>
+
+<p>As the ARGO API service also uses a key/certificate pair it is preferable to use the same pair by creating the following two softlinks:</p>
+
+<pre><code># ln -s /etc/grid-security/hostkey.pem /etc/pki/tls/private/localhost.key
+# ln -s /etc/grid-security/hostcert.pem /etc/pki/tls/certs/localhost.crt
+</code></pre>
+
+<h3 id="sync-components-and-consumer-service">Sync Components and Consumer Service</h3>
+
+<p>Next, as root user install the following packages via yum:</p>
+
+<pre><code># yum install ar-consumer
+# yum install ar-sync
+</code></pre>
+
+<p>The ar-sync package installs components needed for refreshing the current status of the monitored system. For configuration details of the sync components visit <a href="/guides/sync/">this</a> page. </p>
+
+<p>The ar-consumer service can be configured to connect to a pool of message brokers. By default the config is set to <code>mq.afroditi.hellasgrid.gr</code> and <code>mq.cro-ngi.hr</code>. </p>
+
+<p>This configuration is suggested as it will allow the consumer service to cycle to the next broker in the case the one it is connected to fails for some reason. For further configuration of the consumer service please refer <a href="/guides/consumer/">here</a>. </p>
+
+<p>Start consumer service and make sure to add it to appropriate run levels:</p>
+
+<pre><code># service ar-consumer start
+# chkconfig ar-consumer on
+</code></pre>
+
+<h3 id="compute-engine">Compute Engine</h3>
+
+<p>Install the component:</p>
+
+<pre><code># yum install ar-compute
+</code></pre>
+
+<p>Edit the <code>/etc/ar-compute-engine.conf</code> configuration file and </p>
+
+<ul>
+  <li>set the value of the <code>mongo_host</code> variable to <code>127.0.0.1</code> like so: <code>mongo_host=127.0.0.1</code>
+</li>
+  <li>set the value of the <code>mode</code> variable to <code>local</code> like so: <code>mode=local</code>
+</li>
+  <li>set the value of the <code>prefilter_clean</code> variable to <code>false</code> like so: <code>prefilter_clean=false</code>
+</li>
+</ul>
+
+<p>Under the folder <code>/etc/cron.d/</code> place two cronjobs that will handle hourly and daily calculations. </p>
+
+<ul>
+  <li>
+    <p>for the hourly caclulations edit <code>/etc/cron.d/ar_job_cycle_hourly</code> and place the following contents:</p>
+
+    <p>55 * * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date –utc  +\%Y-\%m-\%d)</p>
+  </li>
+  <li>
+    <p>for the daily caclulations edit <code>/etc/cron.d/ar_job_cycle_daily</code> and place the following contents:</p>
+
+    <p>0 0 * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date –utc –date ‘-1 day’ +\%Y-\%m-\%d)</p>
+  </li>
+</ul>
+
+<h3 id="datastore">Datastore</h3>
+
+<p>Install MongoDB with the following command:</p>
+
+<pre><code># yum install mongodb-org-server mongodb-org
+</code></pre>
+
+<p>By default, MongoDB will bind to all active network interfaces. As for the standalone installation this is not required you may limit the service to bind to the localhost interface by editing the <code>/etc/mongod.conf</code> file and setting the value of the variable <code>bind_ip</code> to <code>127.0.0.1</code> like so: <code>bind_ip=127.0.0.1</code>.</p>
+
+<p>To start and enable the MongoDB service use the following two commands:</p>
+
+<pre><code># service mongod start
+# chkconfig mongod on
+</code></pre>
+
+<h3 id="web-api-service">Web API service</h3>
+
+<p>Install the ARGO web API service with the following command:</p>
+
+<pre><code># yum install ar-web-api
+</code></pre>
+
+<p>Finally, start the service using the following command:</p>
+
+<pre><code># start ar-web-api
+</code></pre>
+
+
+        </div><!--col-md-8-->
+        <div class="col-md-2">&nbsp;</div>
+      </div><!--row-->
+    </div><!--container fluid-->
+    <!-- from -->
+<div class="jumbotron">
+    <div class="container" style='padding-left:40px;'>
+      <a href='https://www.grnet.gr/en' target='blank'><img src='/shared/images/grnet_transparent.png' style='padding-left:40px;' alt='GRNET S.A - Greek Research & Technology Network' title='GRNET S.A - Greek Research & Technology Network'/></a>
+      <a href='http://www.cnrs.fr/' target='blank'><img src='/shared/images/cnrs.png' style='padding-left:40px;' alt='Centre national de la recherche scientifique' title='Centre national de la recherche scientifique'/></a>
+      <a href='http://www.srce.unizg.hr/en/' target='blank'><img src='/shared/images/srce.png' style='padding-left:40px;' alt='SCRE - Web stranice Sveučilišnog računskog centra' title='SCRE - Web stranice Sveučilišnog računskog centra'/></a>
+      <a href='http://www.egi.eu' target='blank'><img src='/shared/images/egi2.png' style='padding-left:40px;margin-top:-20px;' alt='European Grid Infrastructure' title='European Grid Infrastructure'/></a>
+    </div> <!-- /container -->
+</div> <!-- jumbotron -->
+<!-- from-->
+
+
+  
+<!--footer -->
+    <footer  id="footer" class="footer">
+	<div class='footer_top'>       
+	<div class="row ">
+       </div>
+       <div class="row ">
+	
+        <div class=" col-md-offset-1 col-md-3">
+		<p><img src='/shared/images/argo-logo.png' alt='Argo'  /></p>		
+		<p>ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures. </p>
+   	</div>
+	 <div class="col-md-offset-1 col-md-3">
+		<h4>Contact Us</h4>
+		<address>
+ 		<strong>Email</strong><br>
+      <a href="mailto:argoeu-project@googlegroups.com" style='color:white;'>argoeu-project[AT]googlegroups.com</a>
+		</address>
+   	</div>
+ 	<div class="col-md-3">
+		<h4>Open development </h4>
+    <p> We follow an open development process. All the repositories of ARGO are hosted on Github under the ARGOeu organization.</p>
+   	</div>
+    <div class="col-md-1"></div>
+      </div>
+      </div><!--footer_top-->
+      <div class="footer_bottom_holder">
+	<div class="footer_bottom">
+    <div class="textwidget"><span>Copyright &copy; 2014 - 2015 GRNET S.A. </span>
+    </div>
+  <div class="textwidget"><span>
+      <a href='http://validator.w3.org/check?uri=referer' target='blank'>
+        <img src='/shared/images/validated.png' alt='HTML5 - CSS3 - W3C Validated' title='HTML5 - CSS3 - W3C Validated' height="30"/>
+       </a>
+    </span>
+  </div>
+	</div>
+     </div>	
+    </footer>
+    <a href="#" class="back-to-top" style="display: inline;">
+      <i class="fa fa-arrow-circle-up"></i>
+    </a>
+<!--/footer -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/shared/js/jquery.min.js"></script>
+    <script src="/shared/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/shared/js/ie10-viewport-bug-workaround.js"></script>
+      <script src="/shared/js/jquery.easing.1.3.js"></script>
+  <script src="/shared/js/jquery.animate-enhanced.min.js"></script>
+  <script src="/shared/js/jquery.superslides.min.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    $(function() {
+    
+
+      $('#slides').superslides({
+        hashchange: false,
+        play: 10000
+      });
+
+        var offset = 250;
+        var duration = 300;
+        jQuery(window).scroll(function() {
+          if (jQuery(this).scrollTop() > offset) {
+            jQuery('.back-to-top').fadeIn(duration);
+          } else {
+            jQuery('.back-to-top').fadeOut(duration);
+          }
+        });
+        jQuery('.back-to-top').click(function(event) {
+          event.preventDefault();
+          jQuery('html, body').animate({scrollTop: 0}, duration);
+          return false;
+        })
+      });
+
+  </script>
+
+</body>
+</html>
