@@ -98,8 +98,8 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-            
-            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+          	
+            <a class="list-group-item active " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
             
@@ -113,7 +113,7 @@
 
  
  	    
-              <a class="list-group-item-level2"  href="/guides/compute/cli-interaction/">
+              <a class="list-group-item-level2 active"  href="/guides/compute/cli-interaction/">
             
             <em class="fa fa-cog"></em> Compute Engine CLI </a>
 
@@ -168,101 +168,133 @@
             
               <i class='fa fa-cog'></i> 
             
-            Compute Engine</h1>
+            Compute - Cli interaction</h1>
           
-          <p class="lead"> The ARGO Compute Engine is responsible for computing the availability and reliability of services.</p>
+          <p class="lead"> This document describes the Executable Scripts for cli interaction with the compute engine</p>
           
-<p>The ARGO Compute Engine is responsible for computing the availability and reliability of services using:</p>
+<h2 id="executable-scripts-for-cli-interaction-with-the-compute-engine">Executable Scripts for cli interaction with the compute engine</h2>
+
+<p>In the folder <code>/usr/libexec/ar-compute/bin/</code> reside executable scripts that can be used for uploading metric data and sync data to the hadoop cluster (HDFS Filesystem).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Script</th>
+      <th>Description</th>
+      <th>Shortcut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>upload_metric.py</td>
+      <td>The specific script is used in order to upload daily metric data (relative to a tenant) to HDFS.</td>
+      <td><a href="#metric">Description</a></td>
+    </tr>
+    <tr>
+      <td>upload_sync.py</td>
+      <td>The specific script is used in order to upload daily sync data (relative to a tenant and a job) to HDFS.</td>
+      <td><a href="#sync">Description</a></td>
+    </tr>
+    <tr>
+      <td>mongo_clean_ar.py</td>
+      <td>The specific script is used if necessary to clean a/r data from the datastore regarding for specified tenant,report and date.</td>
+      <td><a href="#ar">Description</a></td>
+    </tr>
+    <tr>
+      <td>mongo_clean_status.py</td>
+      <td>The specific script is used if necessary to clean status detail data from the datastore for specified tenant,report and date.</td>
+      <td><a href="#status">Description</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="metric"></a></p>
+
+<h3 id="uploadmetricpy">upload_metric.py</h3>
+
+<p>This utility is used in order to upload the daily metric data for a specified date and tenant to the ARGO Compute Engine.</p>
+
+<h4 id="full-path">Full path</h4>
+
+<p><code>
+/usr/libexec/ar-compute/bin/upload_metric.py
+</code></p>
+
+<h4 id="parameters">Parameters</h4>
 
 <ul>
-  <li>the metric results that are collected from monitoring engine(s)</li>
-  <li>information about the topology of the infrastructure</li>
-  <li>information about scheduled downtimes (optional)</li>
-  <li>information about the importance of each entity in the infrastructure (optional)</li>
+  <li>
+<code>-d --date {YYYY-MM-DD}</code> specifies the date of the metric data we want to upload (Required)</li>
+  <li>
+<code>-t --tenant {STRING}</code> a case-sensitive string specifying the name of the tenant (Required)</li>
 </ul>
 
-<p>The availability and reliability results produced by the ARGO Compute Engine can be retrieved through the ARGO Web API.</p>
+<p><a id="sync"></a></p>
 
-<h2 id="how-the-argo-compute-engine-works">How the ARGO Compute Engine works</h2>
+<h3 id="uploadsyncpy">upload_sync.py</h3>
 
-<p>The ARGO Compute Engine is designed to be multi-tenant, meaning that each installation of the ARGO Compute Engine can support multiple tenants - customers. Each tenant must have at least one <em>Report Configuration</em>,  which includes the topology of the monitored infrastructure, information about the monitored services and their metrics and the metric and availability profiles that will be applied in order to calculate the status, the availability and the reliability.</p>
+<p>This utility is used in order to upload the daily sync data for a specified date and tenant to the ARGO Compute Engine.</p>
 
-<p>From the ARGO Compute Engine point of view, a monitored infrastructure is comprised by service instances of specific <em>Service Types</em> running on specific endpoints, which are called <em>Service Endpoints</em>. For example a <em>Service Type</em> of  web server listening on port 443 on the host www.example.com, is a <em>Service Endpoint</em>. So a <em>Service Endpoint</em> is defined as the combination of an FQDN and <em>Service Type</em>. Each <em>Service Type</em> can have a defined set of <em>metrics</em>, which are explicit tests that we check in order to asses the status of a <em>Service Endpoint</em>.  The ARGO Compute Engine receives as input the results from each metric tested against the monitored <em>Service Endpoints</em>.</p>
+<h4 id="full-path-1">Full path</h4>
 
-<p>The ARGO Compute Engine allows the users to model their infrastructure by defining multiple level of <em>Groups</em>, starting from groups of <em>Service Endpoints</em> and moving to higher level groups of groups. In this way it is easy to model different infrastructure architectures.</p>
+<p><code>
+/usr/libexec/ar-compute/bin/upload_sync.py
+</code></p>
 
-<p>For example a user with an infrastructure on top of AWS using VPC can model the infrastructure in the following way:</p>
-
-<pre><code>- Global Group                  # Level 5
-  - Regional Group              # Level 4
-    - VPC                       # Level 3
-      - Availability Group      # Level 2
-	- Service Types         # Level 1
-	  -  Service Endpoints  # Level 0
-</code></pre>
-
-<p>Another example comes from the European Grid Infrastructure (EGI), in which the infrastructure model is the following:</p>
-
-<pre><code>- EGI # Level 4                       |  - VO # Level 2
-  - NGI # Level 3                     |    - Service Type # Level 1
-    - Site # Level 2                  |      - Service Endpoints # Level 0
-      - Service Types # Level 1       |
-	- Service Endpoints # Level 0 |
-</code></pre>
-
-<blockquote>
-  <p><em>More information about <a href="http://www.egi.eu/infrastructure/">European Grid Infrastructure</a>, the <a href="http://www.egi.eu/community/ngis/">NGIs</a> and the <a href="http://www.egi.eu/community/vos/">VOs</a> can be found on the website of <a href="http://www.egi.eu">EGI</a></em></p>
-</blockquote>
-
-<h3 id="status-computations">Status computations</h3>
-
-<p>The ARGO Compute Engine expects to receive a stream metric results produced by a monitoring engine. A metric result is the output of a specific test that was run at a specific time against a specific service endpoint. A metric result includes at least:</p>
+<h4 id="parameters-1">Parameters</h4>
 
 <ul>
-  <li>a timestamp showing when the given monitoring probe was executed</li>
-  <li>the name of the service type (e.g. HTTPS Web Server)</li>
-  <li>the name of the hostname on which the service is running (e.g. www.example.com)</li>
-  <li>the name of the metric that was tested (e.g. TCP_CHECK)</li>
-  <li>the status result that was produced by the monitoring probe (e.g. OK)</li>
+  <li>
+<code>-d --date {YYYY-MM-DD}</code> the date of the daily sync data we want to upload (Required)</li>
+  <li>
+<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
+  <li>
+<code>-j --job {STRING}</code> the name of the job. Case sensitive (Required)</li>
 </ul>
 
-<p>An example metric result in is shown below:</p>
+<p><a id="ar"></a></p>
 
-<pre><code>{
-  "timestamp": "2013-05-02T10:53:38Z",
-  "metric": "org.bdii.Freshness",
-  "service_type": "Site-BDII",
-  "hostname": "bdii.afroditi.hellasgrid.gr",
-  "status": "OK"
-}
-</code></pre>
+<h3 id="mongocleanarpy">mongo_clean_ar.py</h3>
 
-<p>The ARGO Compute Engine receives this stream of metric results and creates a set of status timelines for each service endpoint and metric tuple. The ARGO Compute Engine computes the status of the <em>Service Endpoints</em>  based on the results from each defined <em>metric</em> for the <em>Service Type</em> of the <em>Service Endpoints</em>, which have been checked within a time frame that matches the frequency with which the probe is executed. The ARGO Compute Engine requires at least three states to be defined:</p>
+<p>This utility is used in order to delete availability and reliability data from the datastore, for a specified tenant,report and date. It is called automatically before each A/R computation, but can be ran also manually. The script reports back the number of records and from which collections these records are removed.</p>
+
+<h4 id="full-path-2">Full path</h4>
+
+<p><code>
+/usr/libexec/ar-compute/bin/mongo_clean_ar.py
+</code></p>
+
+<h4 id="parameters-2">Parameters</h4>
 
 <ul>
-  <li>A <code>DOWNTIME</code> state, which is used in order to fill the timelines when downtime information is applied.</li>
-  <li>A <code>MISSING</code> state, which is used in order to fill the timelines when a metric isn’t present in the consumer data for a period of time</li>
-  <li>An <code>UNKNOWN</code> state, which is used in order fill the timelines when a re-computation exclusion is applied</li>
+  <li>
+<code>-d --date {YYYY-MM-DD}</code> the date (day) for which to delete the availability and reliability data (Required)</li>
+  <li>
+<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
+  <li>
+<code>-r --report {STRING}</code> the id (uuid format) of the report that results belong to. Case sensitive (Required)</li>
 </ul>
 
-<p>A default ARGO Compute Engine installation comes with seven statuses predefined, in alignment with the statuses produced by a Nagios compatible monitoring engine: <code>"OK"</code>, <code>"WARNING"</code>, <code>"UNKNOWN"</code>, <code>"MISSING"</code>, <code>"CRITICAL"</code> and <code>"DOWNTIME"</code>. The computed service statuses generate status timelines for each service endpoint.</p>
+<p><a id="status"></a></p>
 
-<p>So for example, let’s assume that the service we are interested in is the website https://www.example.com and that there are two metrics defined for a secure website, the <code>TCP_CHECK</code> and <code>CHECK_CERTIFICATE_VALIDITY</code>. In order for the website to be considered as OK, the results for both the tcp check and the check for the certificate validity must be OK. How the individual results of each <em>metric</em> for a <em>Service Type</em> are combined in order to compute the status of the <em>Service Endpoint</em>, is defined in what we call <em>truth tables</em>. More information about the truth tables can be found in the ARGO Compute Engine configuration document.</p>
+<h3 id="mongocleanstatuspy">mongo_clean_status.py</h3>
 
-<h3 id="availability-and-reliability-computations">Availability and reliability computations</h3>
+<p>This utility can be used in order to delete the status detail data from the datastore, for a specified tenant,report and date.</p>
 
-<p>In order to understand how service availability and reliability is computed, it is important to understand what availability and reliability mean:</p>
+<h4 id="full-path-3">Full path</h4>
+<p><code>
+/usr/libexec/ar-compute/bin/mongo_clean_status.py
+</code>
+#### Parameters</p>
 
 <ul>
-  <li>Service Availability is the fraction of time a service was in the UP Period during the known interval in a given period</li>
-  <li>Service Reliability is the ratio of the time interval a service was UP over the time interval it was supposed (scheduled) to be UP in the given period.</li>
+  <li>
+<code>-d --date {YYYY-MM-DD}</code> the date for which to delete the status detail data from the datastore (Required)</li>
+  <li>
+<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
+  <li>
+<code>-r --report {STRING}</code> the id (uuid format) of the  report that results belong to. Case sensitive (Required)</li>
 </ul>
-
-<p>Before computing the availability and reliability of a given service or group, the ARGO Compute Engine computes the status timelines for that service or group by aggregating the individual status results of the lower level groups or service endpoints. How these aggregations are taking place at each group level, is defined by user defined algorithms called <em>metric profiles</em> for the status computations and <em>availability profiles</em> for the availability and reliability computations. More information about the definition of the <em>metric profiles</em>  and the <em>availability profiles</em> can be found in the ARGO Compute Engine configuration document.</p>
-
-<p>The ARGO Compute Engine computes hourly availability and reliability for  <em>Service Endpoints</em> based on the individual statuses of each <em>Service Endpoint</em> for a specific time period. It computes the percentage of the time the <em>Service Endpoint</em> was available within that period (Availability). In order to compute the Reliability of a <em>Service Endpoint</em>, it takes into account the declared <em>Downtimes</em> for the given <em>Service Endpoint</em>.</p>
-
-<p>The availability and reliability of the <em>Group</em> of <em>Service Endpoints</em> and any other higher level grouping are computed by using the aggregated status timelines. In these computations, the ARGO Compute Engine can take into account custom factors such as the importance of each <em>Service Endpoint</em> and <em>Group</em>. These custom factors are used as weights when the aggregated percentages are computed. More information about the custom factors can be found in the ARGO Compute Engine configuration document.</p>
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>
