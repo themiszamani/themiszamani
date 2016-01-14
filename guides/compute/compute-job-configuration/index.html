@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
+  <title>ARGO Availability and Reliability Monitoring - </title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,8 +98,8 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-          	
-            <a class="list-group-item active " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+            
+            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
             
@@ -107,7 +107,7 @@
             
             <em class="fa fa-cog"></em> Compute Engine Input </a>
  	    
-              <a class="list-group-item-level2 active"  href="/guides/compute/compute-job-configuration/">
+              <a class="list-group-item-level2"  href="/guides/compute/compute-job-configuration/">
             
             <em class="fa fa-cog"></em> Compute engine job configurations </a>
 
@@ -163,517 +163,379 @@
 
         </div>
         <div class="col-md-8 main">
-          	
-            <h1 class="highlight">
-            
-              <i class='fa fa-cog'></i> 
-            
-            Compute engine job configurations</h1>
           
-          <p class="lead"> This document describes the job configurations</p>
-          
-<h2 id="main-job-configurations">Main Job Configurations</h2>
+          <p class="lead"> </p>
+          <h1 id="argo-compute-engine-configuration">ARGO Compute Engine configuration</h1>
+
+<h2 id="overview">Overview</h2>
 
 <table>
+  <thead>
+    <tr>
+      <th>Job Configuration</th>
+      <th>Description</th>
+      <th>Shortcut</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Job Configuration</td>
-      <td>Description - Section of</td>
-      <td>Shortcut</td>
-    </tr>
-    <tr>
-      <td>Main configuration file</td>
+      <td><code>/etc/ar-compute-engine.conf</code></td>
       <td>This file includes various global parameters used by the engine which are organized in sections, as described next:</td>
-      <td><a href="#etcar-compute-engineconf-main-configuration-file">Description</a></td>
+      <td><a href="#compute-engine-conf">Description</a></td>
     </tr>
     <tr>
-      <td>Parameters for section <code>[default]</code>
-</td>
-      <td>Main configuration file</td>
-      <td><a href="#parameters-for-section-default">Description</a></td>
+      <td><code>{TENANT_NAME}_ops.json</code></td>
+      <td>The ops files are json filetypes that are used to describe the available status types encountered in the monitoring environment of a tenant and also the available algorithmic operations available to use in status aggregations.</td>
+      <td><a href="#tenant-ops-conf">Description</a></td>
     </tr>
     <tr>
-      <td>Parameters for section <code>[logging]</code>
-</td>
-      <td>Main configuration file</td>
-      <td><a href="#parameters-for-section-logging">Description</a></td>
-    </tr>
-    <tr>
-      <td>Parameters for section <code>[jobs]</code>
-</td>
-      <td>Main configuration file</td>
-      <td><a href="#parameters-for-section-jobs">Description</a></td>
-    </tr>
-    <tr>
-      <td>Parameters for section <code>[sampling]</code>
-</td>
-      <td>Main configuration file</td>
-      <td><a href="#parameters-for-section-sampling">Description</a></td>
-    </tr>
-    <tr>
-      <td>Parameters for section <code>[datastore-mapping]</code>
-</td>
-      <td>Main configuration file</td>
-      <td><a href="#parameters-for-section-datastore-mapping">Description</a></td>
-    </tr>
-    <tr>
-      <td>Ops Files (per tenant)</td>
-      <td>The ops files are json filetypes that are used to describe the available status types encountered in the monitoring enviroment of a tenant and also the availabe algorithmic operations available to use in status aggregations.</td>
-      <td><a href="#ops-files-per-tenant">Description</a></td>
-    </tr>
-    <tr>
-      <td>Config File (per tenant/ per job)</td>
+      <td><code>{TENANT_NAME}_{JOB_ID}_cfg.json</code></td>
       <td>A job config file is a json file that contains specific information needed during the job run such as grouping parameters, the name of the availability profile used and many more.</td>
-      <td><a href="#config-file-per-tenant-per-job">Description</a></td>
+      <td><a href="#tenant-jobid-conf">Description</a></td>
     </tr>
     <tr>
-      <td>Availability Profile (per tenant / per job)</td>
+      <td><code>{TENANT_NAME}_{JOB_NAME}_ap.json</code></td>
       <td>The availability profile is a json file used per specific job that describes the operations that must take place during aggregating statuses up to endpoint group level.</td>
-      <td><a href="#availability-profile-per-tenant--per-job">Description</a></td>
+      <td><a href="#tenant-jobid-ap-conf">Description</a></td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="tenants-and-job-definitions">Tenants and Job definitions</h2>
-<p>Compute engine can be tenant and job aware. Each tenant must be configured properly both in the argo-connector configuration files and then in the argo-compute-engine configuration. </p>
+<h2 id="tenant-and-report-configuration">Tenant and Report configuration</h2>
 
-<p>For each tenant there is at least one or more computational jobs declared. These jobs allow to perform different calculations on the same metric data in order to produce different a/r results based on topology and metric profiles.</p>
+<p>The ARGO Compute Engine is multi-tenant, meaning that a single installation of the ARGO Compute Engine can support multiple tenants (customers). Each tenant must be configured properly before the ARGO Compute Engine can start computing availability and reliability reports for that tenant.</p>
 
-<p>For example regarding a specific tenant we might have two jobs defined based on two different metric profiles: <strong>Job_Critical</strong>, <strong>Job_All</strong> </p>
+<p>For each tenant there should be at least one <em>Job Configuration</em>.  A <em>Job Configuration</em> defines the topology, metric and availability profiles that will be used by the ARGO Compute Engine in order to perform the computations using as input the monitoring metric results received.</p>
 
-<p>The Job_Critical configuration for example will compute a/r results by taking into account the most critical metrics for each service. The <strong>Job_All</strong> configuration for example will be more strict by using a profile that takes into account all metrics for each service. </p>
+<p>For example regarding a hypothetical tenant, we might have two <em>Job Configurations</em> based on two different metric profiles: <em>Critical</em> and <em>All</em>. The ARGO Compute Engine, using the <em>Critical</em>  job configuration, will compute the availability and reliability report by taking into account the most critical metrics for each service. On the other hand, the <em>All</em> job configuration is more versatile as it takes into account all metrics for each service.</p>
 
-<p>Each Job configuration includes its own supplementary data: <em>topology</em>, <em>metric profile</em>, <em>availability profile</em>, <em>weights</em>, <em>downtimes</em> etc.</p>
-
-<p>Each tenant has its own folder which contains job subfolders. Each job subfolder contains daily supplementary data files from argo-connectors. The directory structure resembles the following:</p>
+<p>Each <em>Job Configuration</em> includes the following data:</p>
 
 <ul>
-  <li>path_to_argo_connector_data
-    <ul>
-      <li>tenantA
-        <ul>
-          <li>Job_Critical</li>
-          <li>Job_All</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
+  <li>Topology</li>
+  <li>Metric Profile</li>
+  <li>Availability Profile</li>
+  <li>Weights <em>(optional)</em>
+</li>
+  <li>Downtimes <em>(optional)</em>
+</li>
 </ul>
 
 <h2 id="hadoop-client-configuration">Hadoop client configuration</h2>
 
 <p>In order for the engine to be able to connect and submit jobs successfully in a hadoop cluster, proper hadoop client configuration files must be present the installed node (<code>/etc/hadoop/conf/</code>)</p>
 
-<h2 id="configuration-files-of-argo-compute-engine">Configuration files of Argo-compute-engine</h2>
+<h2 id="argo-compute-engine-configuration-files">ARGO Compute Engine configuration files</h2>
 
-<p>With the installation of Argo-compute-engine component a main configuration file is deployed in <code>/etc/ar-compute-engine.conf</code>. In addition, a directory with supplementary secondary configuration files is created in <code>/etc/ar-compute/</code></p>
+<p>The main configuration file of the ARGO Compute Engine component is installed by default at <code>/etc/ar-compute-engine.conf</code>. In addition, a directory with supplementary secondary configuration files is created in <code>/etc/ar-compute/</code></p>
 
-<h3 id="etcar-compute-engineconf-main-configuration-file">/etc/ar-compute-engine.conf (Main configuration file)</h3>
+<p><a id="compute-engine-conf"></a></p>
 
-<p>This file includes various global parameters used by the engine which are organized in sections, as described next:</p>
+<h3 id="etcar-compute-engineconf">/etc/ar-compute-engine.conf</h3>
 
-<h4 id="parameters-for-section-default">Parameters for section <code>[default]</code>
-</h4>
+<p>The main configuration files includes various global parameters used by the engine which are organized in sections, as described next:</p>
+
+<h4 id="default"><code>[default]</code></h4>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Options</td>
-      <td>Required</td>
-    </tr>
-    <tr>
-      <td><code>mongo_host={IP ADDRESS}</code></td>
-      <td>specify the ip address of the datastore node (running mongodb)</td>
-      <td> </td>
+      <td><code>mongo_host</code></td>
+      <td>String</td>
+      <td>Specify the ip address of the datastore node (running mongodb)</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
-      <td><code>mongo_port={PORT_NUMBER}</code></td>
-      <td>specify the port number of the datastore node (running mongodb)</td>
-      <td> </td>
+      <td><code>mongo_port</code></td>
+      <td>String</td>
+      <td>Specify the port number of the datastore node (running mongodb)</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
-      <td><code>mode={cluster|local}</code></td>
-      <td>The mode the engine runs</td>
-      <td>two available options= <strong>cluster, local</strong> .  If specified as <strong>cluster</strong> the engine runs connecting to an available hadoop cluster. If specified as <strong>local</strong>, the engine runs calculating using processes in the local node.</td>
+      <td><code>mode</code></td>
+      <td>String</td>
+      <td>The mode the engine runs. There are two available options: <em>cluster</em> and <em>local</em>: <code>cluster</code>: If the mode is specified as <em>cluster</em>, the engine runs connecting to an existing hadoop cluster. It expects that the hadoop client is properly installed and configured. <code>local</code> : If the mode is specified as <em>local</em>, the engine runs local node.</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
-      <td><code>serialization={avro|none}</code></td>
-      <td>The serializatin type used</td>
-      <td>two available options= <strong>avro, none</strong>. If specified as <strong>avro</strong>, the engine expects metric and sync data in avro format. If specified as <strong>none</strong>, the engine expects to find metric and sync data in simple text file delimited format</td>
+      <td><code>serialization</code></td>
+      <td>String</td>
+      <td>The serialization type used. There are two available options <em>avro</em> and <em>none</em>: <code>avro</code> : If specified as <em>avro</em>, the engine expects metric and sync data in avro format.  <code>none</code> :If specified as <em>none</em>, the engine expects to find metric and sync data in simple text file delimited format.</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
-      <td><code>prefilter_clean={true|false}</code></td>
-      <td>If the local prefilter file will be automatically cleaned after hdfs upload or not</td>
-      <td>If set to <strong>true</strong> local prefilter file will be automatically cleaned after hdfs upload</td>
-      <td> </td>
+      <td><code>prefilter_clean</code></td>
+      <td>Boolean</td>
+      <td>Controls whether the local prefilter file will be automatically removed after it has been uploaded to the Compute Engine. If set to <em>true</em>, the local prefilter file will be automatically removed after it is  uploaded.</td>
+      <td><code>YES</code></td>
     </tr>
     <tr>
-      <td><code>sync_clean={true|false}</code></td>
-      <td>If the uploaded sync files will be automatically cleaned after a job completion or not</td>
-      <td>If set to <strong>true</strong> uploaded sync files will be automatically cleaned after a job completion</td>
+      <td><code>sync_clean</code></td>
+      <td>Boolean</td>
+      <td>Controls whether the uploaded sync files will be automatically removed after a job completion. If set to <em>true</em> the uploaded sync files will be automatically removed after the job completion</td>
       <td><code>YES</code></td>
     </tr>
   </tbody>
 </table>
 
-<h4 id="parameters-for-section-logging">Parameters for section <code>[logging]</code>
-</h4>
+<h4 id="logging"><code>[logging]</code></h4>
+
 <p>In this section we declare the specific logging options for the compute engine</p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Options</td>
-      <td>Default value</td>
-      <td>Required</td>
-    </tr>
-    <tr>
-      <td><code>log_mode=syslog|file|none</code></td>
-      <td>specifies the log_mode used by compute engine. If set to <code>file</code> compute engine can write directy to a file path defined in the next parameter. If set to <code>none</code> no logging is outputted.</td>
-      <td><code>syslog|file|none</code></td>
-      <td>Default value is <code>syslog</code>
-</td>
+      <td><code>log_mode</code></td>
+      <td>String</td>
+      <td>This parameter specifies the log_mode used by the compute engine. Possible values: <code>syslog</code> (default), <code>file</code>, <code>none</code>. a) <code>syslog</code>: the compute engine is configured to use the syslog facility, b) <code>file</code>: the compute engine can write directly to a file defined by <code>log_file</code>,  c) <code>none</code>: the compute engine does not output any logs</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
-      <td><code>log_file=path_to_log_file</code></td>
-      <td>The logfile file path. The compute engine will output log messages to the file path specified as value.</td>
-      <td> </td>
-      <td> </td>
-      <td>NO Must be specified if <code>log_mode=file</code>.</td>
+      <td><code>log_file</code></td>
+      <td>String</td>
+      <td>This parameter must be specified if <code>log_mode=file</code>. The file which the compute engine will use in order to write logging information</td>
+      <td><code>NO</code></td>
     </tr>
     <tr>
-      <td><code>log_level=DEBUG|INFO|WARNING|ERROR|CRITICAL</code></td>
-      <td>Specify the log level status to be used.</td>
-      <td><code>DEBUG|INFO|WARNING|ERROR|CRITICAL</code></td>
-      <td><code>DEBUG</code></td>
+      <td><code>log_level</code></td>
+      <td>String</td>
+      <td>Possible values: <code>DEBUG</code> (default), <code>INFO</code>, <code>WARNING</code>, <code>ERROR</code>, <code>CRITICAL</code>. Defines the log level that is used by the  compute engine.</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
-      <td><code>hadoop_log_root={log4j.appender},{log4j.appender}</code></td>
-      <td>Hadoop clients log level and log appender. If the user for example want the hadoop components to log via SYSLOG must make sure to define an appropriate appender  in hadoop log4j.properties file. Then the name of this appender must be added in the above line. For example if the available appenders in the log4j.properties file are SYSLOG and console the above line will be <code>hadoop_log_root=SYSLOG,console</code>.</td>
-      <td><code>{log4j.appender},{log4j.appender}</code></td>
+      <td><code>hadoop_log_root</code></td>
+      <td>String</td>
+      <td>Hadoop clients log level and log appender. If the user wants the hadoop components to log via SYSLOG must make sure to define an appropriate appender  in hadoop log4j.properties file. The name of this appender must be added in this parameter.</td>
       <td><code>YES</code></td>
-      <td> </td>
     </tr>
   </tbody>
 </table>
 
-<h4 id="parameters-for-section-jobs">Parameters for section <code>[jobs]</code>
-</h4>
-<p>In this section we declare the specific tenant used in the installation and the set of jobs available (as we described them above in the <a href="#tenants-and-job-definitions"><em>“Tenants and jobs definitions”</em></a>). </p>
+<p>For example at <code>hadoop_log_root</code> if the available appenders in the log4j.properties file are SYSLOG and console the above line will be:
+   <code>
+   hadoop_log_root=SYSLOG,console
+  </code></p>
+
+<h4 id="jobs"><code>[jobs]</code></h4>
+
+<p>In this section we declare the specific tenant used in the installation and the set of jobs available (as we described them above in the <a href="#tenant-and-report-configuration"><em>“Tenant and Report configuration”</em></a>).</p>
+
+<p>| Name | Type | Description | Required|
+|——|——|————-|———|
+|<code>tenants</code>| List | Comma separated list with the names of the available tenants. For eg: <code>tenants=tenantFoo,tenantBar</code>|<code>YES</code>|
+| <code>{tenant-name}_jobs</code>| List | For each tenant: a comma separated job list with the names of the available reports to be produced. Names are case-sensitive. Each tenant can have multiple report configurations. Each report configuration is defined by a set of  topologies, metric profiles, weights etc. For eg: <code>tenantFoo_jobs=Major,Minor,ExampleA,Critical</code>| <code>YES</code>|
+| <code>{tenant-name}_prefilter</code>| Path(String) | For each tenant: An optional attribute that specifies the path of a prefilter wrapper - if and only if the tenant requires it. For eg: <code>tenantFoo_prefilter=/path/to/the/prefilter/script</code>| <code>NO</code>|
+#### <code>[sampling]</code></p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
-      <td><code>tenant={TENANT_NAME}</code></td>
-      <td>specify the name of the tenant used in this installation</td>
+      <td><code>s_period</code></td>
+      <td>minutes</td>
+      <td>The sampling period time in minutes</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
-      <td><code>job_set={JobName1},{JobName2},...{JobNameN}</code></td>
-      <td>A list already establihed jobs (initially specified in ar-connector components). Names are case-sensitive. For the same tenant multiple jobs can be present. Each job is defined by a set of different argo-connector files (different topologies,metric profiles,weights,etc…). Each job gives the opportunity to calculate a different view base</td>
+      <td><code>s_interval</code></td>
+      <td>minutes</td>
+      <td>The sampling interval time in minutes</td>
       <td><code>YES</code></td>
     </tr>
   </tbody>
 </table>
 
-<h4 id="parameters-for-section-sampling">Parameters for section <code>[sampling]</code>
-</h4>
+<blockquote>
+  <p><strong>Note</strong></p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
-      <td><code>s_period={INTEGER}</code></td>
-      <td>specify the sampling period time in minutes</td>
-      <td><code>YES</code></td>
-    </tr>
-    <tr>
-      <td><code>s_interval={INTEGER}</code></td>
-      <td>specify the sampling interval time in minutes</td>
-      <td><code>YES</code></td>
-    </tr>
-  </tbody>
-</table>
+  <p>the number of samples used in a/r calculations is determined by the s_period/s_interval value. Default values used
+- <code>s_period = 1440</code>
+- <code>s_interval = 5</code></p>
 
-<p><strong><em>Note:</em></strong> the number of samples used in a/r calculations is determined by the s_period/s_interval value. Default values used: <strong>s_period = 1440</strong> (mins) , <strong>s_interval=5</strong> (mins). so number of sample = 1440/5=288 samples.</p>
+  <p>so number of samples = 1440/5 = 288</p>
+</blockquote>
 
-<h4 id="parameters-for-section-datastore-mapping">Parameters for section <code>[datastore-mapping]</code>
-</h4>
-<p>This section contains various optional parameters used for correctly mapping results to expected datastore collections and fields</p>
+<h3 id="etcar-compute"><code>/etc/ar-compute/</code></h3>
 
-<table>
-  <tbody>
-    <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
-      <td><code>service_dest={db_name}.{collection_name}</code></td>
-      <td>destination for storing service a/r reports E.g: AR.sfreports</td>
-      <td><code>YES</code></td>
-    </tr>
-    <tr>
-      <td><code>egroup_dest={db_name}.{collection_name}</code></td>
-      <td>destination for storing endpoint grouped a/r reports. E.g: AR.sites</td>
-      <td><code>YES</code></td>
-    </tr>
-    <tr>
-      <td><code>sdetail_dest={db_name}.{collection_name}</code></td>
-      <td>destination for storing status detailed results</td>
-      <td><code>YES</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Due to nature of field/value storage in the default datastore (mongodb) a specific schema is used with abbreviated field names for storage optimization.
-For example date-&gt;dt, availability profile-&gt;ap. 
-The following options define some mapping to shorter datastore fieldnames (mongo related) and is recommended not to be changed. Will be removed in further editions. </p>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
-      <td><code>e_map={fieldname1},{fieldname2}...,{fieldnameN}</code></td>
-      <td>When storing endpoint a/r results in mongodb compute engine uses the above field map to store the results using abbreviated fields. the default value is</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>
-<code>e_map=dt,ap,p,s,n,hs,a,r,up,u,d,m,pr,ss,cs,i,sc</code>, where dt-&gt;date,a-&gt;availability etc… (recommended not to be changed)</td>
-      <td><code>YES</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>s_map={fieldname1},{fieldname2}...,{fieldnameN}</code></td>
-      <td>When storing service a/r results in mongodb compute engine uses the above field map to store the results using abbreviated fields. the default value is</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>
-<code>s_map=dt,ap,p,s,n,sf,a,r,up,u,d,m,pr,ss,cs,i,sc</code>, where dt-&gt;date,a-&gt;availability etc… (recommended not to be changed)</td>
-      <td><code>YES</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>sd_map={fieldname1},{fieldname2}</code></td>
-      <td>When storing status detailed results in mongodb compute engine uses the above field map to store the results using abbreviated fields. the default value is</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>
-<code>sd_map=ts,s,sum,msg,ps,pts,di,ti</code>, where ts-&gt;timestamp, msg-&gt;message etc… (recommended not to be changed)</td>
-      <td><code>YES</code></td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>n_eg={STRING}</code></td>
-      <td>endpoint group name type used in status detailed calculations. For e.g. <code>n_eg=site</code> if site is used as a group type</td>
-      <td><code>YES</code></td>
-    </tr>
-    <tr>
-      <td><code>n_gg={STRING}</code></td>
-      <td>group of groups name type used in status detailed calculations</td>
-      <td><code>YES</code></td>
-    </tr>
-    <tr>
-      <td><code>n_alt={STRING}</code></td>
-      <td>mapping of alternative grouping parameter used in status detail calc.</td>
-      <td><code>YES</code></td>
-    </tr>
-    <tr>
-      <td><code>n_altf={STRING}</code></td>
-      <td>mapping of alternative grouping parameter used in status detail calc.</td>
-      <td><code>YES</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<h4 id="contents-of-etcar-compute-directory">Contents of /etc/ar-compute directory</h4>
 <p>As mentioned above secondary configuration files used by the compute-engine are stored to the /etc/ar-compute directory. Here are files describing the set of status state types used in the monitoring engine, algorithmic operations of how to combine those states, availability profiles &amp; configuration files for available jobs.</p>
 
-<h3 id="ops-files-per-tenant">Ops Files (per tenant)</h3>
-<p>The ops files are json filetypes that are used to describe the available status types encountered in the monitoring enviroment of a tenant and also the availabe algorithmic operations available to use in status aggregations. The filename template used is very specific and is the following:</p>
+<p><a id="tenant-ops-conf"></a></p>
 
-<pre><code>{TENANT_NAME}_ops.json
-</code></pre>
+<h4 id="tenantnameopsjson-per-tenant"><code>{TENANT_NAME}_ops.json (per tenant)</code></h4>
 
-<p>for eg. if the tenant name is T1 the corresponding ops filename will be</p>
+<p>These are configuration files expressed in JSON, which describe the available status types encountered in the monitoring environment of a tenant and also the available algorithmic operations to use in status aggregations.</p>
 
-<pre><code>T1_ops.json
-</code></pre>
+<p>For example if the tenant name is <code>T1</code> the corresponding ops filename will be <code>T1_ops.json</code></p>
 
-<h4 id="contents-of-an-ops-file-operations-on-monitoring-statuses">Contents of an ops file (operations on monitoring statuses)</h4>
-<p>During calculations many operations take place among service statuses which need to be described explicitly. Compute engine gives the flexibility to the end user to declare the available monitoring statuses that are produced by the monitoring infrastructure. Then, using the form of simple truth tables the user can describe operations on these statuses and the results of those operations. The available statuses and the available operations are described using json format in ops files:</p>
+<p>During computations many operations take place among service statuses which need to be described explicitly. The ARGO Compute Engine gives the flexibility to the end user to declare the available monitoring statuses that are produced by the monitoring infrastructure and to map them to its internal statuses. Then, using <em>truth tables</em> the user can describe the logical operations on these statuses and their results. An ops file contains:</p>
 
-<p>An ops file contains:
-- the list of available status types 
-- which status type is considered as default in missing circumstances
-- which status type is considered as default in downtime circumstances
-- which status type is considered as default in unknown circumstances
-- a list of available operations between statuses expressed in the form of truth tables</p>
+<ul>
+  <li>the list of available status types</li>
+  <li>which status type is considered as default in missing circumstances</li>
+  <li>which status type is considered as default in downtime circumstances</li>
+  <li>which status type is considered as default in unknown circumstances</li>
+  <li>a list of available operations between statuses expressed in the form of truth tables</li>
+</ul>
 
-<p>The available status states in the metric enviroment are expressed in the <strong>“states”</strong> list as described below </p>
+<p>The available status states produced by the Monitoring Engine(s) are expressed in the <strong>“states”</strong> list. For example below is the definition of the status states produced by Nagios compatible Monitoring Engines:</p>
 
-<pre><code>"states":
-  [
+<p><code>json
+"states": [
     "OK",
     "WARNING",
     "UNKNOWN",
     "MISSING",
     "CRITICAL",
     "DOWNTIME"
-  ]
-</code></pre>
+]
+</code></p>
 
-<p>Based on the availabe states declared in the “states” list are then declared default missing,unknown and downtime states for eg:</p>
+<p>The ARGO Compute Engine requires the user to define a mapping for the default_down, default_missing and default_unknown. For example:</p>
 
-<pre><code> "default_down": "DOWNTIME",
- "default_missing": "MISSING",
- "default_unknown": "UNKNOWN",
-</code></pre>
+<p><code>json
+"default_down": "DOWNTIME",
+"default_missing": "MISSING",
+"default_unknown": "UNKNOWN",
+</code></p>
 
-<p><strong><em>Note: The importance of the default states</em></strong>
-<em>Since compute engine gives the ability to define completely custom states based on your monitoring infrastructure output we must also tag some custom states with specific meaning. These states might not be present in the monitoring messages but are produced during computations by the compute engine according to a specific logic. So we need to “tie” some of the custom status we declare to a specific default state of service.</em></p>
+<blockquote>
+  <p><strong>Note: The importance of the default states</strong></p>
+
+  <p>Since compute engine gives the ability to define completely custom states based on your monitoring infrastructure output we must also tag some custom states with specific meaning. These states might not be present in the monitoring messages but are produced during computations by the compute engine according to a specific logic. So we need to “tie” some of the custom status we declare to a specific default state of service.</p>
+</blockquote>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-    </tr>
-    <tr>
       <td><code>"default_down": "DOWNTIME"</code></td>
-      <td><em>means that whenever compute engine needs to produce a status for a scheduled downtime will mark it using the “DOWNTIME” state.</em></td>
+      <td>Means that whenever compute engine needs to produce a status for a scheduled downtime will mark it using the “DOWNTIME” state.</td>
     </tr>
     <tr>
       <td><code>"default_missing": "MISSING"</code></td>
-      <td><em>means whenever compute engine decides that a service status must declared missing (because there is no information provided from the metric data) will mark it using the “MISSING” state.</em></td>
+      <td>Means whenever compute engine decides that a service status must declared missing (because there is no information provided from the metric data) will mark it using the “MISSING” state.</td>
     </tr>
     <tr>
-      <td><code>"default_unknown": "UNKNOWN"</code></td>
-      <td><em>means whenever compute engine decides that must produce a service status to be considered unknown (for e.g. during recomputation requests) will mark it using the “UNKNOWN” state.</em></td>
+      <td><code>"default_unknown: "UNKNOWN"</code></td>
+      <td>Means whenever compute engine decides that must produce a service status to be considered unknown (for e.g. during recomputation requests) will mark it using the “UNKNOWN” state.</td>
     </tr>
   </tbody>
 </table>
 
 <p>The available operations are declared in the operations list using truth tables as follows:</p>
 
-<pre><code>"operations":
-  {
-    "AND":[]
-    "OR":[]
-  }
-</code></pre>
+<p><code>json
+"operations": {
+  "AND":[],
+  "OR":[]
+}
+</code></p>
 
-<p>Each operation consists of a json array used to describe a truth table. For example expanding the above AND operation we see that it consists of a list of dictionary elements</p>
+<p>Each operation consists of a JSON array used to describe a <em>truth table</em>. An example of such a <em>truth table</em> is presented below:</p>
 
-<pre><code>"operations":
-  {
-    "AND":
-    [
-      { "A":"OK",       "B":"OK",       "X":"OK"       },
-      { "A":"OK",       "B":"WARNING",  "X":"WARNING"  },
-      { "A":"OK",       "B":"UNKNOWN",  "X":"UNKNOWN"  },
-      ...
-      ...
-      ...
-     ]
-}	
-</code></pre>
+<p><code>json
+"operations": {
+  "AND": [
+    { "A":"OK",       "B":"OK",       "X":"OK"       },
+    { "A":"OK",       "B":"WARNING",  "X":"WARNING"  },
+    { "A":"OK",       "B":"UNKNOWN",  "X":"UNKNOWN"  },
+  ]
+}
+</code></p>
 
-<p>Each element of the json array describes a row of the truth table for eg:</p>
+<p>Each element of the JSON array describes a row of the <em>truth table</em> for example:</p>
 
-<pre><code>{ "A":"OK", "B":"WARNING", "X":"WARNING"}
-</code></pre>
+<p><code>json
+{ "A":"OK", "B":"WARNING", "X":"WARNING"}
+</code></p>
 
 <p>declares that in an algorithmic AND operation between two status states of <em>OK</em> and <em>WARNING</em> the result is <em>WARNING</em></p>
 
-<p>In the ops file the user is able to declare any number of availabe monitoring states and any number of available custom operations on those states. The compute-engine picks up this information as a sync file for a job and creates in memory the corresponding truth tables.</p>
+<p>In the ops file the user is able to declare any number of available monitoring states and any number of available custom operations on those states. The ARGO Compute Engine uses this information to create the corresponding <em>truth tables</em> in memory.</p>
 
-<h3 id="config-file-per-tenant-per-job">Config File (per tenant/ per job)</h3>
-<p>A job config file is a json file that contains specific information needed during the job run such as grouping parameters, the name of the availability profile used and many more.</p>
+<p><a id="tenant-jobid-conf"></a></p>
 
-<p>The file name template of each job config file is the following:</p>
+<h4 id="tenantnamejobidcfgjson-per-job"><code>{TENANT_NAME}_{JOB_ID}_cfg.json (per job)</code></h4>
 
-<pre><code>{TENANT_NAME}_{JOB_ID}_cfg.json
-</code></pre>
+<p>A <em>Job Configuration</em> file is a JSON file that contains specific information needed during the computations such as grouping parameters, the name of the availability profile used and many more. If the tenant’s name is <code>T1</code> and the report name is <code>JobA</code> then the filename of the config file must be <code>T1_JobA_cfg.json</code></p>
 
-<p>If the tenant’s name is T1 and the jobs name is JobA then the filename of the config file must be:</p>
+<p>The configuration file of the job contains mandatory and optional fields with rich information describing the parameters of the specific job. Some important fields are:</p>
 
-<pre><code>T1_JobA_cfg.json
-</code></pre>
+<p><code>json
+"tenant": "tenant_name"`
+"job": "job_name",
+"aprofile": "availability_profile_name",
+"egroup": "endpoint_group_type_name",
+"ggroup": "group_of_group_type_name",
+"weight": "weight_factor_type_name"
+</code></p>
 
-<h4 id="contents-of-an-job-config-file">Contents of an job config file</h4>
-<p>The configuration file of the job contains mandatory and optional fields with rich information describing the paramaters of the specific job. Some important fields are:</p>
-
-<pre><code>"tenant":"tenant_name"`
-"job":"job_name",
-"aprofile":"availability_profile_name",
-"egroup":"endpoint_group_type_name",
-"ggroup":"group_of_group_type_name",
-"weight":"weight_factor_type_name",
-</code></pre>
-
-<p>In the above snippet are declared the name of the tenant, the name of the job, the name of the specific availability profile used in the job. Also the type of endpoint grouping that will be used is declared here also and the type of upper hierarchical grouping. Also if available here is declared the type of weight factor used for upper level a/r aggregations</p>
+<p>In the above snippet we have declared the name of the tenant, the name of the job, the name of the specific availability profile used in the job. Also the type of endpoint grouping that will be used is declared here and the type of upper hierarchical grouping. Also if available here is declared the type of weight factor used for upper level A/R aggregations</p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-    </tr>
-    <tr>
       <td><code>"tenant"</code></td>
-      <td>field is explicitly linked to the value of the tenant declaration of the global ar-compute-engine.conf file <a href="/#parameters-for-section-jobs">link to description above</a>
+      <td>This field is explicitly linked to the value of the tenant declaration of the global ar-compute-engine.conf file <a href="/#parameters-for-section-jobs">link to description above</a>
 </td>
     </tr>
     <tr>
       <td><code>"job"</code></td>
-      <td>field is explicitly linked to the name of a job declared in the job_set variable of the global ar-compute-engine.conf file <a href="#parameters-for-section-jobs">link to description above</a>
+      <td>This field is explicitly linked to the name of a job declared in the job_set variable of the global ar-compute-engine.conf file <a href="#parameters-for-section-jobs">link to description above</a>
 </td>
     </tr>
     <tr>
       <td><code>"aprofile"</code></td>
-      <td>field is explicitly linked to one of the availability profile json files declared in the <code>/etc/ar_compute/</code> folder and they are described below <a href="#availability-profile-per-tenant--per-job">link to description further below</a>
+      <td>This field is explicitly linked to one of the availability profile json files declared in the <code>/etc/ar_compute/</code> folder and they are described below <a href="#availability-profile-per-tenant--per-job">link to description further below</a>
 </td>
     </tr>
     <tr>
       <td><code>"egroup"</code></td>
-      <td>field is used to declare the endpoint group that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the topology file <a href="/guides/compute/compute-input/#groupendpointsavro">group_endpoints.avro</a>
+      <td>This field is used to declare the endpoint group that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the topology file <a href="/guides/compute/compute-input/#groupendpointsavro">group_endpoints.avro</a>
 </td>
     </tr>
     <tr>
       <td><code>"ggroup"</code></td>
-      <td>field is used to declare the group of groups that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the topology file <a href="/guides/compute/compute-input/#groupgroupsavro">group_groups.avro</a>
+      <td>This field is used to declare the group of groups that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the topology file <a href="/guides/compute/compute-input/#groupgroupsavro">group_groups.avro</a>
 </td>
     </tr>
     <tr>
       <td><code>"weight"</code></td>
-      <td>field is used to declare the type of weight that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the weight (factors) file <a href="/guides/compute/compute-input/#weights-factors">weight_sync.avro</a>
+      <td>This field is used to declare the type of weight that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the weight (factors) file <a href="/guides/compute/compute-input/#weights-factors">weight_sync.avro</a>
 </td>
     </tr>
   </tbody>
@@ -681,91 +543,95 @@ The following options define some mapping to shorter datastore fieldnames (mongo
 
 <p>In the configuration file are specified the specific tag values that will be used during the job in order to filter metric data.</p>
 
-<p>For eg. </p>
+<p>For example:</p>
 
-<pre><code>"egroup_tags":{
-    "scope":"scope_type",
-    "production":"Y",
-    "monitored":"Y"
-    }
-</code></pre>
+<p><code>json
+"egroup_tags": {
+  "scope":"scope_type",
+  "production":"Y",
+  "monitored":"Y"
+}
+</code></p>
 
-<p>In the egroup_tag list are declared values for available tag fields that will be encountered in the endpoint group topology sync file (produced by ar-sync components).These tag fields are explicitly linked to the description of the schema of the <a href="/guides/compute/compute-input/#groupendpointsavro">group_endpoints.avro file</a> </p>
+<p>In the egroup_tag list are declared values for available tag fields that will be encountered in the endpoint group topology sync file (produced by ar-sync components).These tag fields are explicitly linked to the description of the schema of the <a href="/guides/compute/compute-input/#groupendpointsavro">group_endpoints.avro file</a></p>
 
-<h3 id="availability-profile-per-tenant--per-job">Availability Profile (per tenant / per job)</h3>
-<p>The availability profile is a json file used per specific job that describes the operations that must take place during aggregating statuses up to endpoint group level. The filename template is specific:</p>
+<p><a id="tenant-jobid-ap-conf"></a></p>
 
-<pre><code>{TENANT_NAME}_{JOB_NAME}_ap.json
-</code></pre>
+<h3 id="tenantnamejobidapjson-per-report"><code>{TENANT_NAME}_{JOB_ID}_ap.json (per report)</code></h3>
 
-<p>For eg. if the tenant name = T1 and the job name = JobA the corresponding availability profile name must be:</p>
+<p>The availability profile is a json file used per specific job that describes the operations that must take place during aggregating statuses up to endpoint group level. For example if the tenant name is <code>T1</code> and the report name <code>JobA</code> the corresponding availability profile name must be <code>T1_ReportA_ap.json</code></p>
 
-<pre><code>T1_JobA_ap.json
-</code></pre>
-
-<p>The information in the availability profile json file is automatically picked up by the compute-engine during computations. </p>
-
-<h4 id="contents-of-an-availability-profile-json-file">Contents of an availability profile json file</h4>
+<p>The information in the availability profile JSON file is automatically picked up by the compute-engine during computations.</p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Type</td>
-      <td>Description</td>
-    </tr>
-    <tr>
       <td><code>"name"</code></td>
-      <td><code>"string"</code></td>
-      <td>the name of the availability profile</td>
+      <td>string</td>
+      <td>The name of the availability profile</td>
     </tr>
     <tr>
       <td><code>"namespace"</code></td>
-      <td><code>"string"</code></td>
-      <td>the name of the namespace used by the profile</td>
+      <td>string</td>
+      <td>The name of the namespace used by the profile</td>
     </tr>
     <tr>
       <td><code>"metric_profile"</code></td>
-      <td><code>"string"</code></td>
-      <td>the name of the metric profile linked to this availability profile</td>
+      <td>string</td>
+      <td>The name of the metric profile linked to this availability profile</td>
     </tr>
     <tr>
       <td><code>"metric_ops"</code></td>
-      <td><code> "string"</code></td>
-      <td>the default operation to be used when aggregating low level metric statuses</td>
+      <td>string</td>
+      <td>The default operation to be used when aggregating low level metric statuses</td>
     </tr>
     <tr>
       <td><code>"group_type"</code></td>
-      <td><code>"string"</code></td>
-      <td>the default endpoint group type used in aggregation</td>
+      <td>string</td>
+      <td>The default endpoint group type used in aggregation</td>
     </tr>
   </tbody>
 </table>
 
-<p>In the availability profile json file also are declared custom grouping of services to be used in the aggregation. The grouping of services are expressed in the json “groups” list see example below:</p>
+<p>In the availability profile JSON file also are declared custom grouping of services to be used in the aggregation. The grouping of services are expressed in the JSON “groups” list see example below:</p>
 
-<pre><code>"groups": {
-    "my_group_of_services_1": {
-      "services":{
-	"service_type_A":"OR",
-	"service_type_B":"OR"
-	},
-       "operation":"OR"
+<p><code>json
+"groups": {
+  "my_group_of_services_1": {
+    "services":{
+      "service_type_A":"OR",
+      "service_type_B":"OR"
     },
-    "my_group_of_services_2": {
-      "services":{
-	"service_type_C":"OR",
-	"service_type_D":"OR"
-	},
-       "operation":"OR"
+    "operation":"OR"
+  },
+  "my_group_of_services_2": {
+    "services":{
+      "service_type_C":"OR",
+      "service_type_D":"OR"
     },
-"operation":"AND"
+    "operation":"OR"
+  },
+  "operation":"AND"
 }
-</code></pre>
+</code></p>
 
-<p>In the above example the service types are grouped in two groups: <strong><em>my_group_of_services_1</em></strong> and <strong><em>my_group_of_services_2</em></strong>. Each group contains a “service” list containing service types included in the group as fields and the operation values in orded to choose who to aggregate the various instances of a specific service. For example if for <strong><em>“service_type_A”</em></strong> are 3 service endpoints available, they are going to be aggregated using the OR operation. The <strong><em>“operation”</em></strong> field under each group of services is used to declare the operation that will be used to aggregate the service types under that group. <br>
-The outer <strong><em>“operation”</em></strong> field in the root of the json document is used to declare the operation used to aggregate the various groups in order to produce the final endpoint aggregation result.</p>
+<p>In the above example the service types are grouped in two groups:</p>
 
+<ul>
+  <li>
+<strong>my_group_of_services_1</strong> and</li>
+  <li>
+<strong>my_group_of_services_2</strong>.</li>
+</ul>
+
+<p>Each group contains a “service” list containing service types included in the group as fields and the operation values in order to choose who to aggregate the various instances of a specific service. For example if for <strong><em>“service_type_A”</em></strong> are 3 service endpoints available, they are going to be aggregated using the OR operation. The <strong><em>“operation”</em></strong> field under each group of services is used to declare the operation that will be used to aggregate the service types under that group. The outer <strong><em>“operation”</em></strong> field in the root of the json document is used to declare the operation used to aggregate the various groups in order to produce the final endpoint aggregation result.</p>
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>

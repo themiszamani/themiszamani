@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
+  <title>ARGO Availability and Reliability Monitoring - </title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,12 +98,12 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-          	
-            <a class="list-group-item active " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+            
+            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
             
-              <a class="list-group-item-level2 active"  href="/guides/compute/compute-input/">
+              <a class="list-group-item-level2"  href="/guides/compute/compute-input/">
             
             <em class="fa fa-cog"></em> Compute Engine Input </a>
  	    
@@ -163,24 +163,21 @@
 
         </div>
         <div class="col-md-8 main">
-          	
-            <h1 class="highlight">
-            
-              <i class='fa fa-cog'></i> 
-            
-            Compute Engine Input</h1>
           
-          <p class="lead"> This document describes the compute engine input data (metrics, topology, profiles, factors)</p>
-          
+          <p class="lead"> </p>
+          <h1 id="argo-compute-engine-input">ARGO Compute Engine input</h1>
+
 <h2 id="input-data">Input Data</h2>
 
 <table>
-  <tbody>
+  <thead>
     <tr>
-      <td>Input Data</td>
-      <td>Description</td>
-      <td>Shortcut</td>
+      <th>Input Data</th>
+      <th>Description</th>
+      <th>Shortcut</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td>Metric Data</td>
       <td>Metric data come in the form of avro files and contain timestamped status information about the hostname,service and specific checks (metrics) that are being monitored</td>
@@ -194,17 +191,17 @@
     <tr>
       <td>Metric Profiles</td>
       <td>Every service type contains a number of metrics that are being checked from the monitoring mechanism.</td>
-      <td><a href="#Profiles">Description</a></td>
+      <td><a href="#profiles">Description</a></td>
     </tr>
     <tr>
       <td>Weights (factors)</td>
-      <td>Some group items have an assosiated weight information (factors) on how they contribute when are being aggregated on higher level groups.</td>
-      <td><a href="#Weights">Description</a></td>
+      <td>Some group items have an associated weight information (factors) on how they contribute when are being aggregated on higher level groups.</td>
+      <td><a href="#weights">Description</a></td>
     </tr>
     <tr>
       <td>Downtimes</td>
       <td>Downtime information: the period (start_time –&gt; end_time) in which a specific service endpoint was in scheduled downtime.</td>
-      <td><a href="#Downtimes">Description</a></td>
+      <td><a href="#downtimes">Description</a></td>
     </tr>
   </tbody>
 </table>
@@ -212,127 +209,137 @@
 <p><a id="metric"></a></p>
 
 <h2 id="metric-data">Metric data</h2>
+
 <p>The main engine’s input is the metric data collected from the argo-consumer component. These files (according to the default configuration of ar-consumer component) reside to the <code>/var/lib/ar-consumer/</code> folder.</p>
 
 <p>Metric data come in the form of avro files and contain timestamped status information about the hostname,service and specific checks (metrics) that are being monitored. A typical item of information in the metric data avro file contains the following fields:</p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
       <td><code>hostname</code></td>
-      <td>the fqdn address of the host being monitored</td>
+      <td>The fqdn address of the host being monitored</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>service</code></td>
-      <td>the name of the specific service being monitored</td>
+      <td>The name of the specific service being monitored</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>metric</code></td>
-      <td>the name of the specific metric (check) of the service that is being monitored</td>
+      <td>The name of the specific metric (check) of the service that is being monitored</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>timestamp</code></td>
-      <td>time of the monitoring check</td>
+      <td>Time of the monitoring check</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>status</code></td>
-      <td>status of the metric during the monitoring check</td>
+      <td>Status of the metric during the monitoring check</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>monitoring_host</code></td>
-      <td>the fqdn of the monitoring agent</td>
-      <td>NO</td>
+      <td>The fqdn of the monitoring agent</td>
+      <td><code>NO</code></td>
     </tr>
     <tr>
       <td><code>summary</code></td>
-      <td>text containing a summary of the monitoring check</td>
-      <td>NO</td>
+      <td>Text containing a summary of the monitoring check</td>
+      <td><code>NO</code></td>
     </tr>
     <tr>
       <td><code>message</code></td>
-      <td>text containing the detailed system output message of the monitoring check probe</td>
-      <td>NO</td>
+      <td>Text containing the detailed system output message of the monitoring check probe</td>
+      <td><code>NO</code></td>
     </tr>
     <tr>
       <td><code>tags</code></td>
-      <td>array containing optional user defined tags</td>
-      <td>NO</td>
+      <td>Array containing optional user defined tags</td>
+      <td><code>NO</code></td>
     </tr>
   </tbody>
 </table>
 
 <p>The current <strong>raw avro schema file</strong> for the metric data is the following:</p>
 
-<pre><code>{"namespace": "argo.avro",
-"type": "record",
- 	"name": "metric_data",
-"fields": [
-	{"name": "timestamp", "type": "string"},
-	{"name": "service", "type": "string"},
-	{"name": "hostname", "type": "string"},
-	{"name": "metric", "type": "string"},
-	{"name": "status", "type": "string"},
-	{"name": "monitoring_host", "type": ["null", "string"]},
-	{"name": "summary", "type": ["null", "string"]},
-	{"name": "message", "type": ["null", "string"]},
-	{"name": "tags", "type": ["null", {"name" : "Tags",
-		"type" : "record",
-		"fields" : [
-			{"name" : "roc", "type" : ["null", "string"]},
-                            {"name" : "vo", "type" : ["null", "string"]},
-                            {"name" : "vo_fqan", "type" : ["null", "string"]}]}]}
- 	]
+<p><code>json
+{
+  "namespace": "argo.avro",
+  "type": "record",
+  "name": "metric_data",
+  "fields": [
+    { "name": "timestamp", "type": "string"},
+    { "name": "service", "type": "string"},
+    { "name": "hostname", "type": "string"},
+    { "name": "metric", "type": "string"},
+    { "name": "status", "type": "string"},
+    { "name": "monitoring_host", "type": ["null", "string"]},
+    { "name": "summary", "type": ["null", "string"]},
+    { "name": "message", "type": ["null", "string"]},
+    { "name": "tags", "type" : [
+      "null", { "name" : "Tags",
+                "type" : "map",
+                "values" : ["int", "string"]
+              }
+      ]
+    }
+  ]
 }
-</code></pre>
+</code></p>
 
 <h2 id="additional-input-topology-profiles-factors">Additional input: topology, profiles, factors</h2>
 
 <p>This core metric data set is processed and transformed with additional information provided by the argo-connector components. Additional information includes topology, grouping of services, weight factors, lists relevant metrics to be considered, etc. This information is provided per-tenant/per-job in the following path</p>
 
-<pre><code>/var/lib/ar-sync/{tenant-name}/{job-name}
-</code></pre>
+<p><code>
+/var/lib/ar-sync/{tenant-name}/{job-name}
+</code></p>
 
-<p>for e.g. <strong>for tenant-name=T1 and job-name=JobA</strong> the correct path with the sync files is as follows</p>
+<p>for example for <code>tenant-name=T1</code> and <code>job-name=JobA</code> the correct path with the sync files is as follows</p>
 
-<pre><code>/var/lib/ar-sync/T1/JobA
-</code></pre>
+<p><code>
+/var/lib/ar-sync/T1/JobA
+</code></p>
 
 <p>Some sync files that concern the whole enviroment such as the downtime information are provided once in the root ar-sync folder <code>/var/lib/ar-sync/</code></p>
 
 <p><a id="topology"></a></p>
 
 <h3 id="topology-files">Topology files</h3>
-<p>Topology information is provided by two files: </p>
+
+<p>Topology information is provided by two files:</p>
 
 <ul>
-  <li>groups of endpoints, </li>
+  <li>groups of endpoints,</li>
   <li>groups of groups.</li>
 </ul>
 
-<p>A service endpoint is considered by the engine the simplest item of topology.
-Service endpoint combines the information of hostname+service_name. Service endpoints can be grouped together forming upper level entities named endpoint groups. For example an organization’s geographical IT site that is being monitored can be considered a group of service endpoints. Information for available endpoint groups is contained in the file group_endpoints. </p>
+<p>A service endpoint is considered by the engine the simplest item of topology. Service endpoint combines the information of <code>hostname + service_name</code>. Service endpoints can be grouped together forming upper level entities named endpoint groups. For example an organization’s geographical IT site that is being monitored can be considered a group of service endpoints. Information for available endpoint groups is contained in the file group_endpoints.</p>
 
 <h4 id="groupendpointsavro">group_endpoints.avro</h4>
 
 <p>The file uses avro format and contains the following fields:</p>
 
 <table>
-  <tbody>
+  <thead>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td><code>group</code></td>
       <td>The name of the group (e.g. MY-SITE-A)</td>
@@ -355,50 +362,53 @@ Service endpoint combines the information of hostname+service_name. Service endp
     </tr>
     <tr>
       <td><code>tags</code></td>
-      <td>user defined tags providing description metadata</td>
-      <td>NO</td>
+      <td>User defined tags providing description metadata</td>
+      <td><code>NO</code></td>
     </tr>
   </tbody>
 </table>
 
 <p>Below is the full description of the group_endpoints.avro specification</p>
 
-<pre><code>{"namespace": "argo.avro",
- "type": "record",
- "name": "group_of_service_endpoints",
- "fields": [
-	{"name": "type", "type": "string"},
-	{"name": "group", "type": "string"},
-	{"name": "service", "type": "string"},
-	{"name": "hostname", "type": "string"},
-	{"name": "tags", "type" : ["null", { "name" : "Tags",
-	                                     "type" : "record",
-	                                     "fields" : [
-	                                        {"name" : "scope", "type" : "string"},
-	                                        {"name" : "monitored", "type" : "int"},
-	                                        {"name" : "production", "type" : "int"}]}
-	                          ]
-	}
- ] 
+<p><code>json
+{
+  "namespace": "argo.avro",
+  "type": "record",
+  "name": "group_of_service_endpoints",
+    "fields": [
+      { "name": "type", "type": "string" },
+      { "name": "group", "type": "string" },
+      { "name": "service", "type": "string" },
+      { "name": "hostname", "type": "string" },
+      { "name": "tags", "type" : [
+        "null", { "name" : "Tags",
+                  "type" : "map",
+                  "values" : ["int", "string"]
+                }
+        ]
+      }
+    ]
 }
-</code></pre>
+</code></p>
 
 <h4 id="groupgroupsavro">group_groups.avro</h4>
 
-<p>Service endpoint groups can be further grouped in higher-level entities such as for example nation-wide groups of sites etc. The topology information regarding higher-level groups is contained to the group_groups.avro file. </p>
+<p>Service endpoint groups can be further grouped in higher-level entities such as for example nation-wide groups of sites etc. The topology information regarding higher-level groups is contained to the group_groups.avro file.</p>
 
 <p>The file uses avro format and contains the following fields:</p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
       <td><code>profile</code></td>
-      <td>name of the profile</td>
+      <td>Profile name</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
@@ -423,8 +433,8 @@ Service endpoint combines the information of hostname+service_name. Service endp
     </tr>
     <tr>
       <td><code>tags</code></td>
-      <td>user defined tags providing description metadata</td>
-      <td>NO</td>
+      <td>User defined tags providing description metadata</td>
+      <td><code>NO</code></td>
     </tr>
   </tbody>
 </table>
@@ -432,12 +442,14 @@ Service endpoint combines the information of hostname+service_name. Service endp
 <p>Below is the full description of the avro specification:</p>
 
 <table>
-  <tbody>
+  <thead>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td><code>group</code></td>
       <td>The name of the group (e.g. MY-NATIONAL-GROUP)</td>
@@ -455,137 +467,145 @@ Service endpoint combines the information of hostname+service_name. Service endp
     </tr>
     <tr>
       <td><code>tags</code></td>
-      <td>user defined tags providing description metadata</td>
-      <td>NO</td>
+      <td>User defined tags providing description metadata</td>
+      <td><code>NO</code></td>
     </tr>
   </tbody>
 </table>
 
-<p>The structure of the specific file gives the ability to define recursively group entities that can be contained as subgroups on other group entities </p>
+<p>The structure of the specific file gives the ability to define recursively group entities that can be contained as subgroups on other group entities.</p>
 
-<p>an abstract example using cities,nations,continents</p>
+<p>An abstract example using cities, nations, continents</p>
 
-<pre><code>group: 'Athens', type: 'cities', subgroup:'location-1'
-group: 'Athens', type: 'cities', subgroup:'location-2'
-group: 'Athens', type: 'cities', subgroup:'location-3'
+<p>```
+group: ‘Athens’, type: ‘cities’, subgroup:’location-1’
+group: ‘Athens’, type: ‘cities’, subgroup:’location-2’
+group: ‘Athens’, type: ‘cities’, subgroup:’location-3’</p>
 
-group: 'Thessaloniki', type: 'cities', subgroup:'location-5'
-group: 'Thessaloniki', type: 'cities', subgroup:'location-6'
-group: 'Thessaloniki', type: 'cities', subgroup:'location-7'
+<p>group: ‘Thessaloniki’, type: ‘cities’, subgroup:’location-5’
+group: ‘Thessaloniki’, type: ‘cities’, subgroup:’location-6’
+group: ‘Thessaloniki’, type: ‘cities’, subgroup:’location-7’</p>
 
-group: 'Greece', type: 'countries', subgroup: 'Athens'
-group: 'Greece', type: 'countries', subgroup: 'Thessaloniki'
+<p>group: ‘Greece’, type: ‘countries’, subgroup: ‘Athens’
+group: ‘Greece’, type: ‘countries’, subgroup: ‘Thessaloniki’</p>
 
-group 'Europe', type: 'continents' subgroup: 'Greece'
-group 'Europe', type: 'continents' subgroup: 'Croatia'
-group 'Europe', type: 'continents' subgroup: 'France'
-...etc
-</code></pre>
+<p>group: ‘Europe’, type: ‘continents’ subgroup: ‘Greece’
+group: ‘Europe’, type: ‘continents’ subgroup: ‘Croatia’
+group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
+```</p>
 
 <p>Below is the full avro specification of the group_groups.avro file:</p>
 
-<pre><code>{"namespace": "argo.avro",
- "type": "record",
- "name": "group_groups",
- "fields": [
-    {"name": "type", "type": "string"},
-    {"name": "group", "type": "string"},
-    {"name": "subgroup", "type": "string"},
-    {"name": "tags", "type": {"name" : "Tags",
-	                       "type" : "record",
-	                       "fields" : [
-	                          {"name" : "scope", "type" : "string"},
-	                          {"name" : "infrastructure", "type" : "string"},
-	                          {"name" : "certification", "type" : "string"}
-	                        ]}}
- ]
+<p><code>json
+{
+  "namespace": "argo.avro",
+  "type": "record",
+  "name": "group_groups",
+  "fields": [
+    { "name": "type", "type": "string" },
+    { "name": "group", "type": "string" },
+    { "name": "subgroup", "type": "string" },
+    { "name": "tags", "type" : [
+      "null", { "name" : "Tags",
+                "type" : "map",
+                "values" : ["int", "string"]
+              }
+      ]
+    }
+  ]
 }
-</code></pre>
+</code></p>
 
-<p><a id="Profiles"></a></p>
+<p><a id="profiles"></a></p>
 
 <h3 id="metric-profiles">Metric Profiles</h3>
 
-<p>Every service type contains a number of metrics that are being checked from the monitoring mechanism. Each metric equals to a specific monitoring check that takes place periodically on the host and has to do with a specific facet of the service’s operation (processes,memory,load,files,settings,network etc…)</p>
+<p>Every service type contains a number of metrics that are being checked from the monitoring mechanism. Each metric equals to a specific monitoring check that takes place periodically on the host and has to do with a specific facet of the service’s operation (processes, memory, load, files, settings, network etc)</p>
 
 <p>When wanting to look on the whole status information of the service for a given time it is possible to take into account any number of the metrics available (for e.g. the most critical ones) and compose a view of the service based on those specific metrics selected. This view is dictated by a profile, actually a metric profile which contains information about the service and which metrics are relevant. The metric profile is provided as an avro type file containing the following fields:</p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
       <td><code>profile</code></td>
-      <td>name of the profile</td>
+      <td>Name of the profile</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>service</code></td>
-      <td>name of the specific service</td>
+      <td>Name of the specific service</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>metric</code></td>
-      <td>name of the metric to be taken into account</td>
+      <td>Name of the metric to be taken into account</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>tags</code></td>
-      <td>user defined tags</td>
-      <td>NO</td>
+      <td>User defined tags</td>
+      <td><code>NO</code></td>
     </tr>
   </tbody>
 </table>
 
 <p>and the full avro specification:</p>
 
-<pre><code>{"namespace": "argo.avro",
-	"type": "record",
-	"name": "metric_profiles",
-	"fields": [
-		{"name": "profile", "type": "string"},
-		{"name": "service", "type": "string"},
-		{"name": "metric", "type": "string"},
-		{"name": "tags", "type" : ["null", {"name" : "Tags",
-                                    "type" : "record",
-                                    "fields" : [
-                                      {"name" : "vo", "type" : "string"},
-                                      {"name" : "fqan", "type" : "string"}]}
-                          ]
-			}
- 		]
-}	
-</code></pre>
+<p><code>json
+{
+  "namespace": "argo.avro",
+  "type": "record",
+  "name": "metric_profiles",
+  "fields": [
+    { "name": "profile", "type": "string" },
+    { "name": "service", "type": "string" },
+    { "name": "metric", "type": "string" },
+    { "name": "tags", "type" : [
+      "null", { "name" : "Tags",
+                "type" : "map",
+                "values" : ["int", "string"]
+              }
+      ]
+    }
+  ]
+}
+</code></p>
 
-<p><a id="Weights"></a></p>
+<p><a id="weights"></a></p>
 
 <h3 id="weights-factors">Weights (factors)</h3>
 
-<p>Some group items have an assosiated weight information (factors) on how they contribute when are being aggregated on higher level groups. For example hepspec weights for specific sites when they are aggregated on their contribution on national level groups. The weight information is provided in an avro file format containing the following fields:</p>
+<p>Some group items have an associated weight information (factors) on how they contribute when are being aggregated on higher level groups. For example hepspec weights for specific sites when they are aggregated on their contribution on national level groups. The weight information is provided in an avro file format containing the following fields:</p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
       <td><code>type</code></td>
-      <td>type of the weight (for e.g. hepspec)</td>
+      <td>Type of the weight (for e.g. hepspec)</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>site</code></td>
-      <td>name of the specific site</td>
+      <td>Name of the specific site</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>weight</code></td>
-      <td>number value of the weight</td>
+      <td>Number value of the weight</td>
       <td><code>YES</code></td>
     </tr>
   </tbody>
@@ -593,48 +613,52 @@ group 'Europe', type: 'continents' subgroup: 'France'
 
 <p>The full avro specification of the weight file:</p>
 
-<pre><code>{"namespace": "argo.avro",
-	"type": "record",
-	"name": "weight_sites",
-	"fields": [
-	{"name": "type", "type": "string"},
-	{"name": "site", "type": "string"},
-	{"name": "weight", "type": "string"}
-	]
+<p><code>json
+{
+  "namespace": "argo.avro",
+  "type": "record",
+  "name": "weight_sites",
+  "fields": [
+    { "name": "type", "type": "string" },
+    { "name": "site", "type": "string" },
+    { "name": "weight", "type": "string" }
+  ]
 }
-</code></pre>
+</code></p>
 
-<p><a id="Downtimes"></a></p>
+<p><a id="downtimes"></a></p>
 
 <h3 id="downtimes">Downtimes</h3>
 
 <p>Downtime information: the period (start_time –&gt; end_time) in which a specific service endpoint was in scheduled downtime. This information resided in the corresponding downtime avro file. The file has the following fields:</p>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Required</td>
-    </tr>
-    <tr>
       <td><code>hostname</code></td>
-      <td>the hostname fqdn info part of the specific service endpoint</td>
+      <td>The hostname fqdn info part of the specific service endpoint</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>service</code></td>
-      <td>the service name info part of the specific service endpoint</td>
+      <td>The service name info part of the specific service endpoint</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>start_time</code></td>
-      <td>wc3 date/time when the period begins</td>
+      <td>WC3 date/time when the period begins</td>
       <td><code>YES</code></td>
     </tr>
     <tr>
       <td><code>end_time</code></td>
-      <td>wc3 date/time when the period ends</td>
+      <td>WC3 date/time when the period ends</td>
       <td><code>YES</code></td>
     </tr>
   </tbody>
@@ -642,18 +666,19 @@ group 'Europe', type: 'continents' subgroup: 'France'
 
 <p>The full avro specification of the file is provided below</p>
 
-<pre><code>{"namespace": "argo.avro",
- "type": "record",
- "name": "downtimes",
- "fields": [
-    {"name": "hostname", "type": "string"},
-    {"name": "service", "type": "string"},
-    {"name": "start_time", "type": "string"},
-    {"name": "end_time", "type": "string"}
- ]
+<p><code>json
+{
+  "namespace": "argo.avro",
+  "type": "record",
+  "name": "downtimes",
+  "fields": [
+    { "name": "hostname", "type": "string" },
+    { "name": "service", "type": "string" },
+    { "name": "start_time", "type": "string" },
+    { "name": "end_time", "type": "string" }
+  ]
 }
-</code></pre>
-
+</code></p>
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>

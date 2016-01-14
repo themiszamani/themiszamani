@@ -165,106 +165,84 @@
         <div class="col-md-8 main">
           
           <p class="lead"> </p>
-          <h1 id="argo-compute-engine-cli">ARGO Compute Engine CLI</h1>
+          
+<h1 id="prerequisites">Prerequisites</h1>
 
-<h2 id="executable-scripts-for-cli-interaction-with-the-compute-engine">Executable Scripts for cli interaction with the compute engine</h2>
+<ul>
+  <li>You will need a RHEL 6.x or similar OS (base installation) to proceed. Note that the following instructions have been tested against CentOS 6.x OSes.</li>
+  <li>Make sure that on your host an ntp client service is configured properly.</li>
+</ul>
 
-<p>In the folder <code>/usr/libexec/ar-compute/bin/</code> reside executable scripts that can be used for uploading metric data and sync data to the hadoop cluster (HDFS Filesystem).</p>
+<p>The first step is to install (as root user) the <code>epel</code> and <code>argo</code> release packages via yum:</p>
 
-<p>| Script | Description | Shortcut |
-|——–|————-|———-|
-|upload_metric.py |The specific script is used in order to upload daily metric data (relative to a tenant) to HDFS. | <a href="#metric">Description</a> |
-|upload_sync.py |The specific script is used in order to upload daily sync data (relative to a tenant and a job) to HDFS. |<a href="#sync">Description</a>|
-|mongo_clean_ar.py |The specific script is used if necessary to clean a/r data from the datastore regarding for specified tenant,report and date.  |<a href="#ar">Description</a>|
-|mongo_clean_status.py |The specific script is used if necessary to clean status detail data from the datastore for specified tenant,report and date. | <a href="#status">Description</a>|
-–&gt;</p>
+<pre><code># yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+# yum install http://rpm.hellasgrid.gr/mash/centos6-arstats/i386/ar-release-1.0.0-3.el6.noarch.rpm
+</code></pre>
 
-<p><a id="metric"></a></p>
+<p>These packages will configure on the host the necessary repository files under <code>/etc/yum.repos.d</code>.</p>
 
-<h3 id="uploadmetricpy">upload_metric.py</h3>
+<p>You will also need to install the cloudera repository for Hadoop components to be retrieved (although you will not install any Hadoop cluster, some libraries from the Hadoop ecosystem are needed). Under a file named <code>/etc/yum.repos.d/cloudera-cdh5.repo</code> place the following contents:</p>
 
-<p>This utility is used in order to upload the daily metric data for a specified date and tenant to the ARGO Compute Engine.</p>
+<pre><code>[cloudera-cdh5]
+name=Cloudera's Distribution for Hadoop, Version 5
+baseurl=http://archive.cloudera.com/cdh5/redhat/6/x86_64/cdh/5/
+gpgkey =  http://archive.cloudera.com/cdh5/redhat/6/x86_64/cdh/RPM-GPG-KEY-cloudera
+gpgcheck = 1
+</code></pre>
 
-<h4 id="full-path">Full path</h4>
+<p>You will also need to install the EGI trust-anchors repository (this is required on the host for communicating with topology providing services). Under a file named <code>/etc/yum.repos.d/EGI-trustanchors.repo</code> place the following contents:</p>
 
-<p><code>
-/usr/libexec/ar-compute/bin/upload_metric.py
-</code></p>
+<pre><code>[EGI-trustanchors]
+name=EGI-trustanchors
+baseurl=http://repository.egi.eu/sw/production/cas/1/current/
+enabled=1
+gpgcheck=1
+gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
+</code></pre>
 
-<h4 id="parameters">Parameters</h4>
+<h1 id="installation">Installation</h1>
+
+<p>Install (via <code>pip</code>) the latest version of the pymongo library:</p>
+
+<pre><code># yum install python-pip
+# pip install --upgrade pymongo
+</code></pre>
+
+<p>Install the component:</p>
+
+<pre><code># yum install ar-compute
+</code></pre>
+
+<h1 id="configuration">Configuration</h1>
+
+<p>Edit the <code>/etc/ar-compute-engine.conf</code> configuration file and</p>
+
+<ul>
+  <li>set the values of the <code>mongo_host</code> and <code>mongo_port</code> variables to point to a running mongo service</li>
+  <li>set the value of the <code>mode</code> variable to <code>local</code> or <code>distributed</code>
+</li>
+  <li>set the values of the <code>prefilter_clean</code> and <code>sync_clean</code> variables to either <code>true</code> of <code>false</code>
+</li>
+</ul>
+
+<p>Under the folder <code>/etc/cron.d/</code> place two cronjobs that will handle hourly and daily calculations.</p>
 
 <ul>
   <li>
-<code>-d --date {YYYY-MM-DD}</code> specifies the date of the metric data we want to upload (Required)</li>
-  <li>
-<code>-t --tenant {STRING}</code> a case-sensitive string specifying the name of the tenant (Required)</li>
+    <p>for the daily caclulations edit <code>/etc/cron.d/ar_job_cycle_daily</code> and place the following contents:</p>
+
+    <p>0 0 * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date –utc –date ‘-1 day’ +\%Y-\%m-\%d)</p>
+  </li>
 </ul>
 
-<p><a id="sync"></a></p>
+<p>Optionally - for the hourly caclulations edit <code>/etc/cron.d/ar_job_cycle_hourly</code> and place the following contents:</p>
 
-<h3 id="uploadsyncpy">upload_sync.py</h3>
+<pre><code>55 * * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date --utc  +\%Y-\%m-\%d)
+</code></pre>
 
-<p>This utility is used in order to upload the daily sync data for a specified date and tenant to the ARGO Compute Engine.</p>
+<h1 id="log-files">Log files</h1>
 
-<h4 id="full-path-1">Full path</h4>
-
-<p><code>
-/usr/libexec/ar-compute/bin/upload_sync.py
-</code></p>
-
-<h4 id="parameters-1">Parameters</h4>
-
-<ul>
-  <li>
-<code>-d --date {YYYY-MM-DD}</code> the date of the daily sync data we want to upload (Required)</li>
-  <li>
-<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
-  <li>
-<code>-j --job {STRING}</code> the name of the job. Case sensitive (Required)</li>
-</ul>
-
-<p><a id="ar"></a>
-### mongo_clean_ar.py</p>
-
-<p>This utility is used in order to delete availability and reliability data from the datastore, for a specified tenant,report and date. It is called automatically before each A/R computation, but can be ran also manually. The script reports back the number of records and from which collections these records are removed.</p>
-
-<h4 id="full-path-2">Full path</h4>
-
-<p><code>
-/usr/libexec/ar-compute/bin/mongo_clean_ar.py
-</code></p>
-
-<h4 id="parameters-2">Parameters</h4>
-
-<ul>
-  <li>
-<code>-d --date {YYYY-MM-DD}</code> the date (day) for which to delete the availability and reliability data (Required)</li>
-  <li>
-<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
-  <li>
-<code>-r --report {STRING}</code> the id (uuid format) of the report that results belong to. Case sensitive (Required)</li>
-</ul>
-
-<p><a id="status"></a></p>
-
-<h3 id="mongocleanstatuspy">mongo_clean_status.py</h3>
-
-<p>This utility can be used in order to delete the status detail data from the datastore, for a specified tenant,report and date.</p>
-
-<h4 id="full-path-3">Full path</h4>
-<p><code>
-/usr/libexec/ar-compute/bin/mongo_clean_status.py
-</code>
-#### Parameters</p>
-
-<ul>
-  <li>
-<code>-d --date {YYYY-MM-DD}</code> the date for which to delete the status detail data from the datastore (Required)</li>
-  <li>
-<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
-  <li>
-<code>-r --report {STRING}</code> the id (uuid format) of the  report that results belong to. Case sensitive (Required)</li>
-</ul>
+<p>The compute engine uses by default the system syslog to log any messages. You may change this behaviour by editing the configucation file <code>/etc/ar-compute-engine.conf</code>. You may also wish to change the logging level by setting the <code>log_level</code> value to your preference.</p>
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>
