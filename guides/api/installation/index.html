@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - </title>
+  <title>ARGO Availability and Reliability Monitoring - Web API documentation | ARGO</title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -173,8 +173,14 @@
 
         </div>
         <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cogs'></i> 
+            
+            API Installation</h1>
           
-          <p class="lead"> </p>
+          <p class="lead"> This document describes the Web API.</p>
           <h2 id="api-data">API Data</h2>
 
 <table>
@@ -196,7 +202,7 @@
 
 
           
-<h1 id="prerequisites">Prerequisites</h1>
+<h2 id="prerequisites">Prerequisites</h2>
 
 <ul>
   <li>You will need a RHEL 6.x or similar OS (base installation) to proceed. Note that the following instructions have been tested against CentOS 6.x OSes. </li>
@@ -212,14 +218,14 @@
 
 <p>These packages will configure on the host the necessary repository files under <code>/etc/yum.repos.d</code>.</p>
 
-<h1 id="installation">Installation</h1>
+<h2 id="installation">Installation</h2>
 
 <p>Install the ARGO web API service with the following command:</p>
 
 <pre><code># yum install argo-web-api
 </code></pre>
 
-<h1 id="configuration">Configuration</h1>
+<h2 id="configuration">Configuration</h2>
 
 <p>Edit the <code>/etc/argo-web-api.conf</code> configuration file and </p>
 
@@ -230,7 +236,7 @@
 
 <p>Optionally, you may further configure service parameters (i.e. interface to bind to, port number etc). </p>
 
-<h1 id="services">Services</h1>
+<h2 id="services">Services</h2>
 
 <p>Start the service using the following command:</p>
 
