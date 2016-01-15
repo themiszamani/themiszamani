@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - </title>
+  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,10 +99,14 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-            
-            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+          	
+            <a class="list-group-item active " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
+  	      
+              <a class="list-group-item-level2 active"  href="/guides/compute/installation/">
+            
+            <em class="fa fa-cog"></em> Compute engine Installation </a>
             
               <a class="list-group-item-level2"  href="/guides/compute/compute-input/">
             
@@ -169,10 +173,16 @@
 
         </div>
         <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cog'></i> 
+            
+            Compute - Installation</h1>
           
-          <p class="lead"> </p>
+          <p class="lead"> This document describes the Executable Scripts for cli interaction with the compute engine</p>
           
-<h1 id="prerequisites">Prerequisites</h1>
+<h2 id="prerequisites">Prerequisites</h2>
 
 <ul>
   <li>You will need a RHEL 6.x or similar OS (base installation) to proceed. Note that the following instructions have been tested against CentOS 6.x OSes.</li>
@@ -206,7 +216,7 @@ gpgcheck=1
 gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
 </code></pre>
 
-<h1 id="installation">Installation</h1>
+<h2 id="installation">Installation</h2>
 
 <p>Install (via <code>pip</code>) the latest version of the pymongo library:</p>
 
@@ -219,17 +229,14 @@ gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
 <pre><code># yum install ar-compute
 </code></pre>
 
-<h1 id="configuration">Configuration</h1>
+<h2 id="configuration">Configuration</h2>
 
 <p>Edit the <code>/etc/ar-compute-engine.conf</code> configuration file and</p>
 
-<ul>
-  <li>set the values of the <code>mongo_host</code> and <code>mongo_port</code> variables to point to a running mongo service</li>
-  <li>set the value of the <code>mode</code> variable to <code>local</code> or <code>distributed</code>
-</li>
-  <li>set the values of the <code>prefilter_clean</code> and <code>sync_clean</code> variables to either <code>true</code> of <code>false</code>
-</li>
-</ul>
+<pre><code>- set the values of the `mongo_host` and `mongo_port` variables to point to a running mongo service
+- set the value of the `mode` variable to `local` or `distributed`
+- set the values of the `prefilter_clean` and `sync_clean` variables to either `true` of `false`
+</code></pre>
 
 <p>Under the folder <code>/etc/cron.d/</code> place two cronjobs that will handle hourly and daily calculations.</p>
 
@@ -246,7 +253,7 @@ gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
 <pre><code>55 * * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date --utc  +\%Y-\%m-\%d)
 </code></pre>
 
-<h1 id="log-files">Log files</h1>
+<h2 id="log-files">Log files</h2>
 
 <p>The compute engine uses by default the system syslog to log any messages. You may change this behaviour by editing the configucation file <code>/etc/ar-compute-engine.conf</code>. You may also wish to change the logging level by setting the <code>log_level</code> value to your preference.</p>
 
