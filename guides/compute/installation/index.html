@@ -114,7 +114,7 @@
  	    
               <a class="list-group-item-level2"  href="/guides/compute/compute-job-configuration/">
             
-            <em class="fa fa-cog"></em> Compute engine job configurations </a>
+            <em class="fa fa-cog"></em> Compute Engine job configurations </a>
 
  
  	    
@@ -240,13 +240,10 @@ gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
 
 <p>Under the folder <code>/etc/cron.d/</code> place two cronjobs that will handle hourly and daily calculations.</p>
 
-<ul>
-  <li>
-    <p>for the daily caclulations edit <code>/etc/cron.d/ar_job_cycle_daily</code> and place the following contents:</p>
+<p>For the daily caclulations edit <code>/etc/cron.d/ar_job_cycle_daily</code> and place the following contents.</p>
 
-    <p>0 0 * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date –utc –date ‘-1 day’ +\%Y-\%m-\%d)</p>
-  </li>
-</ul>
+<pre><code>0 0 * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date --utc --date '-1 day' +\%Y-\%m-\%d)
+</code></pre>
 
 <p>Optionally - for the hourly caclulations edit <code>/etc/cron.d/ar_job_cycle_hourly</code> and place the following contents:</p>
 
