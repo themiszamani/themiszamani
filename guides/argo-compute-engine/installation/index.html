@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - Overview | ARGO</title>
+  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +33,7 @@
   <![endif]-->
 </head>
 
-<body class="api">
+<body class="documentation">
   <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -75,11 +75,11 @@
 
   <div class='container-fluid' >
     <div class='row'>
-      <div class="col-md-2 sidebar" >
-                 <div class="list-group" >	
+        <div class="col-md-2 sidebar">
+                   <div class="list-group" >	
             <a class="list-group-item disabled blue" href="/overview/">Documentation</a>
-          	
-            <a class="list-group-item active" href="/overview/">Overview</a>
+          
+            <a class="list-group-item" href="/overview/">Overview</a>
           
             <a class="list-group-item disabled blue" href="/guides/installation/">Installation</a>
           
@@ -99,12 +99,12 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-            
-            <a class="list-group-item " href="/guides/argo-compute-engine/"><em class="fa fa-cog"></em> Compute Engine</a>
+          	
+            <a class="list-group-item active " href="/guides/argo-compute-engine/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
   	      
-              <a class="list-group-item-level2"  href="/guides/argo-compute-engine/installation/">
+              <a class="list-group-item-level2 active"  href="/guides/argo-compute-engine/installation/">
             
             <em class="fa fa-cog"></em> Compute engine Installation </a>
             
@@ -171,62 +171,88 @@
 
 
 
-      </div><!--sidebar-->
-      <div class="col-md-8 main">
-        	
-          <h1 class="highlight">
-          
-            <em class='fa fa-file-text-o'></em> 
-          
-          Overview</h1>
-        
-        <p class="lead"> ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized Research Infrastructures. The ARGO software stack is comprised of the following components (products)</p>
-        
-
-        <div style="padding:30px;" class="marketing">
-          <div class="row">
-            <div class="col-lg-4">
-              <em class="fa fa-refresh fa-6 fa-blue"></em>
-              <h2>EGI connectors</h2> 
-              <p>This document describes the sync components.</p>
-              <p><a role="button" href="/guides/sync/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-check-square-o fa-6 fa-blue"></em>
-              <h2>Poem service</h2> 
-              <p>This document describes the POEM service for ARGO framework.</p>
-              <p><a role="button" href="/guides/poem/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-send-o fa-6 fa-blue"></em>  
-              <h2>Consumer</h2> 
-              <p>Data is collected using an ActiveMQ message broker network.</p>
-              <p><a role="button" href="/guides/consumer/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
-          <div class="row">
-            <div class="col-lg-4">
-              <em class="fa fa-cog fa-6 fa-blue"></em>
-              <h2>Compute Engine</h2> 
-              <p>This document describes the Compute service</p>
-              <p><a role="button" href="/guides/argo-compute-engine/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-cogs fa-6 fa-blue"></em>
-              <h2>API</h2> 
-              <p>This document describes the API service</p>
-              <p><a role="button" href="/guides/api/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-connectdevelop fa-6 fa-blue"></em>  
-              <h2>Web UI</h2> 
-              <p>using the HTTP application protocol.</p>
-              <p><a role="button" href="/guides/webui/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
         </div>
+        <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cog'></i> 
+            
+            Compute - Installation</h1>
+          
+          <p class="lead"> This document describes the Executable Scripts for cli interaction with the compute engine</p>
+          
+<h2 id="prerequisites">Prerequisites</h2>
 
+<ul>
+  <li>You will need a RHEL 6.x or similar OS (base installation) to proceed. Note that the following instructions have been tested against CentOS 6.x OSes.</li>
+  <li>Make sure that on your host an ntp client service is configured properly.</li>
+</ul>
 
+<p>The first step is to install (as root user) the <code>epel</code> and <code>argo</code> release packages via yum:</p>
+
+<pre><code># yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+# yum install http://rpm.hellasgrid.gr/mash/centos6-arstats/i386/ar-release-1.0.0-3.el6.noarch.rpm
+</code></pre>
+
+<p>These packages will configure on the host the necessary repository files under <code>/etc/yum.repos.d</code>.</p>
+
+<p>You will also need to install the cloudera repository for Hadoop components to be retrieved (although you will not install any Hadoop cluster, some libraries from the Hadoop ecosystem are needed). Under a file named <code>/etc/yum.repos.d/cloudera-cdh5.repo</code> place the following contents:</p>
+
+<pre><code>[cloudera-cdh5]
+name=Cloudera's Distribution for Hadoop, Version 5
+baseurl=http://archive.cloudera.com/cdh5/redhat/6/x86_64/cdh/5/
+gpgkey =  http://archive.cloudera.com/cdh5/redhat/6/x86_64/cdh/RPM-GPG-KEY-cloudera
+gpgcheck = 1
+</code></pre>
+
+<p>You will also need to install the EGI trust-anchors repository (this is required on the host for communicating with topology providing services). Under a file named <code>/etc/yum.repos.d/EGI-trustanchors.repo</code> place the following contents:</p>
+
+<pre><code>[EGI-trustanchors]
+name=EGI-trustanchors
+baseurl=http://repository.egi.eu/sw/production/cas/1/current/
+enabled=1
+gpgcheck=1
+gpgkey=http://repository.egi.eu/sw/production/cas/1/GPG-KEY-EUGridPMA-RPM-3
+</code></pre>
+
+<h2 id="installation">Installation</h2>
+
+<p>Install (via <code>pip</code>) the latest version of the pymongo library:</p>
+
+<pre><code># yum install python-pip
+# pip install --upgrade pymongo
+</code></pre>
+
+<p>Install the component:</p>
+
+<pre><code># yum install ar-compute
+</code></pre>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Edit the <code>/etc/ar-compute-engine.conf</code> configuration file and</p>
+
+<pre><code>- set the values of the `mongo_host` and `mongo_port` variables to point to a running mongo service
+- set the value of the `mode` variable to `local` or `distributed`
+- set the values of the `prefilter_clean` and `sync_clean` variables to either `true` of `false`
+</code></pre>
+
+<p>Under the folder <code>/etc/cron.d/</code> place two cronjobs that will handle hourly and daily calculations.</p>
+
+<p>For the daily caclulations edit <code>/etc/cron.d/ar_job_cycle_daily</code> and place the following contents.</p>
+
+<pre><code>0 0 * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date --utc --date '-1 day' +\%Y-\%m-\%d)
+</code></pre>
+
+<p>Optionally - for the hourly caclulations edit <code>/etc/cron.d/ar_job_cycle_hourly</code> and place the following contents:</p>
+
+<pre><code>55 * * * * root /usr/libexec/ar-compute/standalone/job_cycle.py -d $(/bin/date --utc  +\%Y-\%m-\%d)
+</code></pre>
+
+<h2 id="log-files">Log files</h2>
+
+<p>The compute engine uses by default the system syslog to log any messages. You may change this behaviour by editing the configucation file <code>/etc/ar-compute-engine.conf</code>. You may also wish to change the logging level by setting the <code>log_level</code> value to your preference.</p>
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>

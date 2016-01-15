@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
+  <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures. ">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ARGO Availability and Reliability Monitoring" />
+    <meta property="og:description" content="ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures." />
+    <meta property="og:url" content="http://argoeu.github.io/" />
+    <meta property="og:site_name" content="ARGO Documentation" />
+    <meta property="article:publisher" content="ARGO Team" />
+    <meta property="og:image" content="http://argoeu.github.io/shared/images/argo-logo.png" />
+  <meta name="author" content="">
+  <link rel="icon" href="/shared/favicon.ico">
+  <!-- Bootstrap core CSS -->
+  <link href="/shared/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/shared/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/shared/css/font-beba.css">
+
+  <link href="/shared/css/custom.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="documentation">
+  <!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		    <span class="sr-only">Toggle navigation</span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="/index.html"><img src='/shared/images/argo-logo.png' alt='ARGO'  /></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+		  <ul class="nav navbar-nav navbar-right">
+		    <li class="active"><a href="/index.html">Home</a></li>
+		    <li><a href="/index.html#what">About</a></li>
+		    <li><a href="/index.html#features">Features</a></li>
+		    <li><a href="/use-cases/">Use cases</a></li>
+		    <li class="dropdown">
+		      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Documentation <span class="caret"></span></a>
+		      <ul class="dropdown-menu" role="menu">
+			<li><a href="/overview/"><em class="fa fa-file-text-o"></em>  Overview</a></li>
+			<li><a href="/guides/installation/"><em class="fa fa-file-text-o"></em>  Installation</a></li>
+			<li><a href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a></li>
+			<li><a href="/guides/poem/"><em class="fa fa-check-square-o"></em>  Poem service</a></li>
+			<li><a href="/guides/consumer/"><em class="fa fa-send-o"></em>  Consumer</a></li>
+			<li><a href="/guides/argo-compute-engine/"><em class="fa fa-cog"></em>  Compute Engine</a></li>
+			<li><a href="/guides/webui/"><em class="fa fa-connectdevelop"></em>  Web UI</a></li>
+			<li class="divider"></li>
+			<li class="dropdown-header">Developers</li>
+			<li><a href="/guides/api/"><em class="fa fa-cogs"></em>  API </a></li>
+			<li><a href="#"><em class="fa fa-github-alt"></em>  Github</a></li>
+		      </ul>
+		    </li>
+		  </ul>
+		</div><!--/.nav-collapse -->
+	</div><!--container-->
+</nav>
+
+  <div class='container-fluid' >
+    <div class='row'>
+        <div class="col-md-2 sidebar">
+                   <div class="list-group" >	
+            <a class="list-group-item disabled blue" href="/overview/">Documentation</a>
+          
+            <a class="list-group-item" href="/overview/">Overview</a>
+          
+            <a class="list-group-item disabled blue" href="/guides/installation/">Installation</a>
+          
+            <a class="list-group-item" href="/guides/installation/"><em class="fa fa-terminal"></em> Standalone</a>
+          
+          
+            <a class="list-group-item" href="/guides/installation_cluster/"><em class="fa fa-sitemap"></em> Cluster Mode</a>
+          
+            <a class="list-group-item disabled blue" href="/guides/egi-connectors/">Components</a>
+          
+            <a class="list-group-item" href="/guides/egi-connectors/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+
+          
+          
+            <a class="list-group-item" href="/guides/poem/"><em class="fa fa-check-square-o"></em> Poem service</a>
+          
+          
+            <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
+          
+          	
+            <a class="list-group-item active " href="/guides/argo-compute-engine/"><em class="fa fa-cog"></em> Compute Engine</a>
+          
+  	  <div id='caret-data1'>
+  	      
+              <a class="list-group-item-level2"  href="/guides/argo-compute-engine/installation/">
+            
+            <em class="fa fa-cog"></em> Compute engine Installation </a>
+            
+              <a class="list-group-item-level2"  href="/guides/argo-compute-engine/input/">
+            
+            <em class="fa fa-cog"></em> Compute Engine Input </a>
+ 	    
+              <a class="list-group-item-level2 active"  href="/guides/argo-compute-engine/report-configuration/">
+            
+            <em class="fa fa-cog"></em> Compute Engine report configurations </a>
+
+ 
+ 	    
+              <a class="list-group-item-level2"  href="/guides/argo-compute-engine/cli-interaction/">
+            
+            <em class="fa fa-cog"></em> Compute Engine CLI </a>
+
+
+	  </div>
+          
+            <a class="list-group-item" href="/guides/api/" id='caretclick' data-caret='open'> 
+          
+          <em class="fa fa-cogs"></em> API <span class="caret" ></span></a>
+
+          <div id='caret-data'>
+            
+              <a class="list-group-item-level2"  href="/guides/api/status-results/">
+            
+            <em class="fa fa-cogs"></em> API - Status results</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/avail-reliab/">
+            
+            <em class="fa fa-cogs"></em> API - Availabilities & Reliabilities</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/metric-result/">
+            
+            <em class="fa fa-cogs"></em> Metric Result</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/recalculationrequests/">
+            
+            <em class="fa fa-cogs"></em> Recalculation Requests</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/availabilityprofs/">
+            
+            <em class="fa fa-cogs"></em> API - Availability Profiles</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/poemprofiles/">
+            
+            <em class="fa fa-cogs"></em> API - POEM Profiles</a>
+
+        </div>
+          
+            <a class="list-group-item" href="/guides/webui/"><em class="fa fa-connectdevelop"></em> Web UI</a>
+          
+          </div> <!--list group-->
+          <p>&nbsp;</p>
+
+          
+
+
+
+        </div>
+        <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cog'></i> 
+            
+            Compute engine job configurations</h1>
+          
+          <p class="lead"> This document describes the job configurations</p>
+          
+<h2 id="overview">Overview</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Job Configuration</td>
+      <td>Description</td>
+      <td>Shortcut</td>
+    </tr>
+    <tr>
+      <td><code>/etc/ar-compute-engine.conf</code></td>
+      <td>This file includes various global parameters used by the engine which are organized in sections, as described next:</td>
+      <td><a href="#compute-engine-conf">Description</a></td>
+    </tr>
+    <tr>
+      <td><code>{TENANT_NAME}_ops.json</code></td>
+      <td>The ops files are json filetypes that are used to describe the available status types encountered in the monitoring environment of a tenant and also the available algorithmic operations available to use in status aggregations.</td>
+      <td><a href="#tenant-ops-conf">Description</a></td>
+    </tr>
+    <tr>
+      <td><code>{TENANT_NAME}_{JOB_ID}_cfg.json</code></td>
+      <td>A job config file is a json file that contains specific information needed during the job run such as grouping parameters, the name of the availability profile used and many more.</td>
+      <td><a href="#tenant-jobid-conf">Description</a></td>
+    </tr>
+    <tr>
+      <td><code>{TENANT_NAME}_{JOB_NAME}_ap.json</code></td>
+      <td>The availability profile is a json file used per specific job that describes the operations that must take place during aggregating statuses up to endpoint group level.</td>
+      <td><a href="#tenant-jobid-ap-conf">Description</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="tenant-and-report-configuration">Tenant and Report configuration</h2>
+
+<p>The ARGO Compute Engine is multi-tenant, meaning that a single installation of the ARGO Compute Engine can support multiple tenants (customers). Each tenant must be configured properly before the ARGO Compute Engine can start computing availability and reliability reports for that tenant.</p>
+
+<p>For each tenant there should be at least one <em>Job Configuration</em>.  A <em>Job Configuration</em> defines the topology, metric and availability profiles that will be used by the ARGO Compute Engine in order to perform the computations using as input the monitoring metric results received.</p>
+
+<p>For example regarding a hypothetical tenant, we might have two <em>Job Configurations</em> based on two different metric profiles: <em>Critical</em> and <em>All</em>. The ARGO Compute Engine, using the <em>Critical</em>  job configuration, will compute the availability and reliability report by taking into account the most critical metrics for each service. On the other hand, the <em>All</em> job configuration is more versatile as it takes into account all metrics for each service.</p>
+
+<p>Each <em>Job Configuration</em> includes the following data:</p>
+
+<ul>
+  <li>Topology</li>
+  <li>Metric Profile</li>
+  <li>Availability Profile</li>
+  <li>Weights <em>(optional)</em>
+</li>
+  <li>Downtimes <em>(optional)</em>
+</li>
+</ul>
+
+<h2 id="hadoop-client-configuration">Hadoop client configuration</h2>
+
+<p>In order for the engine to be able to connect and submit jobs successfully in a hadoop cluster, proper hadoop client configuration files must be present the installed node (<code>/etc/hadoop/conf/</code>)</p>
+
+<h2 id="argo-compute-engine-configuration-files">ARGO Compute Engine configuration files</h2>
+
+<p>The main configuration file of the ARGO Compute Engine component is installed by default at <code>/etc/ar-compute-engine.conf</code>. In addition, a directory with a supplementary secondary configuration files is created in <code>/etc/ar-compute/</code></p>
+
+<p><a id="compute-engine-conf"></a></p>
+
+<h3 id="etcar-compute-engineconf">/etc/ar-compute-engine.conf</h3>
+
+<p>The main configuration files includes various global parameters used by the engine which are organized in sections, as described next:</p>
+
+<h4 id="default"><code>[default]</code></h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>mongo_host</code></td>
+      <td>String</td>
+      <td>Specify the ip address of the datastore node (running mongodb)</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>mongo_port</code></td>
+      <td>String</td>
+      <td>Specify the port number of the datastore node (running mongodb)</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>mode</code></td>
+      <td>String</td>
+      <td>The mode the engine runs. There are two available options: <em>cluster</em> and <em>local</em>: <code>cluster</code>: If the mode is specified as <em>cluster</em>, the engine runs connecting to an existing hadoop cluster. It expects that the hadoop client is properly installed and configured. <code>local</code> : If the mode is specified as <em>local</em>, the engine runs local node.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>serialization</code></td>
+      <td>String</td>
+      <td>The serialization type used. There are two available options <em>avro</em> and <em>none</em>: <code>avro</code> : If specified as <em>avro</em>, the engine expects metric and sync data in avro format.  <code>none</code> :If specified as <em>none</em>, the engine expects to find metric and sync data in simple text file delimited format.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>prefilter_clean</code></td>
+      <td>Boolean</td>
+      <td>Controls whether the local prefilter file will be automatically removed after it has been uploaded to the Compute Engine. If set to <em>true</em>, the local prefilter file will be automatically removed after it is  uploaded.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>sync_clean</code></td>
+      <td>Boolean</td>
+      <td>Controls whether the uploaded sync files will be automatically removed after a job completion. If set to <em>true</em> the uploaded sync files will be automatically removed after the job completion</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="logging"><code>[logging]</code></h4>
+
+<p>In this section we declare the specific logging options for the compute engine</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>log_mode</code></td>
+      <td>String</td>
+      <td>This parameter specifies the log_mode used by the compute engine. Possible values: <code>syslog</code> (default), <code>file</code>, <code>none</code>. a) <code>syslog</code>: the compute engine is configured to use the syslog facility, b) <code>file</code>: the compute engine can write directly to a file defined by <code>log_file</code>,  c) <code>none</code>: the compute engine does not output any logs</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>log_file</code></td>
+      <td>String</td>
+      <td>This parameter must be specified if <code>log_mode=file</code>. The file which the compute engine will use in order to write logging information</td>
+      <td><code>NO</code></td>
+    </tr>
+    <tr>
+      <td><code>log_level</code></td>
+      <td>String</td>
+      <td>Possible values: <code>DEBUG</code> (default), <code>INFO</code>, <code>WARNING</code>, <code>ERROR</code>, <code>CRITICAL</code>. Defines the log level that is used by the  compute engine.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>hadoop_log_root</code></td>
+      <td>String</td>
+      <td>Hadoop clients log level and log appender. If the user wants the hadoop components to log via SYSLOG must make sure to define an appropriate appender  in hadoop log4j.properties file. The name of this appender must be added in this parameter.</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For example at <code>hadoop_log_root</code> if the available appenders in the log4j.properties file are SYSLOG and console the above line will be:</p>
+
+<pre><code>   hadoop_log_root=SYSLOG,console
+</code></pre>
+
+<h4 id="jobs"><code>[jobs]</code></h4>
+
+<p>In this section we declare the specific tenant used in the installation and the set of jobs available (as we described them above in the <a href="#tenant-and-report-configuration"><em>“Tenant and Report configuration”</em></a>).</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>tenants</code></td>
+      <td>List</td>
+      <td>Comma separated list with the names of the available tenants. For eg: <code>tenants=tenantFoo,tenantBar</code>
+</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>{tenant-name}_jobs</code></td>
+      <td>List</td>
+      <td>For each tenant: a comma separated job list with the names of the available reports to be produced. Names are case-sensitive. Each tenant can have multiple report configurations. Each report configuration is defined by a set of  topologies, metric profiles, weights etc. For eg: <code>tenantFoo_jobs=Major,Minor,ExampleA,Critical</code>
+</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>{tenant-name}_prefilter</code></td>
+      <td>Path(String)</td>
+      <td>For each tenant: An optional attribute that specifies the path of a prefilter wrapper - if and only if the tenant requires it. For eg: <code>tenantFoo_prefilter=/path/to/the/prefilter/script</code>
+</td>
+      <td><code>NO</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="sampling"><code>[sampling]</code></h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>s_period</code></td>
+      <td>minutes</td>
+      <td>The sampling period time in minutes</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>s_interval</code></td>
+      <td>minutes</td>
+      <td>The sampling interval time in minutes</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Note</strong>
+the number of samples used in a/r calculations is determined by the s_period/s_interval value. Default values used</p>
+
+<ul>
+  <li><code>s_period = 1440</code></li>
+  <li><code>s_interval = 5</code></li>
+</ul>
+
+<p>so number of samples = 1440/5 = 288</p>
+
+<h3 id="etcar-compute"><code>/etc/ar-compute/</code></h3>
+
+<p>As mentioned above secondary configuration files used by the compute-engine are stored to the /etc/ar-compute directory. Here are files describing the set of status state types used in the monitoring engine, algorithmic operations of how to combine those states, availability profiles &amp; configuration files for available jobs.</p>
+
+<p><a id="tenant-ops-conf"></a></p>
+
+<h4 id="tenantnameopsjson-per-tenant"><code>{TENANT_NAME}_ops.json (per tenant)</code></h4>
+
+<p>These are configuration files expressed in JSON, which describe the available status types encountered in the monitoring environment of a tenant and also the available algorithmic operations to use in status aggregations.</p>
+
+<p>For example if the tenant name is <code>T1</code> the corresponding ops filename will be <code>T1_ops.json</code></p>
+
+<p>During computations many operations take place among service statuses which need to be described explicitly. The ARGO Compute Engine gives the flexibility to the end user to declare the available monitoring statuses that are produced by the monitoring infrastructure and to map them to its internal statuses. Then, using <em>truth tables</em> the user can describe the logical operations on these statuses and their results. An ops file contains:</p>
+
+<ul>
+  <li>the list of available status types</li>
+  <li>which status type is considered as default in missing circumstances</li>
+  <li>which status type is considered as default in downtime circumstances</li>
+  <li>which status type is considered as default in unknown circumstances</li>
+  <li>a list of available operations between statuses expressed in the form of truth tables</li>
+</ul>
+
+<p>The available status states produced by the Monitoring Engine(s) are expressed in the <strong>“states”</strong> list. For example below is the definition of the status states produced by Nagios compatible Monitoring Engines:</p>
+
+<pre><code>"states": [
+    "OK",
+    "WARNING",
+    "UNKNOWN",
+    "MISSING",
+    "CRITICAL",
+    "DOWNTIME"
+]
+</code></pre>
+
+<p>The ARGO Compute Engine requires the user to define a mapping for the default_down, default_missing and default_unknown. For example:</p>
+
+<pre><code>"default_down": "DOWNTIME",
+"default_missing": "MISSING",
+"default_unknown": "UNKNOWN",
+</code></pre>
+
+<p><strong>Note: The importance of the default states</strong> :
+  Since compute engine gives the ability to define completely custom states based on your monitoring infrastructure output we must also tag some custom states with specific meaning. These states might not be present in the monitoring messages but are produced during computations by the compute engine according to a specific logic. So we need to “tie” some of the custom status we declare to a specific default state of service.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td><code>"default_down": "DOWNTIME"</code></td>
+      <td>Means that whenever compute engine needs to produce a status for a scheduled downtime will mark it using the “DOWNTIME” state.</td>
+    </tr>
+    <tr>
+      <td><code>"default_missing": "MISSING"</code></td>
+      <td>Means whenever compute engine decides that a service status must declared missing (because there is no information provided from the metric data) will mark it using the “MISSING” state.</td>
+    </tr>
+    <tr>
+      <td><code>"default_unknown: "UNKNOWN"</code></td>
+      <td>Means whenever compute engine decides that must produce a service status to be considered unknown (for e.g. during recomputation requests) will mark it using the “UNKNOWN” state.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The available operations are declared in the operations list using truth tables as follows:</p>
+
+<pre><code>"operations": {
+  "AND":[],
+  "OR":[]
+}
+</code></pre>
+
+<p>Each operation consists of a JSON array used to describe a <em>truth table</em>. An example of such a <em>truth table</em> is presented below:</p>
+
+<pre><code>"operations": {
+  "AND": [
+    { "A":"OK",       "B":"OK",       "X":"OK"       },
+    { "A":"OK",       "B":"WARNING",  "X":"WARNING"  },
+    { "A":"OK",       "B":"UNKNOWN",  "X":"UNKNOWN"  },
+  ]
+}
+</code></pre>
+
+<p>Each element of the JSON array describes a row of the <em>truth table</em> for example:</p>
+
+<pre><code>{ "A":"OK", "B":"WARNING", "X":"WARNING"}
+</code></pre>
+
+<p>declares that in an algorithmic AND operation between two status states of <em>OK</em> and <em>WARNING</em> the result is <em>WARNING</em></p>
+
+<p>In the ops file the user is able to declare any number of available monitoring states and any number of available custom operations on those states. The ARGO Compute Engine uses this information to create the corresponding <em>truth tables</em> in memory.</p>
+
+<p><a id="tenant-jobid-conf"></a></p>
+
+<h4 id="tenantnamejobidcfgjson-per-job"><code>{TENANT_NAME}_{JOB_ID}_cfg.json (per job)</code></h4>
+
+<p>A <em>Job Configuration</em> file is a JSON file that contains specific information needed during the computations such as grouping parameters, the name of the availability profile used and many more. If the tenant’s name is <code>T1</code> and the report name is <code>JobA</code> then the filename of the config file must be <code>T1_JobA_cfg.json</code></p>
+
+<p>The configuration file of the job contains mandatory and optional fields with rich information describing the parameters of the specific job. Some important fields are:</p>
+
+<pre><code>"tenant": "tenant_name"`
+"job": "job_name",
+"aprofile": "availability_profile_name",
+"egroup": "endpoint_group_type_name",
+"ggroup": "group_of_group_type_name",
+"weight": "weight_factor_type_name"
+</code></pre>
+
+<p>In the above snippet we have declared the name of the tenant, the name of the job, the name of the specific availability profile used in the job. Also the type of endpoint grouping that will be used is declared here and the type of upper hierarchical grouping. Also if available here is declared the type of weight factor used for upper level A/R aggregations</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td><code>"tenant"</code></td>
+      <td>This field is explicitly linked to the value of the tenant declaration of the global ar-compute-engine.conf file <a href="/#parameters-for-section-jobs">link to description above</a>
+</td>
+    </tr>
+    <tr>
+      <td><code>"job"</code></td>
+      <td>This field is explicitly linked to the name of a job declared in the job_set variable of the global ar-compute-engine.conf file <a href="#parameters-for-section-jobs">link to description above</a>
+</td>
+    </tr>
+    <tr>
+      <td><code>"aprofile"</code></td>
+      <td>This field is explicitly linked to one of the availability profile json files declared in the <code>/etc/ar_compute/</code> folder and they are described below <a href="#availability-profile-per-tenant--per-job">link to description further below</a>
+</td>
+    </tr>
+    <tr>
+      <td><code>"egroup"</code></td>
+      <td>This field is used to declare the endpoint group that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the topology file <a href="/guides/compute/compute-input/#groupendpointsavro">group_endpoints.avro</a>
+</td>
+    </tr>
+    <tr>
+      <td><code>"ggroup"</code></td>
+      <td>This field is used to declare the group of groups that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the topology file <a href="/guides/compute/compute-input/#groupgroupsavro">group_groups.avro</a>
+</td>
+    </tr>
+    <tr>
+      <td><code>"weight"</code></td>
+      <td>This field is used to declare the type of weight that will be used during computation aggregations. The value corresponds to one of the values present in the field <code>type</code> of the weight (factors) file <a href="/guides/compute/compute-input/#weights-factors">weight_sync.avro</a>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In the configuration file are specified the specific tag values that will be used during the job in order to filter metric data.</p>
+
+<p>For example:</p>
+
+<pre><code>"egroup_tags": {
+  "scope":"scope_type",
+  "production":"Y",
+  "monitored":"Y"
+}
+</code></pre>
+
+<p>In the egroup_tag list are declared values for available tag fields that will be encountered in the endpoint group topology sync file (produced by ar-sync components).These tag fields are explicitly linked to the description of the schema of the <a href="/guides/compute/compute-input/#groupendpointsavro">group_endpoints.avro file</a></p>
+
+<p><a id="tenant-jobid-ap-conf"></a></p>
+
+<h3 id="tenantnamejobidapjson-per-report"><code>{TENANT_NAME}_{JOB_ID}_ap.json (per report)</code></h3>
+
+<p>The availability profile is a json file used per specific job that describes the operations that must take place during aggregating statuses up to endpoint group level. For example if the tenant name is <code>T1</code> and the report name <code>JobA</code> the corresponding availability profile name must be <code>T1_ReportA_ap.json</code></p>
+
+<p>The information in the availability profile JSON file is automatically picked up by the compute-engine during computations.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+    </tr>
+    <tr>
+      <td><code>"name"</code></td>
+      <td>string</td>
+      <td>The name of the availability profile</td>
+    </tr>
+    <tr>
+      <td><code>"namespace"</code></td>
+      <td>string</td>
+      <td>The name of the namespace used by the profile</td>
+    </tr>
+    <tr>
+      <td><code>"metric_profile"</code></td>
+      <td>string</td>
+      <td>The name of the metric profile linked to this availability profile</td>
+    </tr>
+    <tr>
+      <td><code>"metric_ops"</code></td>
+      <td>string</td>
+      <td>The default operation to be used when aggregating low level metric statuses</td>
+    </tr>
+    <tr>
+      <td><code>"group_type"</code></td>
+      <td>string</td>
+      <td>The default endpoint group type used in aggregation</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In the availability profile JSON file also are declared custom grouping of services to be used in the aggregation. The grouping of services are expressed in the JSON “groups” list see example below:</p>
+
+<pre><code>"groups": {
+  "my_group_of_services_1": {
+    "services":{
+      "service_type_A":"OR",
+      "service_type_B":"OR"
+    },
+    "operation":"OR"
+  },
+  "my_group_of_services_2": {
+    "services":{
+      "service_type_C":"OR",
+      "service_type_D":"OR"
+    },
+    "operation":"OR"
+  },
+  "operation":"AND"
+}
+</code></pre>
+
+<p>In the above example the service types are grouped in two groups:</p>
+
+<ul>
+  <li>
+<strong>my_group_of_services_1</strong> and</li>
+  <li>
+<strong>my_group_of_services_2</strong>.</li>
+</ul>
+
+<p>Each group contains a “service” list containing service types included in the group as fields and the operation values in order to choose who to aggregate the various instances of a specific service. For example if for <strong><em>“service_type_A”</em></strong> are 3 service endpoints available, they are going to be aggregated using the OR operation. The <strong><em>“operation”</em></strong> field under each group of services is used to declare the operation that will be used to aggregate the service types under that group. The outer <strong><em>“operation”</em></strong> field in the root of the json document is used to declare the operation used to aggregate the various groups in order to produce the final endpoint aggregation result.</p>
+
+
+        </div><!--col-md-8-->
+        <div class="col-md-2">&nbsp;</div>
+      </div><!--row-->
+    </div><!--container fluid-->
+    <!-- from -->
+<div class="jumbotron">
+    <div class="container" style='padding-left:40px;'>
+      <a href='https://www.grnet.gr/en' target='blank'><img src='/shared/images/grnet_transparent.png' style='padding-left:40px;' alt='GRNET S.A - Greek Research & Technology Network' title='GRNET S.A - Greek Research & Technology Network'/></a>
+      <a href='http://www.cnrs.fr/' target='blank'><img src='/shared/images/cnrs.png' style='padding-left:40px;' alt='Centre national de la recherche scientifique' title='Centre national de la recherche scientifique'/></a>
+      <a href='http://www.srce.unizg.hr/en/' target='blank'><img src='/shared/images/srce.png' style='padding-left:40px;' alt='SCRE - Web stranice Sveučilišnog računskog centra' title='SCRE - Web stranice Sveučilišnog računskog centra'/></a>
+      <a href='http://www.egi.eu' target='blank'><img src='/shared/images/egi2.png' style='padding-left:40px;margin-top:-20px;' alt='European Grid Infrastructure' title='European Grid Infrastructure'/></a>
+    </div> <!-- /container -->
+</div> <!-- jumbotron -->
+<!-- from-->
+
+
+  
+<!--footer -->
+    <footer  id="footer" class="footer">
+	<div class='footer_top'>       
+	<div class="row ">
+       </div>
+       <div class="row ">
+	
+        <div class=" col-md-offset-1 col-md-3">
+		<p><img src='/shared/images/argo-logo.png' alt='Argo'  /></p>		
+		<p>ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized e-Infrastructures. </p>
+   	</div>
+	 <div class="col-md-offset-1 col-md-3">
+		<h4>Contact Us</h4>
+		<address>
+ 		<strong>Email</strong><br>
+      <a href="mailto:argoeu-project@googlegroups.com" style='color:white;'>argoeu-project[AT]googlegroups.com</a>
+		</address>
+   	</div>
+ 	<div class="col-md-3">
+		<h4>Open development </h4>
+    <p> We follow an open development process. All the repositories of ARGO are hosted on Github under the ARGOeu organization.</p>
+   	</div>
+    <div class="col-md-1"></div>
+      </div>
+      </div><!--footer_top-->
+      <div class="footer_bottom_holder">
+	<div class="footer_bottom">
+    <div class="textwidget"><span>Copyright &copy; 2014 - 2015 GRNET S.A. </span>
+    </div>
+  <div class="textwidget"><span>
+      <a href='http://validator.w3.org/check?uri=referer' target='blank'>
+        <img src='/shared/images/validated.png' alt='HTML5 - CSS3 - W3C Validated' title='HTML5 - CSS3 - W3C Validated' height="30"/>
+       </a>
+    </span>
+  </div>
+	</div>
+     </div>	
+    </footer>
+    <a href="#" class="back-to-top" style="display: inline;">
+      <i class="fa fa-arrow-circle-up"></i>
+    </a>
+<!--/footer -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/shared/js/jquery.min.js"></script>
+    <script src="/shared/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/shared/js/ie10-viewport-bug-workaround.js"></script>
+      <script src="/shared/js/jquery.easing.1.3.js"></script>
+  <script src="/shared/js/jquery.animate-enhanced.min.js"></script>
+  <script src="/shared/js/jquery.superslides.min.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    $(function() {
+    
+
+      $('#slides').superslides({
+        hashchange: false,
+        play: 10000
+      });
+
+        var offset = 250;
+        var duration = 300;
+        jQuery(window).scroll(function() {
+          if (jQuery(this).scrollTop() > offset) {
+            jQuery('.back-to-top').fadeIn(duration);
+          } else {
+            jQuery('.back-to-top').fadeOut(duration);
+          }
+        });
+        jQuery('.back-to-top').click(function(event) {
+          event.preventDefault();
+          jQuery('html, body').animate({scrollTop: 0}, duration);
+          return false;
+        })
+      });
+
+  </script>
+
+</body>
+</html>

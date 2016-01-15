@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - Overview | ARGO</title>
+  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +33,7 @@
   <![endif]-->
 </head>
 
-<body class="api">
+<body class="documentation">
   <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -75,11 +75,11 @@
 
   <div class='container-fluid' >
     <div class='row'>
-      <div class="col-md-2 sidebar" >
-                 <div class="list-group" >	
+        <div class="col-md-2 sidebar">
+                   <div class="list-group" >	
             <a class="list-group-item disabled blue" href="/overview/">Documentation</a>
-          	
-            <a class="list-group-item active" href="/overview/">Overview</a>
+          
+            <a class="list-group-item" href="/overview/">Overview</a>
           
             <a class="list-group-item disabled blue" href="/guides/installation/">Installation</a>
           
@@ -99,8 +99,8 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-            
-            <a class="list-group-item " href="/guides/argo-compute-engine/"><em class="fa fa-cog"></em> Compute Engine</a>
+          	
+            <a class="list-group-item active " href="/guides/argo-compute-engine/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
   	      
@@ -171,62 +171,108 @@
 
 
 
-      </div><!--sidebar-->
-      <div class="col-md-8 main">
-        	
-          <h1 class="highlight">
-          
-            <em class='fa fa-file-text-o'></em> 
-          
-          Overview</h1>
-        
-        <p class="lead"> ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized Research Infrastructures. The ARGO software stack is comprised of the following components (products)</p>
-        
-
-        <div style="padding:30px;" class="marketing">
-          <div class="row">
-            <div class="col-lg-4">
-              <em class="fa fa-refresh fa-6 fa-blue"></em>
-              <h2>EGI connectors</h2> 
-              <p>This document describes the sync components.</p>
-              <p><a role="button" href="/guides/sync/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-check-square-o fa-6 fa-blue"></em>
-              <h2>Poem service</h2> 
-              <p>This document describes the POEM service for ARGO framework.</p>
-              <p><a role="button" href="/guides/poem/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-send-o fa-6 fa-blue"></em>  
-              <h2>Consumer</h2> 
-              <p>Data is collected using an ActiveMQ message broker network.</p>
-              <p><a role="button" href="/guides/consumer/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
-          <div class="row">
-            <div class="col-lg-4">
-              <em class="fa fa-cog fa-6 fa-blue"></em>
-              <h2>Compute Engine</h2> 
-              <p>This document describes the Compute service</p>
-              <p><a role="button" href="/guides/argo-compute-engine/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-cogs fa-6 fa-blue"></em>
-              <h2>API</h2> 
-              <p>This document describes the API service</p>
-              <p><a role="button" href="/guides/api/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-connectdevelop fa-6 fa-blue"></em>  
-              <h2>Web UI</h2> 
-              <p>using the HTTP application protocol.</p>
-              <p><a role="button" href="/guides/webui/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
         </div>
+        <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cog'></i> 
+            
+            Compute Engine Info</h1>
+          
+          <p class="lead"> The ARGO Compute Engine is responsible for computing the availability and reliability of services.</p>
+          
+<p>The ARGO Compute Engine is responsible for computing the availability and reliability of services using:</p>
 
+<ul>
+  <li>the metric results that are collected from monitoring engine(s)</li>
+  <li>information about the topology of the infrastructure</li>
+  <li>information about scheduled downtimes (optional)</li>
+  <li>information about the importance of each entity in the infrastructure (optional)</li>
+</ul>
 
+<p>The availability and reliability results produced by the ARGO Compute Engine can be retrieved through the ARGO Web API.</p>
+
+<h2 id="how-the-argo-compute-engine-works">How the ARGO Compute Engine works</h2>
+
+<p>The ARGO Compute Engine is designed to be multi-tenant, meaning that each installation of the ARGO Compute Engine can support multiple tenants - customers. Each tenant must have at least one <em>Report Configuration</em>,  which includes the topology of the monitored infrastructure, information about the monitored services and their metrics and the metric and availability profiles that will be applied in order to calculate the status, the availability and the reliability.</p>
+
+<p>From the ARGO Compute Engine point of view, a monitored infrastructure is comprised by service instances of specific <em>Service Types</em> running on specific endpoints, which are called <em>Service Endpoints</em>. For example a <em>Service Type</em> of  web server listening on port 443 on the host www.example.com, is a <em>Service Endpoint</em>. So a <em>Service Endpoint</em> is defined as the combination of an FQDN and <em>Service Type</em>. Each <em>Service Type</em> can have a defined set of <em>metrics</em>, which are explicit tests that we check in order to asses the status of a <em>Service Endpoint</em>.  The ARGO Compute Engine receives as input the results from each metric tested against the monitored <em>Service Endpoints</em>.</p>
+
+<p>The ARGO Compute Engine allows the users to model their infrastructure by defining multiple level of <em>Groups</em>, starting from groups of <em>Service Endpoints</em> and moving to higher level groups of groups. In this way it is easy to model different infrastructure architectures.</p>
+
+<p>For example a user with an infrastructure on top of AWS using VPC can model the infrastructure in the following way:</p>
+
+<pre><code>- Global Group                  # Level 5
+  - Regional Group              # Level 4
+    - VPC                       # Level 3
+      - Availability Group      # Level 2
+	- Service Types         # Level 1
+	  -  Service Endpoints  # Level 0
+</code></pre>
+
+<p>Another example comes from the European Grid Infrastructure (EGI), in which the infrastructure model is the following:</p>
+
+<pre><code>- EGI # Level 4                       |  - VO # Level 2
+  - NGI # Level 3                     |    - Service Type # Level 1
+    - Site # Level 2                  |      - Service Endpoints # Level 0
+      - Service Types # Level 1       |
+	- Service Endpoints # Level 0 |
+</code></pre>
+
+<blockquote>
+  <p><em>More information about <a href="http://www.egi.eu/infrastructure/">European Grid Infrastructure</a>, the <a href="http://www.egi.eu/community/ngis/">NGIs</a> and the <a href="http://www.egi.eu/community/vos/">VOs</a> can be found on the website of <a href="http://www.egi.eu">EGI</a></em></p>
+</blockquote>
+
+<h3 id="status-computations">Status computations</h3>
+
+<p>The ARGO Compute Engine expects to receive a stream metric results produced by a monitoring engine. A metric result is the output of a specific test that was run at a specific time against a specific service endpoint. A metric result includes at least:</p>
+
+<ul>
+  <li>a timestamp showing when the given monitoring probe was executed</li>
+  <li>the name of the service type (e.g. HTTPS Web Server)</li>
+  <li>the name of the hostname on which the service is running (e.g. www.example.com)</li>
+  <li>the name of the metric that was tested (e.g. TCP_CHECK)</li>
+  <li>the status result that was produced by the monitoring probe (e.g. OK)</li>
+</ul>
+
+<p>An example metric result in is shown below:</p>
+
+<pre><code>{
+  "timestamp": "2013-05-02T10:53:38Z",
+  "metric": "org.bdii.Freshness",
+  "service_type": "Site-BDII",
+  "hostname": "bdii.afroditi.hellasgrid.gr",
+  "status": "OK"
+}
+</code></pre>
+
+<p>The ARGO Compute Engine receives this stream of metric results and creates a set of status timelines for each service endpoint and metric tuple. The ARGO Compute Engine computes the status of the <em>Service Endpoints</em>  based on the results from each defined <em>metric</em> for the <em>Service Type</em> of the <em>Service Endpoints</em>, which have been checked within a time frame that matches the frequency with which the probe is executed. The ARGO Compute Engine requires at least three states to be defined:</p>
+
+<ul>
+  <li>A <code>DOWNTIME</code> state, which is used in order to fill the timelines when downtime information is applied.</li>
+  <li>A <code>MISSING</code> state, which is used in order to fill the timelines when a metric isn’t present in the consumer data for a period of time</li>
+  <li>An <code>UNKNOWN</code> state, which is used in order fill the timelines when a re-computation exclusion is applied</li>
+</ul>
+
+<p>A default ARGO Compute Engine installation comes with seven statuses predefined, in alignment with the statuses produced by a Nagios compatible monitoring engine: <code>"OK"</code>, <code>"WARNING"</code>, <code>"UNKNOWN"</code>, <code>"MISSING"</code>, <code>"CRITICAL"</code> and <code>"DOWNTIME"</code>. The computed service statuses generate status timelines for each service endpoint.</p>
+
+<p>So for example, let’s assume that the service we are interested in is the website https://www.example.com and that there are two metrics defined for a secure website, the <code>TCP_CHECK</code> and <code>CHECK_CERTIFICATE_VALIDITY</code>. In order for the website to be considered as OK, the results for both the tcp check and the check for the certificate validity must be OK. How the individual results of each <em>metric</em> for a <em>Service Type</em> are combined in order to compute the status of the <em>Service Endpoint</em>, is defined in what we call <em>truth tables</em>. More information about the truth tables can be found in the ARGO Compute Engine configuration document.</p>
+
+<h3 id="availability-and-reliability-computations">Availability and reliability computations</h3>
+
+<p>In order to understand how service availability and reliability is computed, it is important to understand what availability and reliability mean:</p>
+
+<ul>
+  <li>Service Availability is the fraction of time a service was in the UP Period during the known interval in a given period</li>
+  <li>Service Reliability is the ratio of the time interval a service was UP over the time interval it was supposed (scheduled) to be UP in the given period.</li>
+</ul>
+
+<p>Before computing the availability and reliability of a given service or group, the ARGO Compute Engine computes the status timelines for that service or group by aggregating the individual status results of the lower level groups or service endpoints. How these aggregations are taking place at each group level, is defined by user defined algorithms called <em>metric profiles</em> for the status computations and <em>availability profiles</em> for the availability and reliability computations. More information about the definition of the <em>metric profiles</em>  and the <em>availability profiles</em> can be found in the ARGO Compute Engine configuration document.</p>
+
+<p>The ARGO Compute Engine computes hourly availability and reliability for  <em>Service Endpoints</em> based on the individual statuses of each <em>Service Endpoint</em> for a specific time period. It computes the percentage of the time the <em>Service Endpoint</em> was available within that period (Availability). In order to compute the Reliability of a <em>Service Endpoint</em>, it takes into account the declared <em>Downtimes</em> for the given <em>Service Endpoint</em>.</p>
+
+<p>The availability and reliability of the <em>Group</em> of <em>Service Endpoints</em> and any other higher level grouping are computed by using the aggregated status timelines. In these computations, the ARGO Compute Engine can take into account custom factors such as the importance of each <em>Service Endpoint</em> and <em>Group</em>. These custom factors are used as weights when the aggregated percentages are computed. More information about the custom factors can be found in the ARGO Compute Engine configuration document.</p>
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>

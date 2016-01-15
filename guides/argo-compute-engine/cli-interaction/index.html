@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - Overview | ARGO</title>
+  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +33,7 @@
   <![endif]-->
 </head>
 
-<body class="api">
+<body class="documentation">
   <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -75,11 +75,11 @@
 
   <div class='container-fluid' >
     <div class='row'>
-      <div class="col-md-2 sidebar" >
-                 <div class="list-group" >	
+        <div class="col-md-2 sidebar">
+                   <div class="list-group" >	
             <a class="list-group-item disabled blue" href="/overview/">Documentation</a>
-          	
-            <a class="list-group-item active" href="/overview/">Overview</a>
+          
+            <a class="list-group-item" href="/overview/">Overview</a>
           
             <a class="list-group-item disabled blue" href="/guides/installation/">Installation</a>
           
@@ -99,8 +99,8 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-            
-            <a class="list-group-item " href="/guides/argo-compute-engine/"><em class="fa fa-cog"></em> Compute Engine</a>
+          	
+            <a class="list-group-item active " href="/guides/argo-compute-engine/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
   	      
@@ -118,7 +118,7 @@
 
  
  	    
-              <a class="list-group-item-level2"  href="/guides/argo-compute-engine/cli-interaction/">
+              <a class="list-group-item-level2 active"  href="/guides/argo-compute-engine/cli-interaction/">
             
             <em class="fa fa-cog"></em> Compute Engine CLI </a>
 
@@ -171,61 +171,199 @@
 
 
 
-      </div><!--sidebar-->
-      <div class="col-md-8 main">
-        	
-          <h1 class="highlight">
-          
-            <em class='fa fa-file-text-o'></em> 
-          
-          Overview</h1>
-        
-        <p class="lead"> ARGO is a lightweight service for Service Level Monitoring designed for medium and large sized Research Infrastructures. The ARGO software stack is comprised of the following components (products)</p>
-        
-
-        <div style="padding:30px;" class="marketing">
-          <div class="row">
-            <div class="col-lg-4">
-              <em class="fa fa-refresh fa-6 fa-blue"></em>
-              <h2>EGI connectors</h2> 
-              <p>This document describes the sync components.</p>
-              <p><a role="button" href="/guides/sync/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-check-square-o fa-6 fa-blue"></em>
-              <h2>Poem service</h2> 
-              <p>This document describes the POEM service for ARGO framework.</p>
-              <p><a role="button" href="/guides/poem/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-send-o fa-6 fa-blue"></em>  
-              <h2>Consumer</h2> 
-              <p>Data is collected using an ActiveMQ message broker network.</p>
-              <p><a role="button" href="/guides/consumer/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
-          <div class="row">
-            <div class="col-lg-4">
-              <em class="fa fa-cog fa-6 fa-blue"></em>
-              <h2>Compute Engine</h2> 
-              <p>This document describes the Compute service</p>
-              <p><a role="button" href="/guides/argo-compute-engine/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-cogs fa-6 fa-blue"></em>
-              <h2>API</h2> 
-              <p>This document describes the API service</p>
-              <p><a role="button" href="/guides/api/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <em class="fa fa-connectdevelop fa-6 fa-blue"></em>  
-              <h2>Web UI</h2> 
-              <p>using the HTTP application protocol.</p>
-              <p><a role="button" href="/guides/webui/" class="btn btn-default">View details »</a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
         </div>
+        <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cog'></i> 
+            
+            Compute - Cli interaction</h1>
+          
+          <p class="lead"> This document describes the Executable Scripts for cli interaction with the compute engine</p>
+          
+<h2 id="executable-scripts-for-cli-interaction-with-the-compute-engine">Executable Scripts for cli interaction with the compute engine</h2>
 
+<p>In the folder <code>/usr/libexec/ar-compute/bin/</code> reside executable scripts that can be used for uploading metric data and sync data to the hadoop cluster (HDFS Filesystem). . </p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Script</th>
+      <th>Description</th>
+      <th>Shortcut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>upload_metric.py</td>
+      <td>The specific script is used in order to upload daily metric data (relative to a tenant) to HDFS.</td>
+      <td><a href="#metric">Description</a></td>
+    </tr>
+    <tr>
+      <td>upload_sync.py</td>
+      <td>The specific script is used in order to upload daily sync data (relative to a tenant and a job) to HDFS.</td>
+      <td><a href="#sync">Description</a></td>
+    </tr>
+    <tr>
+      <td>mongo_clean_ar.py</td>
+      <td>The specific script is used if necessary to clean a/r data from the datastore regarding for specified tenant,report and date.</td>
+      <td><a href="#ar">Description</a></td>
+    </tr>
+    <tr>
+      <td>mongo_clean_status.py</td>
+      <td>The specific script is used if necessary to clean status detail data from the datastore for specified tenant,report and date.</td>
+      <td><a href="#status">Description</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="metric"></a></p>
+
+<h3 id="uploadmetricpy">upload_metric.py</h3>
+
+<p>This utility is used in order to upload the daily metric data for a specified date and tenant to the ARGO Compute Engine.</p>
+
+<h4 id="full-path">Full path</h4>
+
+<pre><code>/usr/libexec/ar-compute/bin/upload_metric.py
+</code></pre>
+
+<h4 id="parameters">Parameters</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>-d --date {YYYY-MM-DD}</code></td>
+      <td>specifies the date of the metric data we want to upload  (e.g. MY-SITE-A)</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-t --tenant {STRING}</code></td>
+      <td>a case-sensitive string specifying the name of the tenant</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="sync"></a></p>
+
+<h3 id="uploadsyncpy">upload_sync.py</h3>
+
+<p>This utility is used in order to upload the daily sync data for a specified date and tenant to the ARGO Compute Engine.</p>
+
+<h4 id="full-path-1">Full path</h4>
+
+<pre><code>/usr/libexec/ar-compute/bin/upload_sync.py
+</code></pre>
+
+<h4 id="parameters-1">Parameters</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>-d --date {YYYY-MM-DD}</code></td>
+      <td>the date of the daily sync data we want to upload</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-t --tenant {STRING}</code></td>
+      <td>the name of the tenant. Case sensitive.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-j --job {STRING}</code></td>
+      <td>the name of the job. Case sensitive</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="ar"></a></p>
+
+<h3 id="mongocleanarpy">mongo_clean_ar.py</h3>
+
+<p>This utility is used in order to delete availability and reliability data from the datastore, for a specified tenant,report and date. It is called automatically before each A/R computation, but can be ran also manually. The script reports back the number of records and from which collections these records are removed.</p>
+
+<h4 id="full-path-2">Full path</h4>
+
+<pre><code>/usr/libexec/ar-compute/bin/mongo_clean_ar.py
+</code></pre>
+
+<h4 id="parameters-2">Parameters</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>-d --date {YYYY-MM-DD}</code></td>
+      <td>the date (day) for which to delete the availability and reliability data</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-t --tenant {STRING}</code></td>
+      <td>the name of the tenant. Case sensitive.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-j --report {STRING}</code></td>
+      <td>the id (uuid format) of the report that results belong to. Case sensitive</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="status"></a></p>
+
+<h3 id="mongocleanstatuspy">mongo_clean_status.py</h3>
+
+<p>This utility can be used in order to delete the status detail data from the datastore, for a specified tenant,report and date.</p>
+
+<h4 id="full-path-3">Full path</h4>
+
+<pre><code>/usr/libexec/ar-compute/bin/mongo_clean_status.py
+</code></pre>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>-d --date {YYYY-MM-DD}</code></td>
+      <td>the date (day) for which to delete the availability and reliability data</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-t --tenant {STRING}</code></td>
+      <td>the name of the tenant. Case sensitive.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-j --report {STRING}</code></td>
+      <td>the id (uuid format) of the report that results belong to. Case sensitive</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
 
 
         </div><!--col-md-8-->
