@@ -222,18 +222,30 @@
 
 <h4 id="full-path">Full path</h4>
 
-<p><code>
-/usr/libexec/ar-compute/bin/upload_metric.py
-</code></p>
+<pre><code>/usr/libexec/ar-compute/bin/upload_metric.py
+</code></pre>
 
 <h4 id="parameters">Parameters</h4>
 
-<ul>
-  <li>
-<code>-d --date {YYYY-MM-DD}</code> specifies the date of the metric data we want to upload (Required)</li>
-  <li>
-<code>-t --tenant {STRING}</code> a case-sensitive string specifying the name of the tenant (Required)</li>
-</ul>
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>-d --date {YYYY-MM-DD}</code></td>
+      <td>specifies the date of the metric data we want to upload  (e.g. MY-SITE-A)</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-t --tenant {STRING}</code></td>
+      <td>a case-sensitive string specifying the name of the tenant</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
 
 <p><a id="sync"></a></p>
 
@@ -243,20 +255,35 @@
 
 <h4 id="full-path-1">Full path</h4>
 
-<p><code>
-/usr/libexec/ar-compute/bin/upload_sync.py
-</code></p>
+<pre><code>/usr/libexec/ar-compute/bin/upload_sync.py
+</code></pre>
 
 <h4 id="parameters-1">Parameters</h4>
 
-<ul>
-  <li>
-<code>-d --date {YYYY-MM-DD}</code> the date of the daily sync data we want to upload (Required)</li>
-  <li>
-<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
-  <li>
-<code>-j --job {STRING}</code> the name of the job. Case sensitive (Required)</li>
-</ul>
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>-d --date {YYYY-MM-DD}</code></td>
+      <td>the date of the daily sync data we want to upload</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-t --tenant {STRING}</code></td>
+      <td>the name of the tenant. Case sensitive.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-j --job {STRING}</code></td>
+      <td>the name of the job. Case sensitive</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
 
 <p><a id="ar"></a></p>
 
@@ -266,20 +293,35 @@
 
 <h4 id="full-path-2">Full path</h4>
 
-<p><code>
-/usr/libexec/ar-compute/bin/mongo_clean_ar.py
-</code></p>
+<pre><code>/usr/libexec/ar-compute/bin/mongo_clean_ar.py
+</code></pre>
 
 <h4 id="parameters-2">Parameters</h4>
 
-<ul>
-  <li>
-<code>-d --date {YYYY-MM-DD}</code> the date (day) for which to delete the availability and reliability data (Required)</li>
-  <li>
-<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
-  <li>
-<code>-r --report {STRING}</code> the id (uuid format) of the report that results belong to. Case sensitive (Required)</li>
-</ul>
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>-d --date {YYYY-MM-DD}</code></td>
+      <td>the date (day) for which to delete the availability and reliability data</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-t --tenant {STRING}</code></td>
+      <td>the name of the tenant. Case sensitive.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-j --report {STRING}</code></td>
+      <td>the id (uuid format) of the report that results belong to. Case sensitive</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
 
 <p><a id="status"></a></p>
 
@@ -288,19 +330,36 @@
 <p>This utility can be used in order to delete the status detail data from the datastore, for a specified tenant,report and date.</p>
 
 <h4 id="full-path-3">Full path</h4>
-<p><code>
-/usr/libexec/ar-compute/bin/mongo_clean_status.py
-</code>
-#### Parameters</p>
 
-<ul>
-  <li>
-<code>-d --date {YYYY-MM-DD}</code> the date for which to delete the status detail data from the datastore (Required)</li>
-  <li>
-<code>-t --tenant {STRING}</code> the name of the tenant. Case sensitive. (Required)</li>
-  <li>
-<code>-r --report {STRING}</code> the id (uuid format) of the  report that results belong to. Case sensitive (Required)</li>
-</ul>
+<pre><code>/usr/libexec/ar-compute/bin/mongo_clean_status.py
+</code></pre>
+
+<h4 id="parameters-3">Parameters</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>-d --date {YYYY-MM-DD}</code></td>
+      <td>the date (day) for which to delete the availability and reliability data</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-t --tenant {STRING}</code></td>
+      <td>the name of the tenant. Case sensitive.</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>-j --report {STRING}</code></td>
+      <td>the id (uuid format) of the report that results belong to. Case sensitive</td>
+      <td><code>YES</code></td>
+    </tr>
+  </tbody>
+</table>
 
 
         </div><!--col-md-8-->
