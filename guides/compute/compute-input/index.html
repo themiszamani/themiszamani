@@ -187,14 +187,12 @@
 <h2 id="input-data">Input Data</h2>
 
 <table>
-  <thead>
-    <tr>
-      <th>Input Data</th>
-      <th>Description</th>
-      <th>Shortcut</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Input Data</td>
+      <td>Description</td>
+      <td>Shortcut</td>
+    </tr>
     <tr>
       <td>Metric data</td>
       <td>Metric data come in the form of avro files and contain timestamped status information about the hostname,service and specific checks (metrics) that are being monitored</td>
@@ -202,7 +200,7 @@
     </tr>
     <tr>
       <td>Topology files</td>
-      <td>Topology information is provided by two files: a) groups of endpoints, and b)groups of groups.</td>
+      <td>Topology information is provided by two files: a) groups of endpoints, and b) groups of groups.</td>
       <td><a href="#topology">Description</a></td>
     </tr>
     <tr>
@@ -225,25 +223,19 @@
 
 <p><a id="metric"></a></p>
 
-<p>«««&lt; HEAD
-## Metric data
-=======
-## Metric Data
-»»»&gt; a10ff30c0a05aebc62166afcdba0b42b3ef0b642</p>
+<h2 id="metric-data">Metric data</h2>
 
 <p>The main engine’s input is the metric data collected from the argo-consumer component. These files (according to the default configuration of ar-consumer component) reside to the <code>/var/lib/ar-consumer/</code> folder.</p>
 
 <p>Metric data come in the form of avro files and contain timestamped status information about the hostname,service and specific checks (metrics) that are being monitored. A typical item of information in the metric data avro file contains the following fields:</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>hostname</code></td>
       <td>The fqdn address of the host being monitored</td>
@@ -322,39 +314,19 @@
 
 <p>This core metric data set is processed and transformed with additional information provided by the argo-connector components. Additional information includes topology, grouping of services, weight factors, lists relevant metrics to be considered, etc. This information is provided per-tenant/per-job in the following path</p>
 
-<p><code>
-/var/lib/ar-sync/{tenant-name}/{job-name}
-</code></p>
+<pre><code>/var/lib/ar-sync/{tenant-name}/{job-name}
+</code></pre>
 
 <p>for example for <code>tenant-name=T1</code> and <code>job-name=JobA</code> the correct path with the sync files is as follows</p>
 
-<p><code>
-/var/lib/ar-sync/T1/JobA
-</code></p>
+<pre><code>/var/lib/ar-sync/T1/JobA
+</code></pre>
 
 <p>Some sync files that concern the whole enviroment such as the downtime information are provided once in the root ar-sync folder <code>/var/lib/ar-sync/</code></p>
 
 <p><a id="topology"></a></p>
 
 <h3 id="topology-files">Topology files</h3>
-<p>«««&lt; HEAD</p>
-
-<h1 id="topology-information-is-provided-by-two-files">Topology information is provided by two files:</h1>
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <blockquote>
-        <blockquote>
-          <blockquote>
-            <blockquote>
-              <p>a10ff30c0a05aebc62166afcdba0b42b3ef0b642</p>
-            </blockquote>
-          </blockquote>
-        </blockquote>
-      </blockquote>
-    </blockquote>
-  </blockquote>
-</blockquote>
 
 <p>Topology information is provided by two files:</p>
 
@@ -370,14 +342,12 @@
 <p>The file uses avro format and contains the following fields:</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>group</code></td>
       <td>The name of the group (e.g. MY-SITE-A)</td>
@@ -435,14 +405,12 @@
 <p>The file uses avro format and contains the following fields:</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>profile</code></td>
       <td>Profile name</td>
@@ -479,14 +447,12 @@
 <p>Below is the full description of the avro specification:</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>group</code></td>
       <td>The name of the group (e.g. MY-NATIONAL-GROUP)</td>
@@ -532,24 +498,7 @@ group: 'Europe', type: 'continents' subgroup: 'France'
 
 <p>Below is the full avro specification of the group_groups.avro file:</p>
 
-<p>«««&lt; HEAD</p>
-
-<pre><code>{"namespace": "argo.avro",
- "type": "record",
- "name": "group_groups",
- "fields": [
-    {"name": "type", "type": "string"},
-    {"name": "group", "type": "string"},
-    {"name": "subgroup", "type": "string"},
-    {"name": "tags", "type": {"name" : "Tags",
-	                       "type" : "record",
-	                       "fields" : [
-	                          {"name" : "scope", "type" : "string"},
-	                          {"name" : "infrastructure", "type" : "string"},
-	                          {"name" : "certification", "type" : "string"}
-	                        ]}}
- ] =======
-{
+<pre><code>{
   "namespace": "argo.avro",
   "type": "record",
   "name": "group_groups",
@@ -564,7 +513,7 @@ group: 'Europe', type: 'continents' subgroup: 'France'
 	      }
       ]
     }
-  ] &gt;&gt;&gt;&gt;&gt;&gt;&gt; a10ff30c0a05aebc62166afcdba0b42b3ef0b642
+  ]
 }
 </code></pre>
 
@@ -577,14 +526,12 @@ group: 'Europe', type: 'continents' subgroup: 'France'
 <p>When wanting to look on the whole status information of the service for a given time it is possible to take into account any number of the metrics available (for e.g. the most critical ones) and compose a view of the service based on those specific metrics selected. This view is dictated by a profile, actually a metric profile which contains information about the service and which metrics are relevant. The metric profile is provided as an avro type file containing the following fields:</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>profile</code></td>
       <td>Name of the profile</td>
@@ -636,14 +583,12 @@ group: 'Europe', type: 'continents' subgroup: 'France'
 <p>Some group items have an associated weight information (factors) on how they contribute when are being aggregated on higher level groups. For example hepspec weights for specific sites when they are aggregated on their contribution on national level groups. The weight information is provided in an avro file format containing the following fields:</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>type</code></td>
       <td>Type of the weight (for e.g. hepspec)</td>
@@ -683,14 +628,12 @@ group: 'Europe', type: 'continents' subgroup: 'France'
 <p>Downtime information: the period (start_time –&gt; end_time) in which a specific service endpoint was in scheduled downtime. This information resided in the corresponding downtime avro file. The file has the following fields:</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>hostname</code></td>
       <td>The hostname fqdn info part of the specific service endpoint</td>
