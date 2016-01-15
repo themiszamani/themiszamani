@@ -185,14 +185,12 @@
 <h2 id="overview">Overview</h2>
 
 <table>
-  <thead>
-    <tr>
-      <th>Job Configuration</th>
-      <th>Description</th>
-      <th>Shortcut</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Job Configuration</td>
+      <td>Description</td>
+      <td>Shortcut</td>
+    </tr>
     <tr>
       <td><code>/etc/ar-compute-engine.conf</code></td>
       <td>This file includes various global parameters used by the engine which are organized in sections, as described next:</td>
@@ -253,15 +251,13 @@
 <h4 id="default"><code>[default]</code></h4>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>mongo_host</code></td>
       <td>String</td>
@@ -306,15 +302,13 @@
 <p>In this section we declare the specific logging options for the compute engine</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>log_mode</code></td>
       <td>String</td>
@@ -342,32 +336,57 @@
   </tbody>
 </table>
 
-<p>For example at <code>hadoop_log_root</code> if the available appenders in the log4j.properties file are SYSLOG and console the above line will be:
-   <code>
-   hadoop_log_root=SYSLOG,console
-  </code></p>
+<p>For example at <code>hadoop_log_root</code> if the available appenders in the log4j.properties file are SYSLOG and console the above line will be:</p>
+
+<pre><code>   hadoop_log_root=SYSLOG,console
+</code></pre>
 
 <h4 id="jobs"><code>[jobs]</code></h4>
 
 <p>In this section we declare the specific tenant used in the installation and the set of jobs available (as we described them above in the <a href="#tenant-and-report-configuration"><em>“Tenant and Report configuration”</em></a>).</p>
 
-<p>| Name | Type | Description | Required|
-|——|——|————-|———|
-|<code>tenants</code>| List | Comma separated list with the names of the available tenants. For eg: <code>tenants=tenantFoo,tenantBar</code>|<code>YES</code>|
-| <code>{tenant-name}_jobs</code>| List | For each tenant: a comma separated job list with the names of the available reports to be produced. Names are case-sensitive. Each tenant can have multiple report configurations. Each report configuration is defined by a set of  topologies, metric profiles, weights etc. For eg: <code>tenantFoo_jobs=Major,Minor,ExampleA,Critical</code>| <code>YES</code>|
-| <code>{tenant-name}_prefilter</code>| Path(String) | For each tenant: An optional attribute that specifies the path of a prefilter wrapper - if and only if the tenant requires it. For eg: <code>tenantFoo_prefilter=/path/to/the/prefilter/script</code>| <code>NO</code>|
-#### <code>[sampling]</code></p>
+<table>
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td><code>tenants</code></td>
+      <td>List</td>
+      <td>Comma separated list with the names of the available tenants. For eg: <code>tenants=tenantFoo,tenantBar</code>
+</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>{tenant-name}_jobs</code></td>
+      <td>List</td>
+      <td>For each tenant: a comma separated job list with the names of the available reports to be produced. Names are case-sensitive. Each tenant can have multiple report configurations. Each report configuration is defined by a set of  topologies, metric profiles, weights etc. For eg: <code>tenantFoo_jobs=Major,Minor,ExampleA,Critical</code>
+</td>
+      <td><code>YES</code></td>
+    </tr>
+    <tr>
+      <td><code>{tenant-name}_prefilter</code></td>
+      <td>Path(String)</td>
+      <td>For each tenant: An optional attribute that specifies the path of a prefilter wrapper - if and only if the tenant requires it. For eg: <code>tenantFoo_prefilter=/path/to/the/prefilter/script</code>
+</td>
+      <td><code>NO</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="sampling"><code>[sampling]</code></h4>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+      <td>Required</td>
+    </tr>
     <tr>
       <td><code>s_period</code></td>
       <td>minutes</td>
@@ -441,13 +460,11 @@
 </blockquote>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+    </tr>
     <tr>
       <td><code>"default_down": "DOWNTIME"</code></td>
       <td>Means that whenever compute engine needs to produce a status for a scheduled downtime will mark it using the “DOWNTIME” state.</td>
@@ -510,13 +527,11 @@
 <p>In the above snippet we have declared the name of the tenant, the name of the job, the name of the specific availability profile used in the job. Also the type of endpoint grouping that will be used is declared here and the type of upper hierarchical grouping. Also if available here is declared the type of weight factor used for upper level A/R aggregations</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Description</td>
+    </tr>
     <tr>
       <td><code>"tenant"</code></td>
       <td>This field is explicitly linked to the value of the tenant declaration of the global ar-compute-engine.conf file <a href="/#parameters-for-section-jobs">link to description above</a>
@@ -572,14 +587,12 @@
 <p>The information in the availability profile JSON file is automatically picked up by the compute-engine during computations.</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
   <tbody>
+    <tr>
+      <td>Name</td>
+      <td>Type</td>
+      <td>Description</td>
+    </tr>
     <tr>
       <td><code>"name"</code></td>
       <td>string</td>
