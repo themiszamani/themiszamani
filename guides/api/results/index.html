@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - API documentation | ARGO</title>
+  <title>ARGO Availability and Reliability Monitoring - </title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,7 +121,7 @@
 
 	  </div>
           
-            <a class="list-group-item active" href="/guides/api/" id='caretclick' data-caret='open'>
+            <a class="list-group-item" href="/guides/api/" id='caretclick' data-caret='open'> 
           
           <em class="fa fa-cogs"></em> API <span class="caret" ></span></a>
 
@@ -147,7 +147,7 @@
             <em class="fa fa-cogs"></em> Recalculation Requests</a>
 
             
-              <a class="list-group-item-level2 active"  href="/guides/api/availabilityprofs/">
+              <a class="list-group-item-level2"  href="/guides/api/availabilityprofs/">
             
             <em class="fa fa-cogs"></em> API - Availability Profiles</a>
 
@@ -169,14 +169,8 @@
 
         </div>
         <div class="col-md-8 main">
-          	
-            <h1 class="highlight">
-            
-              <i class='fa fa-cogs'></i> 
-            
-            API - Availability Profiles</h1>
           
-          <p class="lead"> API Calls for managing Availability Profiles</p>
+          <p class="lead"> </p>
           <h2 id="api-data">API Data</h2>
 
 <table>
@@ -197,374 +191,413 @@
 </table>
 
 
-          
-<h2 id="api-calls">API Calls</h2>
+          <h1 id="api-calls">API Calls</h1>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Shortcut</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Shortcut</td>
+      <td>GET: List Availability and Reliability results for an endpoint group</td>
+      <td>This method retrieves the results of a specified endpoint group or multiple endpoint groups of a specific type that where computed based on a given report. Results can be retrieved on daily or monthly granularity.</td>
+      <td><a href="#1">Description</a></td>
     </tr>
     <tr>
-      <td>GET: List Availability Profiles</td>
-      <td>This method can be used to retrieve a list of current Availability profiles used by the Compute Engine.</td>
-      <td><a href="#1"> Description</a></td>
+      <td>GET: List Availability and Reliability results for a group of endpoint groups</td>
+      <td>This method retrieves the results of a specified group of endpoint group or multiple groups of endpoint groups of a specific type that where computed based on a given report. Results can be retrieved on daily or monthly granularity.</td>
+      <td><a href="#2">Description</a></td>
     </tr>
     <tr>
-      <td>POST: Create a new availability profile</td>
-      <td>This method can be used to insert a new Availability Profile onto the Compute Engine.</td>
-      <td><a href="#2"> Description</a></td>
-    </tr>
-    <tr>
-      <td>PUT: Update an existing Availability Profile</td>
-      <td>This method can be used to update an existing Availability Profile onto the Compute Engine.</td>
-      <td><a href="#3"> Description</a></td>
-    </tr>
-    <tr>
-      <td>DELETE: Delete an availability profile</td>
-      <td>This method can be used to delete an existing Availability Profile.</td>
-      <td><a href="#4"> Description</a></td>
+      <td>GET: List Availability and Reliability results for a Service Flavor</td>
+      <td>This method retrieves the results of a specified service flavor or multiple service flavors that where computed based on a given report. Results can be retrieved on daily or monthly granularity.</td>
+      <td><a href="#3">Description</a></td>
     </tr>
   </tbody>
 </table>
 
 <p><a id="1"></a></p>
 
-<h2 id="get-list-availability-profiles">GET: List Availability Profiles</h2>
+<h1 id="get-list-availabilities-and-reliabilities-for-endpoint-groups">GET: List Availabilities and Reliabilities for Endpoint Groups</h1>
 
-<p>This method can be used to retrieve a list of current Availability profiles used by the Compute Engine.</p>
+<p>The following methods can be used to obtain a tenant’s Availability and Reliability result metrics per Endpoint Group. The api authenticates the tenant using the api-key within the x-api-key header. User can specify time granularity (<code>monthly</code> or <code>daily</code>) for retrieved results and also format using the <code>Accept</code> header. Depending on the form of the request the user can request a single endpoint group results or a bulk of endpoint group results filtered by their type and if necessary their “top-level” group.</p>
+
+<h2 id="endpoint-groups">Endpoint Groups</h2>
 
 <h3 id="input">Input</h3>
 
-<pre><code>/AP?[name]&amp;[namespace]
+<pre><code>/results/{report_name}/{endpoint_group_type}?[start_time]&amp;[end_time]&amp;[granularity]
+or
+/results/{report_name}/{endpoint_group_type}/{endpoint_group_name}?[start_time]&amp;[end_time]&amp;[granularity]
+or
+/results/{report_name}/{group_type}/{group_name}/{endpoint_group_type}?[start_time]&amp;[end_time]&amp;[granularity]
+or
+/results/{report_name}/{group_type}/{group_name}/{endpoint_group_type}/{endpoint_group_name}?[start_time]&amp;[end_time]&amp;[granularity]
 </code></pre>
 
-<h4 id="parameters">Parameters</h4>
+<h4 id="query-parameters">Query Parameters</h4>
 
 <table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Type</td>
-      <td>Description</td>
-      <td>Required</td>
-      <td>Default value</td>
-    </tr>
-    <tr>
-      <td><code>name</code></td>
-      <td>Profile name (both name and namespace are needed)</td>
+      <td><code>[start_time]</code></td>
+      <td>UTC time in W3C format</td>
       <td>YES</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code>namespace</code></td>
-      <td>Profile namespace (both name and namespace are needed)</td>
+      <td><code>[end_time]</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>[granularity]</code></td>
+      <td>Granularity of time that will be used to present data. Possible values are <code>monthly</code> or <code>daily</code>
+</td>
+      <td>NO</td>
+      <td><code>daily</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="path-parameters">Path Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>{report_name}</code></td>
+      <td>Name of the report that contains all the information about the profile, filter tags, group types etc.</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{group_name}</code></td>
+      <td>Name of the Group of Endpoint Groups. If no name is specified then all Endpoint Groups regardless of top-level group are retrieved.</td>
+      <td>NO</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{group_type}</code></td>
+      <td>Type of the Group of Endpoint Groups. If no type is specified then all groups are retrieved.</td>
+      <td>NO</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{endpoint_group_name}</code></td>
+      <td>Name of the the Endpoint Group. If no name is specified then all groups are retrieved according to the <code>{endpoint_group_type}</code>.</td>
+      <td>NO</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{endpoint_group_type}</code></td>
+      <td>Type of the the Endpoint Group.</td>
       <td>YES</td>
       <td> </td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="response">Response</h3>
+<h4 id="headers">Headers</h4>
 
-<p>Headers: <code>Status: 200 OK</code></p>
+<h5 id="request">Request</h5>
 
-<h4 id="response-body">Response body</h4>
+<pre><code>x-api-key: "tenant_key_value"
+Accept: "application/xml" or "application/json"
+</code></pre>
+
+<h5 id="response">Response</h5>
+
+<p><code>
+Status: 200 OK
+</code></p>
+
+<h4 id="url">URL</h4>
+
+<pre><code>`/api/v2/results/Report_A/SITE/ST01?start_time=2015-06-20T12:00:00Z&amp;end_time=2015-06-23T23:00:00Z&amp;granularity=daily`
+</code></pre>
+
+<h4 id="response-body">Response Body</h4>
 
 <pre><code>&lt;root&gt;
-  &lt;profile id="some_id" name="name" namespace="namespace" poems="poem_name"&gt;
-    &lt;AND&gt;
-      &lt;OR&gt;
-        &lt;Group service_flavor="A_FLAVOR"/&gt;
-        &lt;Group service_flavor="B_FLAVOR"/&gt;
-        &lt;Group service_flavor="C_FLAVOR"/&gt;
-        &lt;Group service_flavor="D_FLAVOR"/&gt;
-        &lt;Group service_flavor="E_FLAVOR"/&gt;
-      &lt;/OR&gt;
-      &lt;OR&gt;
-        &lt;Group service_flavor="F_FLAVOR"/&gt;
-        &lt;Group service_flavor="G_FLAVOR"/&gt;
-      &lt;/OR&gt;
-      &lt;OR&gt;
-        &lt;Group service_flavor="H_FLAVOR"/&gt;
-      &lt;/OR&gt;
-    &lt;/AND&gt;
-  &lt;/profile&gt;
-  .
-  .
+    &lt;group name="GROUP_A" type="GROUP"&gt;
+	&lt;group name="ST01" type="SITE"&gt;
+	    &lt;results timestamp="2015-06-22" availability="66.7" reliability="54.6" unknown="0" uptime="1" downtime="0"&gt;&lt;/results&gt;
+	    &lt;results timestamp="2015-06-23" availability="100" reliability="100" unknown="0" uptime="1" downtime="0"&gt;&lt;/results&gt;
+	&lt;/group&gt;
+    &lt;/group&gt;
 &lt;/root&gt;
 </code></pre>
 
 <p><a id="2"></a></p>
 
-<h2 id="post-create-a-new-availability-profile">POST: Create a new availability profile</h2>
+<h1 id="get-list-availabilities-and-reliabilities-for-groups-of-endpoint-groups">GET: List Availabilities and Reliabilities for groups of Endpoint Groups</h1>
 
-<p>This method can be used to insert a new Availability Profile onto the Compute Engine.</p>
+<p>The following methods can be used to obtain a tenant’s Availability and Reliability result metrics per Group of Endpoint Groups. The api authenticates the tenant using the api-key within the x-api-key header. User can specify time granularity (<code>monthly</code> or <code>daily</code>) for retrieved results and also format using the <code>Accept</code> header. Depending on the form of the request the user can request a single group of endpoint groups results or a bulk of group of endpoint groups results filtered by their type.</p>
+
+<h2 id="group-of-endpoint-groups">Group of Endpoint groups</h2>
 
 <h3 id="input-1">Input</h3>
 
-<pre><code>/AP
+<pre><code>/results/{report_name}/{group_type}?[start_time]&amp;[end_time]&amp;[granularity]
+or
+/results/{report_name}/{group_type}/{group_name}?[start_time]&amp;[end_time]&amp;[granularity]
 </code></pre>
 
-<h4 id="parameters-json-formatted-string">Parameters (Json formatted string)</h4>
-
-<pre><code>{ 
-  "name" : &lt;name&gt;, 
-  "namespace" :&lt;namespace&gt;, 
-  "poems" : [&lt;POEM profile&gt;],
-  "groups" : [ [&lt;flavor1&gt;, &lt;flavor2&gt;,... ],...,[&lt;flavorN&gt;] ]
-}
-</code></pre>
+<h4 id="query-parameters-1">Query Parameters</h4>
 
 <table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Type</td>
-      <td>Description</td>
-      <td>Required</td>
-      <td>Default value</td>
-    </tr>
-    <tr>
-      <td><code>name</code></td>
-      <td>Profile name (both name and namespace are needed)</td>
+      <td><code>[start_time]</code></td>
+      <td>UTC time in W3C format</td>
       <td>YES</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code>namespace</code></td>
-      <td>Profile namespace (both name and namespace are needed)</td>
+      <td><code>[end_time]</code></td>
+      <td>UTC time in W3C format</td>
       <td>YES</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code>poems</code></td>
-      <td>Low level profile matching checks with service flavors</td>
+      <td><code>[granularity]</code></td>
+      <td>Granularity of time that will be used to present data. Possible values are <code>monthly</code> or <code>daily</code>
+</td>
+      <td>NO</td>
+      <td><code>daily</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="path-parameters-1">Path Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>{report_name}</code></td>
+      <td>Name of the report that contains all the information about the profile, filter tags, group types etc.</td>
       <td>YES</td>
       <td> </td>
     </tr>
     <tr>
-      <td><code>groups</code></td>
-      <td>Group of service flavors groups</td>
-      <td>YES</td>
+      <td><code>{group_type}</code></td>
+      <td>Type of the Group of Endpoint Groups.</td>
+      <td>NO</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{group_name}</code></td>
+      <td>Name of the Group of Endpoint Groups.</td>
+      <td>NO</td>
       <td> </td>
     </tr>
   </tbody>
 </table>
 
-<h4 id="request-headers">Request headers</h4>
+<h4 id="headers-1">Headers</h4>
 
-<pre><code>x-api-key: "shared_key_value"
-Content-Type: application/json
+<h5 id="request-1">Request</h5>
+
+<pre><code>x-api-key: "tenant_key_value"
+Accept: "application/xml" or "application/json"
 </code></pre>
 
-<h4 id="example">Example</h4>
+<h5 id="response-1">Response</h5>
 
-<p>This example creates a new availability profile <code>ap-test-2</code> for the <code>someRI</code> tenant. The fictional service flavors <code>Torque</code>, <code>Slurm</code> and <code>Moab</code> are logically <strong>ORed</strong> in the calculation of this service group as they more or less represent a similar functionality (lets name this <strong>the compute resource scheduling capability of the RI</strong>). Likewise the fictional <code>iRods</code> and <code>GridFTP</code> service flavors are logically <strong>ORed</strong> in the calculation as they respresent in this context a <strong>storage capability</strong> of the given RI. Finally a valuable resource that is taken in consideration is the fictional IS service flavor which provides the <strong>information service capability</strong> for the given RI. There is only one flavor of that kind on the whole RI Tier hence it makes sense to leave it alone in the A/R calculation. The overall A/R metrics are deduced by grouping these three capabilities ( compute resource scheduling, storage and information service) with a logical <strong>AND</strong> operation. The check (probe) results that are taken into consideration within this calculation are defined within the poem profile, which is extracted via a connector from the POEM endpoint of the RI. </p>
+<p><code>
+Status: 200 OK
+</code></p>
 
-<pre><code>{  
-  "name":"ap-test-2",
-  "namespace":"someRI",
-  "groups":[  
-    [  
-      "Torque",
-      "Slurm",
-      "Moab"
-    ],
-    [  
-      "iRods",
-      "GridFTP"
-    ],
-    [  
-      "IS"
-    ]
-  ],
-  "poems":[  
-    "someRI.root.CRITICAL"
-  ]
-}
+<h4 id="url-1">URL</h4>
+
+<pre><code>`/api/v2/results/Report_A/GROUP/GROUP_A?start_time=2015-06-20T12:00:00Z&amp;end_time=2015-06-26T23:00:00Z&amp;granularity=daily`
 </code></pre>
 
-<h3 id="response-1">Response</h3>
-
-<p>Headers: <code>Status: 200 OK</code></p>
-
-<h4 id="response-body-1">Response body</h4>
-
-<h5 id="successful-creation-of-profile">Successful creation of profile</h5>
+<h4 id="response-body-1">Response Body</h4>
 
 <pre><code>&lt;root&gt;
-   &lt;Message&gt;Availability Profile record successfully created&lt;/Message&gt;
-&lt;/root&gt;
-</code></pre>
-
-<h5 id="profile-exists">Profile exists</h5>
-
-<pre><code>&lt;root&gt;
-   &lt;Message&gt;An availability profile with that name already exists&lt;/Message&gt;
+    &lt;group name="GROUP_A" type="GROUP"&gt;
+	&lt;results timestamp="2015-06-22" availability="68.13896116893515" reliability="50.413931144915935"&gt;&lt;/results&gt;
+	&lt;results timestamp="2015-06-23" availability="75.36324059247399" reliability="80.8138510808647"&gt;&lt;/results&gt;
+    &lt;/group&gt;
 &lt;/root&gt;
 </code></pre>
 
 <p><a id="3"></a></p>
 
-<h2 id="put-update-an-existing-availability-profile">PUT: Update an existing Availability Profile</h2>
+<h1 id="get-list-availabilities-and-reliabilities-for-service-flavors">GET: List Availabilities and Reliabilities for Service Flavors</h1>
 
-<p>This method can be used to update an existing Availability Profile onto the Compute Engine.</p>
+<p>The following methods can be used to obtain a tenant’s Availability and Reliability result metrics per given Service Flavor(s). The api authenticates the tenant using the api-key within the x-api-key header. The user can specify time granularity (<code>monthly</code> or <code>daily</code>) for retrieved results and also format using the <code>Accept</code> header. Depending on the form of the request the user can request a single service flavor results or a bulk of service flavor results.</p>
+
+<h2 id="service-flavors">Service Flavors</h2>
 
 <h3 id="input-2">Input</h3>
 
-<pre><code>/AP/{id}
+<pre><code>/results/{report_name}/{group_type}/{group_name}/{endpoint_group_type}/{endpoint_group_name}/services?[start_time]&amp;[end_time]&amp;[granularity]
+or
+/results/{report_name}/{group_type}/{group_name}/{endpoint_group_type}/{endpoint_group_name}/services/{service_flavor_type}?[start_time]&amp;[end_time]&amp;[granularity]
+or
+/results/{report_name}/{endpoint_group_type}/{endpoint_group_name}/services?[start_time]&amp;[end_time]&amp;[granularity]
+or
+/results/{report_name}/{endpoint_group_type}/{endpoint_group_name}/services/{service_flavor_type}?[start_time]&amp;[end_time]&amp;[granularity]
 </code></pre>
 
-<h4 id="parameters--json-formatted-string">Parameters ( Json formatted string)</h4>
-
-<pre><code>{ 
-  "name" : &lt;name&gt;, 
-  "namespace" :&lt;namespace&gt;, 
-  "poems" : [&lt;POEM profile&gt;],
-  "groups" : [ [&lt;flavor1&gt;, &lt;flavor2&gt;,... ],...,[&lt;flavorN&gt;] ]
-}
-</code></pre>
-
-<h5 id="input-parameters">Input parameters</h5>
+<h4 id="query-parameters-2">Query Parameters</h4>
 
 <table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Type</td>
-      <td>Description</td>
-      <td>Required</td>
-      <td>Default value</td>
+      <td><code>[start_time]</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
     </tr>
     <tr>
-      <td>id</td>
-      <td>The availability profile id</td>
+      <td><code>[end_time]</code></td>
+      <td>UTC time in W3C format</td>
       <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>[granularity]</code></td>
+      <td>Granularity of time that will be used to present data. Possible values are <code>monthly</code> or <code>daily</code>
+</td>
+      <td>NO</td>
+      <td><code>daily</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="path-parameters-2">Path Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>{report_name}</code></td>
+      <td>Name of the report that contains all the information about the profile, filter tags, group types etc.</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{group_type}</code></td>
+      <td>Type of the Group of Endpoint Groups.</td>
+      <td>NO</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{group_name}</code></td>
+      <td>Name of the Group of Endpoint Groups.</td>
+      <td>NO</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{endpoint_group_type}</code></td>
+      <td>Type of the the Endpoint Group.</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{endpoint_group_name}</code></td>
+      <td>Name of the the Endpoint Group.</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>{service_flavor_type}</code></td>
+      <td>Type of the Service Flavor. If no type is given then results for all Service Flavors under the given Endpoint Group will be provided.</td>
+      <td>NO</td>
       <td> </td>
     </tr>
   </tbody>
 </table>
 
-<h5 id="json-parameters">JSON parameters</h5>
+<h4 id="headers-2">Headers</h4>
 
-<table>
-  <tbody>
-    <tr>
-      <td>Type</td>
-      <td>Description</td>
-      <td>Required</td>
-      <td>Default value</td>
-    </tr>
-    <tr>
-      <td><code>name</code></td>
-      <td>Profile name (both name and namespace are needed)</td>
-      <td>YES</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>namespace</code></td>
-      <td>Profile namespace (both name and namespace are needed)</td>
-      <td>YES</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>poems</code></td>
-      <td>Low level profile matching checks with service flavors</td>
-      <td>YES</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><code>groups</code></td>
-      <td>Group of service flavors groups</td>
-      <td>YES</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
+<h5 id="request-2">Request</h5>
 
-<p>Check the POST: Create a new availability profile example. </p>
-
-<h4 id="request-headers-1">Request headers</h4>
-
-<pre><code>x-api-key: "shared_key_value"
-Content-Type: application/json
+<pre><code>x-api-key: "tenant_key_value"
+Accept: "application/xml" or "application/json"
 </code></pre>
 
-<h3 id="response-2">Response</h3>
+<h5 id="response-2">Response</h5>
 
-<p>Headers: <code>Status: 200 OK</code></p>
+<p><code>
+Status: 200 OK
+</code></p>
 
-<h4 id="response-body-2">Response body</h4>
+<h4 id="url-2">URL</h4>
 
-<h5 id="successful-update">Successful update</h5>
+<pre><code>`/api/v2/results/Report_A/SITE/ST01/services?start_time=2015-06-22T00:00:00Z&amp;end_time=2015-06-23T23:23:59Z&amp;granularity=daily`
+</code></pre>
+
+<h4 id="response-body-2">Response Body</h4>
 
 <pre><code>&lt;root&gt;
-   &lt;Message&gt;Update successful&lt;/Message&gt;
+  &lt;group name="ST01" type="SITE"&gt;
+    &lt;group name="SF01" type="service"&gt;
+      &lt;results timestamp="2015-06-22" availability="98.26389" reliability="98.26389" unknown="0" uptime="0.98264" downtime="0"&gt;&lt;/results&gt;
+      &lt;results timestamp="2015-06-23" availability="54.03509" reliability="81.48148" unknown="0.01042" uptime="0.53472" downtime="0.33333"&gt;&lt;/results&gt;
+    &lt;/group&gt;
+    &lt;group name="SF02" type="service"&gt;
+      &lt;results timestamp="2015-06-22" availability="96.875" reliability="96.875" unknown="0" uptime="0.96875" downtime="0"&gt;&lt;/results&gt;
+      &lt;results timestamp="2015-06-23" availability="100" reliability="100" unknown="0" uptime="1" downtime="0"&gt;&lt;/results&gt;
+    &lt;/group&gt;
+  &lt;/group&gt;
 &lt;/root&gt;
 </code></pre>
-
-<h5 id="profile-does-not-exist">Profile does not exist</h5>
-
-<pre><code>&lt;root&gt;
-   &lt;Message&gt;No profile matching the requested id&lt;/Message&gt;
-&lt;/root&gt;
-</code></pre>
-
-<p><a id="4"></a></p>
-
-<h2 id="delete-delete-an-availability-profile">DELETE: Delete an availability profile</h2>
-
-<p>This method can be used to delete an existing Availability Profile.</p>
-
-<h3 id="input-3">Input</h3>
-
-<pre><code>/AP/{id}
-</code></pre>
-
-<h4 id="parameters-1">Parameters</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td>Type</td>
-      <td>Description</td>
-      <td>Required</td>
-      <td>Default value</td>
-    </tr>
-    <tr>
-      <td>id</td>
-      <td>The availability profile id</td>
-      <td>YES</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h4 id="request-headers-2">Request headers</h4>
-
-<pre><code>x-api-key: "shared_key_value"
-</code></pre>
-
-<h3 id="response-3">Response</h3>
-
-<p>Headers: <code>Status: 200 OK</code></p>
-
-<h4 id="response-body-3">Response body</h4>
-
-<h5 id="successful-delete">Successful delete</h5>
-
-<pre><code>&lt;root&gt;
-   &lt;Message&gt;Delete successful&lt;/Message&gt;
-&lt;/root&gt;
-</code></pre>
-
-<h5 id="profile-does-not-exist-1">Profile does not exist</h5>
-
-<pre><code>&lt;root&gt;
-   &lt;Message&gt;No profile matching the requested id&lt;/Message&gt;
-&lt;/root&gt;
-</code></pre>
-
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>

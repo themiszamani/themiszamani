@@ -88,9 +88,10 @@
           
             <a class="list-group-item" href="/guides/installation_cluster/"><em class="fa fa-sitemap"></em> Cluster Mode</a>
           
-            <a class="list-group-item disabled blue" href="/guides/sync/">Components</a>
+            <a class="list-group-item disabled blue" href="/guides/egi-connectors/">Components</a>
           
-            <a class="list-group-item" href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+            <a class="list-group-item" href="/guides/egi-connectors/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+
           
           
             <a class="list-group-item" href="/guides/poem/"><em class="fa fa-check-square-o"></em> Poem service</a>
@@ -136,6 +137,11 @@
             <em class="fa fa-cogs"></em> API - Availabilities & Reliabilities</a>
 
             
+              <a class="list-group-item-level2"  href="/guides/api/metric-result/">
+            
+            <em class="fa fa-cogs"></em> Metric Result</a>
+
+            
               <a class="list-group-item-level2"  href="/guides/api/recalculationrequests/">
             
             <em class="fa fa-cogs"></em> Recalculation Requests</a>
@@ -177,7 +183,7 @@
 <tbody>
 <tr>
 <td>Base URL</td>
-<td><code>https://host:port/api/v1/</code></td>
+<td><code>https://host:port/api/v2/</code></td>
 </tr>
 <tr>
 <td><strong>Default Port</strong></td>
@@ -185,7 +191,7 @@
 </tr>
 <tr>
 <td><strong>Central instance of the ARGO production service</strong></td>
-<td><code>https://snf-629551.vm.okeanos.grnet.gr/api/v1/</code></td>
+<td><code>https://snf-629551.vm.okeanos.grnet.gr/api/v2/</code></td>
 </tr>
 </tbody>
 </table>
@@ -195,30 +201,32 @@
 <h2 id="api-calls">API Calls</h2>
 
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Shortcut</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td>Name</td>
-      <td>Description</td>
-      <td>Shortcut</td>
-    </tr>
-    <tr>
       <td>GET: List Service Metric Status Timelines</td>
-      <td>This method may be used to retrieve a specific service metric status timeline (applies on a specific host endpoint and a specific service flavor).</td>
+      <td>This method may be used to retrieve a specific service metric status timeline (applies on a specific service endpoint).</td>
       <td><a href="#1"> Description</a></td>
     </tr>
     <tr>
       <td>GET: List Service Endpoint Status Timelines</td>
-      <td>This method may be used to retrieve a specific service endpoint status timeline (applies on a specific service flavor).</td>
+      <td>This method may be used to retrieve a specific service endpoint status timeline (applies on a specific service type).</td>
       <td><a href="#2"> Description</a></td>
     </tr>
     <tr>
-      <td>GET: List Service Flavor Status Timelines</td>
-      <td>This method may be used to retrieve a specific service flavor status timeline (applies for a specific site).</td>
+      <td>GET: List Service  Status Timelines</td>
+      <td>This method may be used to retrieve a specific service type status timeline (applies for a specific service endpoint group).</td>
       <td><a href="#3"> Description</a></td>
     </tr>
     <tr>
-      <td>GET: List Site Status timelines</td>
-      <td>This method may be used to retrieve a whole site status timeline.</td>
+      <td>GET: List Endpoint Group Status Timelines</td>
+      <td>This method may be used to retrieve endpoint group status timelines.</td>
       <td><a href="#4"> Description</a></td>
     </tr>
   </tbody>
@@ -235,7 +243,17 @@
 <pre><code>/status/metrics/timeline/{group}?[start_time]&amp;[end_time]&amp;[vo]&amp;[profile]&amp;[group_type]
 </code></pre>
 
-<h4 id="parameters">Parameters</h4>
+<h4 id="list-all-metrics">List All metrics:</h4>
+
+<pre><code>/status/{report}/{group_type}/{group_name}/services/{service_type}/endpoints/{hostname}/metrics?[start_time]&amp;[end_time]
+</code></pre>
+
+<h4 id="list-a-specific-metric">List a specific metric:</h4>
+
+<pre><code>/status/{report}/{endpoint_group_type}/{endpoint_group_name}/services/{service_type}/endpoints/{hostname}/metrics/{metric_name}?[start_time]&amp;[end_time]
+</code></pre>
+
+<h4 id="path-parameters">Path Parameters</h4>
 
 <table>
   <tbody>
@@ -282,9 +300,50 @@
 
 <p>Depending on the <code>group_type</code>, <code>{group}</code> is the name of the group (for example <code>NGI_GRNET</code> when <code>group_type=ngi</code>, <code>HG-03-AUTH</code> when <code>group_type=site</code> or <code>cream.afroditi.hellasgrid.gr</code> when <code>group_type=host</code>). </p>
 
-<h3 id="response">Response</h3>
+<h4 id="url-parameters">Url Parameters</h4>
 
-<p>Headers: <code>Status: 200 OK</code></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>start_time</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>end_time</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong><em>Notes</em></strong>:
+<code>group_type</code> and <code>group_name</code> in the specific request refer always to endpoint groups (eg. <code>SITES</code>).
+when <code>metric_name</code> is supplied, the request returns results for a specific metric. Else returns results for all available metrics for the specific <strong>endpoint</strong> (and <strong>report</strong>)</p>
+
+<h4 id="headers">Headers</h4>
+
+<pre><code>x-api-key: "tenant_key_value"
+Accept: "application/xml" or "application/json"
+</code></pre>
+
+<h3 id="responses">Responses</h3>
+
+<h4 id="response-code">Response Code</h4>
+
+<p><code>
+Status: 200 OK
+</code></p>
 
 <h4 id="response-body">Response body</h4>
 
@@ -354,14 +413,22 @@
 
 <h2 id="get-list-service-endpoint-status-timelines">GET: List Service Endpoint Status Timelines</h2>
 
-<p>This method may be used to retrieve a specific service endpoint status timeline (applies on a specific service flavor).</p>
+<p>This method may be used to retrieve a specific service endpoint status timeline (applies on a specific service type).</p>
 
 <h3 id="input-1">Input</h3>
 
 <pre><code>/status/endpoints/timeline/{group}?[start_time]&amp;[end_time]&amp;[vo]&amp;[profile]&amp;[group_type]
+
+
+/status/{report}/{group_type}/{group_name}/services/{service_type}/endpoints?[start_time]&amp;[end_time]
 </code></pre>
 
-<h4 id="parameters-1">Parameters</h4>
+<h5 id="list-a-specific-endpoint">List a specific endpoint:</h5>
+
+<pre><code>/status/{report}/{endpoint_group_type}/{endpoint_group_name}/services/{service_type}/endpoints/{hostname}?[start_time]&amp;[end_time]
+</code></pre>
+
+<h4 id="path-parameters-1">Path Parameters</h4>
 
 <table>
   <tbody>
@@ -408,11 +475,131 @@
 
 <p>Depending on the <code>group_type</code>, <code>{group}</code> is the name of the group (for example <code>HG-03-AUTH</code> when <code>group_type=site</code> or <code>NGI_GRNET</code> when <code>group_type=ngi</code>). </p>
 
-<h3 id="response-1">Response</h3>
+<h4 id="url-parameters-1">Url Parameters</h4>
 
-<p>Headers: <code>Status: 200 OK</code></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>start_time</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>end_time</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
-<h4 id="response-body-1">Response body</h4>
+<p><strong><em>Notes</em></strong>:
+<code>group_type</code> and <code>group_name</code> in the specific request refer always to endpoint groups (eg. <code>SITES</code>).
+when <code>hostname</code> is supplied, the request returns results for a specific endpoint. Else returns results for all available metrics for the specific <strong>endpoint</strong> (and <strong>report</strong>)</p>
+
+<h4 id="headers-1">Headers</h4>
+
+<pre><code>x-api-key: "tenant_key_value"
+Accept: "application/xml" or "application/json"
+</code></pre>
+
+<h4 id="response-code-1">Response Code</h4>
+
+<p><code>
+Status: 200 OK
+</code></p>
+
+<h3 id="response-body-1">Response body</h3>
+
+<h5 id="list-all-metrics-1">List All metrics:</h5>
+
+<h6 id="example-request">Example Request:</h6>
+
+<p>URL:</p>
+
+<pre><code>/status/EGI_CRITICAL/SITES/HG-03-AUTH/services/CREAM-CE/endpoints?start_time=2015-05-01T00:00:00Z&amp;end_time=2015-05-01T23:59:59Z
+</code></pre>
+
+<p>Headers:</p>
+
+<pre><code>x-api-key:"INSERTTENANTKEYHERE"
+Accept:"application/xml"
+</code></pre>
+
+<h6 id="example-response">Example Response:</h6>
+
+<p>Code:</p>
+
+<p><code>
+Status: 200 OK
+</code></p>
+
+<p>Reponse body:</p>
+
+<pre><code>&lt;root&gt;
+	&lt;group name="HG-03-AUTH" type="SITES"&gt;
+		&lt;group name="CREAM-CE" type="service"&gt;
+			&lt;endpoint name="cream01.afroditi.gr"&gt;
+				&lt;status timestamp="2015-04-30T23:59:00Z" status="OK"&gt;&lt;/status&gt;
+				&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+				&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+			&lt;/endpoint&gt;
+			&lt;endpoint name="cream02.afroditi.gr"&gt;
+				&lt;status timestamp="2015-04-30T23:59:00Z" status="OK"&gt;&lt;/status&gt;
+				&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+				&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+			&lt;/endpoint&gt;
+		&lt;/group&gt;
+	&lt;/group&gt;
+&lt;/root&gt;
+</code></pre>
+
+<h4 id="list-specific-endpoint">List specific endpoint</h4>
+<p>(<code>hostname=cream01.afroditi.gr</code>):</p>
+
+<h5 id="example-request-1">Example Request:</h5>
+
+<p>URL:</p>
+
+<pre><code>/status/EGI_CRITICAL/SITES/HG-03-AUTH/services/CREAM-CE/endpoints/cream01.afroditi.gr?start_time=2015-05-01T00:00:00Z&amp;end_time=2015-05-01T23:59:59Z
+</code></pre>
+
+<p>Headers:</p>
+
+<pre><code>x-api-key:"INSERTTENANTKEYHERE"
+Accept:"application/xml"
+</code></pre>
+
+<h5 id="example-response-1">Example Response:</h5>
+
+<p>Code:
+<code>
+Status: 200 OK
+</code></p>
+
+<p>Reponse body:</p>
+
+<pre><code>&lt;root&gt;
+	&lt;group name="HG-03-AUTH" type="SITES"&gt;
+		&lt;group name="CREAM-CE" type="service"&gt;
+			&lt;endpoint name="cream01.afroditi.gr"&gt;
+				&lt;status timestamp="2015-04-30T23:59:00Z" status="OK"&gt;&lt;/status&gt;
+				&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+				&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+			&lt;/endpoint&gt;
+		&lt;/group&gt;
+	&lt;/group&gt;
+&lt;/root&gt;
+</code></pre>
 
 <h5 id="grouptypesite-1"><code>group_type=site</code></h5>
 
@@ -482,16 +669,24 @@
 
 <p><a id="3"></a></p>
 
-<h2 id="get-list-service-flavor-status-timelines">GET: List Service Flavor Status Timelines</h2>
+<h2 id="get-list-service-status-timelines">GET: List Service Status Timelines</h2>
 
-<p>This method may be used to retrieve a specific service flavor status timeline (applies for a specific site).</p>
+<p>This method may be used to retrieve a specific service flavor status timeline (applies for a specific service endpoint group).</p>
 
 <h3 id="input-2">Input</h3>
 
 <pre><code>/status/services/timeline/{group}?[start_time]&amp;[end_time]&amp;[vo]&amp;[profile]&amp;[group_type]
+
+
+/status/{report}/{group_type}/{group_name}/services[start_time]&amp;[end_time]
 </code></pre>
 
-<h4 id="parameters-2">Parameters</h4>
+<h5 id="list-a-specific-service-type">List a specific service type:</h5>
+
+<pre><code>/status/{report}/{group_type}/{group_name}/services/{service_type}[start_time]&amp;[end_time]
+</code></pre>
+
+<h4 id="path-parameters-2">Path Parameters</h4>
 
 <table>
   <tbody>
@@ -538,42 +733,305 @@
 
 <p>Depending on the <code>group_type</code>, <code>{group}</code> is the name of the group (for example <code>HG-03-AUTH</code> when <code>group_type=site</code> or <code>NGI_GRNET</code> when <code>group_type=ngi</code>).</p>
 
-<h3 id="response-2">Response</h3>
+<h4 id="url-parameters-2">Url Parameters</h4>
 
-<p>Headers: <code>Status: 200 OK</code></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>start_time</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>end_time</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
-<h4 id="response-body-2">Response body</h4>
+<p><strong><em>Notes</em></strong>:
+<code>group_type</code> and <code>group_name</code> in the specific request refer always to endpoint groups (eg. <code>SITES</code>).
+when <code>service_name</code> is supplied, the request returns results for a specific service type. Else returns results for all available service types for the specific <strong>endpoint_group</strong> (and <strong>report</strong>)</p>
+
+<h4 id="headers-2">Headers</h4>
+
+<pre><code>x-api-key: "tenant_key_value"
+Accept: "application/xml" or "application/json"
+</code></pre>
+
+<h4 id="response-code-2">Response Code</h4>
+
+<p><code>
+Status: 200 OK
+</code></p>
+
+<h3 id="response-body-2">Response body</h3>
+
+<h5 id="list-all-service-types">List All service types:</h5>
+
+<h6 id="example-request-2">Example Request:</h6>
+
+<p>URL:</p>
+
+<pre><code>/status/EGI_CRITICAL/SITES/HG-03-AUTH/services?start_time=2015-05-01T00:00:00Z&amp;end_time=2015-05-01T23:59:59Z
+</code></pre>
+
+<p>Headers:</p>
+
+<pre><code>x-api-key:"INSERTTENANTKEYHERE"
+Accept:"application/xml"
+</code></pre>
+
+<h6 id="example-response-2">Example Response:</h6>
+
+<p>Code:
+<code>
+Status: 200 OK
+</code></p>
+
+<p>Reponse body:</p>
 
 <pre><code>&lt;root&gt;
-  &lt;profile name="A_POEM"&gt;
-    &lt;flavor name="A_FLAVOR" site="A_SITE-NAME" vo="A_VO" roc="A_ROC" monitoring_host="A_MONHOST"&gt;
-      &lt;timeline start_time="2014-10-23T00:00:00Z" end_time="2014-10-24T00:00:00Z"&gt;
-        &lt;status timestamp="2014-10-23T00:12:34Z" value="OK" /&gt;
-        &lt;status timestamp="2014-10-23T01:12:20Z" value="WARNING" /&gt;
-        &lt;status timestamp="2014-10-23T02:12:31Z" value="CRITICAL" /&gt;
-        &lt;status timestamp="2014-10-23T04:12:25Z" value="OK" /&gt;
-        .
-        .
-        .
-        &lt;status timestamp="2014-10-23T23:17:45Z" value="OK" /&gt;
-      &lt;/timeline&gt;
-    &lt;/flavor&gt;
-  &lt;/profile&gt;
+	&lt;group name="HG-03-AUTH" type="SITES"&gt;
+		&lt;group name="CREAM-CE" type="service"&gt;
+			&lt;status timestamp="2015-04-30T23:59:00Z" status="OK"&gt;&lt;/status&gt;
+			&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+			&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+		&lt;/group&gt;
+		&lt;group name="SRMv2" type="service"&gt;
+			&lt;status timestamp="2015-04-30T23:59:00Z" status="OK"&gt;&lt;/status&gt;
+			&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+			&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+		&lt;/group&gt;
+	&lt;/group&gt;
+&lt;/root&gt;
+</code></pre>
+
+<h4 id="list-specific-service-type">List specific service type</h4>
+<p>(<code>service_type=CREAM-CE</code>):</p>
+
+<h5 id="example-request-3">Example Request:</h5>
+
+<p>URL:</p>
+
+<pre><code>/status/EGI_CRITICAL/SITES/HG-03-AUTH/services/CREAM-CE?start_time=2015-05-01T00:00:00Z&amp;end_time=2015-05-01T23:59:59Z
+</code></pre>
+
+<p>Headers:</p>
+
+<pre><code>x-api-key:"INSERTTENANTKEYHERE"
+Accept:"application/xml"
+</code></pre>
+
+<h5 id="example-response-3">Example Response:</h5>
+
+<p>Code:
+<code>
+Status: 200 OK
+</code></p>
+
+<p>Reponse body:</p>
+
+<pre><code>&lt;root&gt;
+	&lt;group name="HG-03-AUTH" type="SITES"&gt;
+		&lt;group name="CREAM-CE" type="service"&gt;
+			&lt;status timestamp="2015-04-30T23:59:00Z" status="OK"&gt;&lt;/status&gt;
+			&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+			&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+		&lt;/group&gt;
+	&lt;/group&gt;
 &lt;/root&gt;
 </code></pre>
 
 <p><a id="4"></a></p>
 
-<h2 id="get-list-site-status-timelines">GET: List Site Status timelines</h2>
+<h2 id="get-list-endpoint-group-status-timelines">GET: List Endpoint Group Status Timelines</h2>
 
-<p>This method may be used to retrieve a whole site status timeline.</p>
+<p>This method may be used to retrieve status timelines for endpoint groups.</p>
 
 <h3 id="input-3">Input</h3>
+
+<h4 id="list-all-endpoint-groups-of-specific-type">List All endpoint groups of specific type:</h4>
+
+<pre><code>/status/{report}/{group_type}[start_time]&amp;[end_time]
+</code></pre>
+
+<h5 id="list-a-specific-endpoint-group-of-specific-type">List a specific endpoint group of specific type:</h5>
+
+<pre><code>/status/{report}/{group_type}/{group_name}[start_time]&amp;[end_time]
+</code></pre>
+
+<h4 id="path-parameters-3">Path Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>report</code></td>
+      <td>name of the report used</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>group_type</code></td>
+      <td>type of endpoint group</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>group_name</code></td>
+      <td>name of endpoint group</td>
+      <td>NO</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="url-parameters-3">Url Parameters</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>start_time</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>end_time</code></td>
+      <td>UTC time in W3C format</td>
+      <td>YES</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong><em>Notes</em></strong>:
+<code>group_type</code> and <code>group_name</code> in the specific request refer always to endpoint groups (eg. <code>SITES</code>).
+when <code>group_name</code> is supplied, the request returns results for a specific endpoint group. Else returns results for all available endpoint groups of the specific <strong>group_type</strong></p>
+
+<h4 id="headers-3">Headers</h4>
+
+<pre><code>x-api-key: "tenant_key_value"
+Accept: "application/xml" or "application/json"
+</code></pre>
+
+<h4 id="response-code-3">Response Code</h4>
+
+<p><code>
+Status: 200 OK
+</code></p>
+
+<h3 id="response-body-3">Response body</h3>
+
+<h5 id="list-all-endpoint-groups">List All endpoint groups:</h5>
+
+<h6 id="example-request-4">Example Request:</h6>
+
+<p>URL:</p>
+
+<pre><code>/status/EGI_CRITICAL/SITES?start_time=2015-05-01T00:00:00Z&amp;end_time=2015-05-01T23:59:59Z
+</code></pre>
+
+<p>Headers:</p>
+
+<pre><code>x-api-key:"INSERTTENANTKEYHERE"
+Accept:"application/xml"
+</code></pre>
+
+<h6 id="example-response-4">Example Response:</h6>
+
+<p>Code:
+<code>
+Status: 200 OK
+</code></p>
+
+<p>Reponse body:</p>
+
+<pre><code>&lt;root&gt;
+	&lt;group name="HG-03-AUTH" type="SITES"&gt;
+		&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+		&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+		&lt;status timestamp="2015-05-01T05:00:00Z" status="OK"&gt;&lt;/status&gt;
+	&lt;/group&gt;
+	&lt;group name="HG-01-AUTH" type="SITES"&gt;
+		&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+		&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+		&lt;status timestamp="2015-05-01T05:00:00Z" status="OK"&gt;&lt;/status&gt;
+	&lt;/group&gt;
+&lt;/root&gt;
+</code></pre>
+
+<h4 id="list-specific-endpoint-group">List specific endpoint group</h4>
+<p>(<code>group_name=HG-03-AUTH</code>):</p>
+
+<h5 id="example-request-5">Example Request:</h5>
+
+<p>URL:</p>
+
+<pre><code>/status/EGI_CRITICAL/SITES/HG-03-AUTH?start_time=2015-05-01T00:00:00Z&amp;end_time=2015-05-01T23:59:59Z
+</code></pre>
+
+<p>Headers:</p>
+
+<pre><code>x-api-key:"INSERTTENANTKEYHERE"
+Accept:"application/xml"
+</code></pre>
+
+<h5 id="example-response-5">Example Response:</h5>
+
+<p>Code:
+<code>
+Status: 200 OK
+</code></p>
+
+<p>Reponse body:</p>
+
+<pre><code>&lt;root&gt;
+	&lt;group name="HG-03-AUTH" type="SITES"&gt;
+		&lt;status timestamp="2015-05-01T01:00:00Z" status="CRITICAL"&gt;&lt;/status&gt;
+		&lt;status timestamp="2015-05-01T02:00:00Z" status="OK"&gt;&lt;/status&gt;
+		&lt;status timestamp="2015-05-01T05:00:00Z" status="OK"&gt;&lt;/status&gt;
+	&lt;/group&gt;
+&lt;/root&gt;
+</code></pre>
+
+<h2 id="get-list-metric-results">GET: List Metric Results</h2>
+
+<p>This method may be used to retrieve a detailed metric result.</p>
+
+<h3 id="input-4">Input</h3>
 
 <pre><code>/status/sites/timeline/{group}?[start_time]&amp;[end_time]&amp;[site]&amp;[vo]&amp;[profile]
 </code></pre>
 
-<h4 id="parameters-3">Parameters</h4>
+<h4 id="parameters">Parameters</h4>
 
 <table>
   <tbody>
@@ -620,28 +1078,31 @@
 
 <p>Depending on the <code>group_type</code>, <code>{group}</code> is the name of the group (for example <code>HG-03-AUTH</code> when <code>group_type=site</code> or <code>NGI_GRNET</code> when <code>group_type=ngi</code>).</p>
 
-<h3 id="response-3">Response</h3>
+<h3 id="response">Response</h3>
 
 <p>Headers: <code>Status: 200 OK</code></p>
 
-<h4 id="response-body-3">Response body</h4>
+<h4 id="response-body-4">Response body</h4>
 
 <pre><code>&lt;root&gt;
-  &lt;profile name="A_POEM"&gt;
-    &lt;site name="A_SITE-NAME" vo="A_VO" roc="A_ROC" monitoring_host="A_MONHOST"&gt;
-      &lt;timeline start_time="2014-10-23T00:00:00Z" end_time="2014-10-24T00:00:00Z"&gt;
-        &lt;status timestamp="2014-10-23T00:12:34Z" value="OK" /&gt;
-        &lt;status timestamp="2014-10-23T01:12:20Z" value="WARNING" /&gt;
-        &lt;status timestamp="2014-10-23T02:12:31Z" value="CRITICAL" /&gt;
-        &lt;status timestamp="2014-10-23T04:12:25Z" value="OK" /&gt;
-        .
-        .
-        .
-        &lt;status timestamp="2014-10-23T23:17:45Z" value="OK" /&gt;
-      &lt;/timeline&gt;
-    &lt;/site&gt;
-  &lt;/profile&gt;
-&lt;/root&gt;
+   &lt;job name="ROC_CRITICAL"&gt;
+     &lt;group name="NGI_GRNET" type="ngi"&gt;
+       &lt;group name="HG-03-AUTH" type="site"&gt;
+         &lt;group name="CREAM-CE" type="service_type"&gt;
+           &lt;endpoint name="cream01.afroditi.gr"&gt;
+             &lt;metric name="emi.cream.CREAMCE-JobSubmit"&gt;
+               &lt;status timestamp="2015-05-01T01:00:00Z" status=""&gt;
+                 &lt;summary&gt;Cream status is CRITICAL&lt;/summary&gt;
+                 &lt;message&gt;Cream job submission test failed!&lt;/message&gt;
+               &lt;/status&gt;
+             &lt;/metric&gt;
+           &lt;/endpoint&gt;
+         &lt;/group&gt;
+       &lt;/group&gt;
+     &lt;/group&gt;
+   &lt;/job&gt;
+ &lt;/root&gt;
+&lt;root&gt;
 </code></pre>
 
 

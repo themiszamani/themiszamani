@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - </title>
+  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,9 +88,10 @@
           
             <a class="list-group-item" href="/guides/installation_cluster/"><em class="fa fa-sitemap"></em> Cluster Mode</a>
           
-            <a class="list-group-item disabled blue" href="/guides/sync/">Components</a>
+            <a class="list-group-item disabled blue" href="/guides/egi-connectors/">Components</a>
           
-            <a class="list-group-item" href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+            <a class="list-group-item" href="/guides/egi-connectors/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+
           
           
             <a class="list-group-item" href="/guides/poem/"><em class="fa fa-check-square-o"></em> Poem service</a>
@@ -98,8 +99,8 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-            
-            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+          	
+            <a class="list-group-item active " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
             
@@ -113,7 +114,7 @@
 
  
  	    
-              <a class="list-group-item-level2"  href="/guides/compute/cli-interaction/">
+              <a class="list-group-item-level2 active"  href="/guides/compute/cli-interaction/">
             
             <em class="fa fa-cog"></em> Compute Engine CLI </a>
 
@@ -134,6 +135,11 @@
               <a class="list-group-item-level2"  href="/guides/api/avail-reliab/">
             
             <em class="fa fa-cogs"></em> API - Availabilities & Reliabilities</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/metric-result/">
+            
+            <em class="fa fa-cogs"></em> Metric Result</a>
 
             
               <a class="list-group-item-level2"  href="/guides/api/recalculationrequests/">
@@ -163,21 +169,50 @@
 
         </div>
         <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cog'></i> 
+            
+            Compute - Cli interaction</h1>
           
-          <p class="lead"> </p>
-          <h1 id="argo-compute-engine-cli">ARGO Compute Engine CLI</h1>
-
+          <p class="lead"> This document describes the Executable Scripts for cli interaction with the compute engine</p>
+          
 <h2 id="executable-scripts-for-cli-interaction-with-the-compute-engine">Executable Scripts for cli interaction with the compute engine</h2>
 
-<p>In the folder <code>/usr/libexec/ar-compute/bin/</code> reside executable scripts that can be used for uploading metric data and sync data to the hadoop cluster (HDFS Filesystem).</p>
+<p>In the folder <code>/usr/libexec/ar-compute/bin/</code> reside executable scripts that can be used for uploading metric data and sync data to the hadoop cluster (HDFS Filesystem). . </p>
 
-<p>| Script | Description | Shortcut |
-|——–|————-|———-|
-|upload_metric.py |The specific script is used in order to upload daily metric data (relative to a tenant) to HDFS. | <a href="#metric">Description</a> |
-|upload_sync.py |The specific script is used in order to upload daily sync data (relative to a tenant and a job) to HDFS. |<a href="#sync">Description</a>|
-|mongo_clean_ar.py |The specific script is used if necessary to clean a/r data from the datastore regarding for specified tenant,report and date.  |<a href="#ar">Description</a>|
-|mongo_clean_status.py |The specific script is used if necessary to clean status detail data from the datastore for specified tenant,report and date. | <a href="#status">Description</a>|
-–&gt;</p>
+<table>
+  <thead>
+    <tr>
+      <th>Script</th>
+      <th>Description</th>
+      <th>Shortcut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>upload_metric.py</td>
+      <td>The specific script is used in order to upload daily metric data (relative to a tenant) to HDFS.</td>
+      <td><a href="#metric">Description</a></td>
+    </tr>
+    <tr>
+      <td>upload_sync.py</td>
+      <td>The specific script is used in order to upload daily sync data (relative to a tenant and a job) to HDFS.</td>
+      <td><a href="#sync">Description</a></td>
+    </tr>
+    <tr>
+      <td>mongo_clean_ar.py</td>
+      <td>The specific script is used if necessary to clean a/r data from the datastore regarding for specified tenant,report and date.</td>
+      <td><a href="#ar">Description</a></td>
+    </tr>
+    <tr>
+      <td>mongo_clean_status.py</td>
+      <td>The specific script is used if necessary to clean status detail data from the datastore for specified tenant,report and date.</td>
+      <td><a href="#status">Description</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <p><a id="metric"></a></p>
 
@@ -223,8 +258,9 @@
 <code>-j --job {STRING}</code> the name of the job. Case sensitive (Required)</li>
 </ul>
 
-<p><a id="ar"></a>
-### mongo_clean_ar.py</p>
+<p><a id="ar"></a></p>
+
+<h3 id="mongocleanarpy">mongo_clean_ar.py</h3>
 
 <p>This utility is used in order to delete availability and reliability data from the datastore, for a specified tenant,report and date. It is called automatically before each A/R computation, but can be ran also manually. The script reports back the number of records and from which collections these records are removed.</p>
 
@@ -265,6 +301,7 @@
   <li>
 <code>-r --report {STRING}</code> the id (uuid format) of the  report that results belong to. Case sensitive (Required)</li>
 </ul>
+
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>

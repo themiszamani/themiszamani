@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - </title>
+  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,9 +88,10 @@
           
             <a class="list-group-item" href="/guides/installation_cluster/"><em class="fa fa-sitemap"></em> Cluster Mode</a>
           
-            <a class="list-group-item disabled blue" href="/guides/sync/">Components</a>
+            <a class="list-group-item disabled blue" href="/guides/egi-connectors/">Components</a>
           
-            <a class="list-group-item" href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+            <a class="list-group-item" href="/guides/egi-connectors/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+
           
           
             <a class="list-group-item" href="/guides/poem/"><em class="fa fa-check-square-o"></em> Poem service</a>
@@ -98,8 +99,8 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-            
-            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+          	
+            <a class="list-group-item active " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
             
@@ -107,7 +108,7 @@
             
             <em class="fa fa-cog"></em> Compute Engine Input </a>
  	    
-              <a class="list-group-item-level2"  href="/guides/compute/compute-job-configuration/">
+              <a class="list-group-item-level2 active"  href="/guides/compute/compute-job-configuration/">
             
             <em class="fa fa-cog"></em> Compute engine job configurations </a>
 
@@ -134,6 +135,11 @@
               <a class="list-group-item-level2"  href="/guides/api/avail-reliab/">
             
             <em class="fa fa-cogs"></em> API - Availabilities & Reliabilities</a>
+
+            
+              <a class="list-group-item-level2"  href="/guides/api/metric-result/">
+            
+            <em class="fa fa-cogs"></em> Metric Result</a>
 
             
               <a class="list-group-item-level2"  href="/guides/api/recalculationrequests/">
@@ -163,10 +169,15 @@
 
         </div>
         <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cog'></i> 
+            
+            Compute engine job configurations</h1>
           
-          <p class="lead"> </p>
-          <h1 id="argo-compute-engine-configuration">ARGO Compute Engine configuration</h1>
-
+          <p class="lead"> This document describes the job configurations</p>
+          
 <h2 id="overview">Overview</h2>
 
 <table>
@@ -227,7 +238,7 @@
 
 <h2 id="argo-compute-engine-configuration-files">ARGO Compute Engine configuration files</h2>
 
-<p>The main configuration file of the ARGO Compute Engine component is installed by default at <code>/etc/ar-compute-engine.conf</code>. In addition, a directory with supplementary secondary configuration files is created in <code>/etc/ar-compute/</code></p>
+<p>The main configuration file of the ARGO Compute Engine component is installed by default at <code>/etc/ar-compute-engine.conf</code>. In addition, a directory with a supplementary secondary configuration files is created in <code>/etc/ar-compute/</code></p>
 
 <p><a id="compute-engine-conf"></a></p>
 
@@ -402,8 +413,7 @@
 
 <p>The available status states produced by the Monitoring Engine(s) are expressed in the <strong>“states”</strong> list. For example below is the definition of the status states produced by Nagios compatible Monitoring Engines:</p>
 
-<p><code>json
-"states": [
+<pre><code>"states": [
     "OK",
     "WARNING",
     "UNKNOWN",
@@ -411,15 +421,14 @@
     "CRITICAL",
     "DOWNTIME"
 ]
-</code></p>
+</code></pre>
 
 <p>The ARGO Compute Engine requires the user to define a mapping for the default_down, default_missing and default_unknown. For example:</p>
 
-<p><code>json
-"default_down": "DOWNTIME",
+<pre><code>"default_down": "DOWNTIME",
 "default_missing": "MISSING",
 "default_unknown": "UNKNOWN",
-</code></p>
+</code></pre>
 
 <blockquote>
   <p><strong>Note: The importance of the default states</strong></p>
@@ -452,30 +461,27 @@
 
 <p>The available operations are declared in the operations list using truth tables as follows:</p>
 
-<p><code>json
-"operations": {
+<pre><code>"operations": {
   "AND":[],
   "OR":[]
 }
-</code></p>
+</code></pre>
 
 <p>Each operation consists of a JSON array used to describe a <em>truth table</em>. An example of such a <em>truth table</em> is presented below:</p>
 
-<p><code>json
-"operations": {
+<pre><code>"operations": {
   "AND": [
     { "A":"OK",       "B":"OK",       "X":"OK"       },
     { "A":"OK",       "B":"WARNING",  "X":"WARNING"  },
     { "A":"OK",       "B":"UNKNOWN",  "X":"UNKNOWN"  },
   ]
 }
-</code></p>
+</code></pre>
 
 <p>Each element of the JSON array describes a row of the <em>truth table</em> for example:</p>
 
-<p><code>json
-{ "A":"OK", "B":"WARNING", "X":"WARNING"}
-</code></p>
+<pre><code>{ "A":"OK", "B":"WARNING", "X":"WARNING"}
+</code></pre>
 
 <p>declares that in an algorithmic AND operation between two status states of <em>OK</em> and <em>WARNING</em> the result is <em>WARNING</em></p>
 
@@ -489,14 +495,13 @@
 
 <p>The configuration file of the job contains mandatory and optional fields with rich information describing the parameters of the specific job. Some important fields are:</p>
 
-<p><code>json
-"tenant": "tenant_name"`
+<pre><code>"tenant": "tenant_name"`
 "job": "job_name",
 "aprofile": "availability_profile_name",
 "egroup": "endpoint_group_type_name",
 "ggroup": "group_of_group_type_name",
 "weight": "weight_factor_type_name"
-</code></p>
+</code></pre>
 
 <p>In the above snippet we have declared the name of the tenant, the name of the job, the name of the specific availability profile used in the job. Also the type of endpoint grouping that will be used is declared here and the type of upper hierarchical grouping. Also if available here is declared the type of weight factor used for upper level A/R aggregations</p>
 
@@ -545,13 +550,12 @@
 
 <p>For example:</p>
 
-<p><code>json
-"egroup_tags": {
+<pre><code>"egroup_tags": {
   "scope":"scope_type",
   "production":"Y",
   "monitored":"Y"
 }
-</code></p>
+</code></pre>
 
 <p>In the egroup_tag list are declared values for available tag fields that will be encountered in the endpoint group topology sync file (produced by ar-sync components).These tag fields are explicitly linked to the description of the schema of the <a href="/guides/compute/compute-input/#groupendpointsavro">group_endpoints.avro file</a></p>
 
@@ -602,8 +606,7 @@
 
 <p>In the availability profile JSON file also are declared custom grouping of services to be used in the aggregation. The grouping of services are expressed in the JSON “groups” list see example below:</p>
 
-<p><code>json
-"groups": {
+<pre><code>"groups": {
   "my_group_of_services_1": {
     "services":{
       "service_type_A":"OR",
@@ -620,7 +623,7 @@
   },
   "operation":"AND"
 }
-</code></p>
+</code></pre>
 
 <p>In the above example the service types are grouped in two groups:</p>
 
@@ -632,6 +635,7 @@
 </ul>
 
 <p>Each group contains a “service” list containing service types included in the group as fields and the operation values in order to choose who to aggregate the various instances of a specific service. For example if for <strong><em>“service_type_A”</em></strong> are 3 service endpoints available, they are going to be aggregated using the OR operation. The <strong><em>“operation”</em></strong> field under each group of services is used to declare the operation that will be used to aggregate the service types under that group. The outer <strong><em>“operation”</em></strong> field in the root of the json document is used to declare the operation used to aggregate the various groups in order to produce the final endpoint aggregation result.</p>
+
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>

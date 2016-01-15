@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>ARGO Availability and Reliability Monitoring - </title>
+  <title>ARGO Availability and Reliability Monitoring - Compute Engine documentation | ARGO</title>
   <link rel="alternate" type="application/atom+xml" title="API Changes" href="/changes.atom" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,9 +88,10 @@
           
             <a class="list-group-item" href="/guides/installation_cluster/"><em class="fa fa-sitemap"></em> Cluster Mode</a>
           
-            <a class="list-group-item disabled blue" href="/guides/sync/">Components</a>
+            <a class="list-group-item disabled blue" href="/guides/egi-connectors/">Components</a>
           
-            <a class="list-group-item" href="/guides/sync/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+            <a class="list-group-item" href="/guides/egi-connectors/"><em class="fa fa-refresh"></em> EGI Connectors</a>
+
           
           
             <a class="list-group-item" href="/guides/poem/"><em class="fa fa-check-square-o"></em> Poem service</a>
@@ -98,12 +99,12 @@
           
             <a class="list-group-item" href="/guides/consumer/"><em class="fa fa-send-o"></em> Consumer</a>
           
-            
-            <a class="list-group-item " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
+          	
+            <a class="list-group-item active " href="/guides/compute/"><em class="fa fa-cog"></em> Compute Engine</a>
           
   	  <div id='caret-data1'>
             
-              <a class="list-group-item-level2"  href="/guides/compute/compute-input/">
+              <a class="list-group-item-level2 active"  href="/guides/compute/compute-input/">
             
             <em class="fa fa-cog"></em> Compute Engine Input </a>
  	    
@@ -136,6 +137,11 @@
             <em class="fa fa-cogs"></em> API - Availabilities & Reliabilities</a>
 
             
+              <a class="list-group-item-level2"  href="/guides/api/metric-result/">
+            
+            <em class="fa fa-cogs"></em> Metric Result</a>
+
+            
               <a class="list-group-item-level2"  href="/guides/api/recalculationrequests/">
             
             <em class="fa fa-cogs"></em> Recalculation Requests</a>
@@ -163,9 +169,16 @@
 
         </div>
         <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cog'></i> 
+            
+            Compute Engine Input</h1>
           
-          <p class="lead"> </p>
-          <h1 id="argo-compute-engine-input">ARGO Compute Engine input</h1>
+          <p class="lead"> This document describes the compute engine input data (metrics, topology, profiles, factors).</p>
+          
+<p>This document describes the compute engine input data (metrics, topology, profiles, factors).</p>
 
 <h2 id="input-data">Input Data</h2>
 
@@ -179,17 +192,17 @@
   </thead>
   <tbody>
     <tr>
-      <td>Metric Data</td>
+      <td>Metric data</td>
       <td>Metric data come in the form of avro files and contain timestamped status information about the hostname,service and specific checks (metrics) that are being monitored</td>
       <td><a href="#metric">Description</a></td>
     </tr>
     <tr>
-      <td>Topology Files</td>
+      <td>Topology files</td>
       <td>Topology information is provided by two files: a) groups of endpoints, and b)groups of groups.</td>
       <td><a href="#topology">Description</a></td>
     </tr>
     <tr>
-      <td>Metric Profiles</td>
+      <td>Metric profiles</td>
       <td>Every service type contains a number of metrics that are being checked from the monitoring mechanism.</td>
       <td><a href="#profiles">Description</a></td>
     </tr>
@@ -208,7 +221,11 @@
 
 <p><a id="metric"></a></p>
 
-<h2 id="metric-data">Metric data</h2>
+<p>«««&lt; HEAD
+## Metric data
+=======
+## Metric Data
+»»»&gt; a10ff30c0a05aebc62166afcdba0b42b3ef0b642</p>
 
 <p>The main engine’s input is the metric data collected from the argo-consumer component. These files (according to the default configuration of ar-consumer component) reside to the <code>/var/lib/ar-consumer/</code> folder.</p>
 
@@ -273,9 +290,7 @@
 
 <p>The current <strong>raw avro schema file</strong> for the metric data is the following:</p>
 
-<p><code>json
-{
-  "namespace": "argo.avro",
+<pre><code>{ "namespace": "argo.avro",
   "type": "record",
   "name": "metric_data",
   "fields": [
@@ -287,16 +302,17 @@
     { "name": "monitoring_host", "type": ["null", "string"]},
     { "name": "summary", "type": ["null", "string"]},
     { "name": "message", "type": ["null", "string"]},
-    { "name": "tags", "type" : [
-      "null", { "name" : "Tags",
-                "type" : "map",
-                "values" : ["int", "string"]
-              }
+    { "name": "tags", "type" : ["null", { "name" : "Tags",
+       "type" : "map",
+       "values" : ["int", "string"]
+	}
       ]
     }
   ]
 }
-</code></p>
+</code></pre>
+
+<p><a id="Profiles"></a></p>
 
 <h2 id="additional-input-topology-profiles-factors">Additional input: topology, profiles, factors</h2>
 
@@ -317,6 +333,24 @@
 <p><a id="topology"></a></p>
 
 <h3 id="topology-files">Topology files</h3>
+<p>«««&lt; HEAD</p>
+
+<h1 id="topology-information-is-provided-by-two-files">Topology information is provided by two files:</h1>
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <blockquote>
+        <blockquote>
+          <blockquote>
+            <blockquote>
+              <p>a10ff30c0a05aebc62166afcdba0b42b3ef0b642</p>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+</blockquote>
 
 <p>Topology information is provided by two files:</p>
 
@@ -370,8 +404,7 @@
 
 <p>Below is the full description of the group_endpoints.avro specification</p>
 
-<p><code>json
-{
+<pre><code>{
   "namespace": "argo.avro",
   "type": "record",
   "name": "group_of_service_endpoints",
@@ -381,15 +414,15 @@
       { "name": "service", "type": "string" },
       { "name": "hostname", "type": "string" },
       { "name": "tags", "type" : [
-        "null", { "name" : "Tags",
-                  "type" : "map",
-                  "values" : ["int", "string"]
-                }
-        ]
+	"null", { "name" : "Tags",
+		  "type" : "map",
+		  "values" : ["int", "string"]
+		}
+	]
       }
     ]
 }
-</code></p>
+</code></pre>
 
 <h4 id="groupgroupsavro">group_groups.avro</h4>
 
@@ -477,26 +510,41 @@
 
 <p>An abstract example using cities, nations, continents</p>
 
-<p>```
-group: ‘Athens’, type: ‘cities’, subgroup:’location-1’
-group: ‘Athens’, type: ‘cities’, subgroup:’location-2’
-group: ‘Athens’, type: ‘cities’, subgroup:’location-3’</p>
+<pre><code>group: 'Athens', type: 'cities', subgroup:'location-1'
+group: 'Athens', type: 'cities', subgroup:'location-2'
+group: 'Athens', type: 'cities', subgroup:'location-3'
 
-<p>group: ‘Thessaloniki’, type: ‘cities’, subgroup:’location-5’
-group: ‘Thessaloniki’, type: ‘cities’, subgroup:’location-6’
-group: ‘Thessaloniki’, type: ‘cities’, subgroup:’location-7’</p>
+group: 'Thessaloniki', type: 'cities', subgroup:'location-5'
+group: 'Thessaloniki', type: 'cities', subgroup:'location-6'
+group: 'Thessaloniki', type: 'cities', subgroup:'location-7'
 
-<p>group: ‘Greece’, type: ‘countries’, subgroup: ‘Athens’
-group: ‘Greece’, type: ‘countries’, subgroup: ‘Thessaloniki’</p>
+group: 'Greece', type: 'countries', subgroup: 'Athens'
+group: 'Greece', type: 'countries', subgroup: 'Thessaloniki'
 
-<p>group: ‘Europe’, type: ‘continents’ subgroup: ‘Greece’
-group: ‘Europe’, type: ‘continents’ subgroup: ‘Croatia’
-group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
-```</p>
+group: 'Europe', type: 'continents' subgroup: 'Greece'
+group: 'Europe', type: 'continents' subgroup: 'Croatia'
+group: 'Europe', type: 'continents' subgroup: 'France'
+</code></pre>
 
 <p>Below is the full avro specification of the group_groups.avro file:</p>
 
-<p><code>json
+<p>«««&lt; HEAD</p>
+
+<pre><code>{"namespace": "argo.avro",
+ "type": "record",
+ "name": "group_groups",
+ "fields": [
+    {"name": "type", "type": "string"},
+    {"name": "group", "type": "string"},
+    {"name": "subgroup", "type": "string"},
+    {"name": "tags", "type": {"name" : "Tags",
+	                       "type" : "record",
+	                       "fields" : [
+	                          {"name" : "scope", "type" : "string"},
+	                          {"name" : "infrastructure", "type" : "string"},
+	                          {"name" : "certification", "type" : "string"}
+	                        ]}}
+ ] =======
 {
   "namespace": "argo.avro",
   "type": "record",
@@ -507,14 +555,14 @@ group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
     { "name": "subgroup", "type": "string" },
     { "name": "tags", "type" : [
       "null", { "name" : "Tags",
-                "type" : "map",
-                "values" : ["int", "string"]
-              }
+		"type" : "map",
+		"values" : ["int", "string"]
+	      }
       ]
     }
-  ]
+  ] &gt;&gt;&gt;&gt;&gt;&gt;&gt; a10ff30c0a05aebc62166afcdba0b42b3ef0b642
 }
-</code></p>
+</code></pre>
 
 <p><a id="profiles"></a></p>
 
@@ -558,8 +606,7 @@ group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
 
 <p>and the full avro specification:</p>
 
-<p><code>json
-{
+<pre><code>{
   "namespace": "argo.avro",
   "type": "record",
   "name": "metric_profiles",
@@ -569,14 +616,14 @@ group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
     { "name": "metric", "type": "string" },
     { "name": "tags", "type" : [
       "null", { "name" : "Tags",
-                "type" : "map",
-                "values" : ["int", "string"]
-              }
+		"type" : "map",
+		"values" : ["int", "string"]
+	      }
       ]
     }
   ]
 }
-</code></p>
+</code></pre>
 
 <p><a id="weights"></a></p>
 
@@ -613,8 +660,7 @@ group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
 
 <p>The full avro specification of the weight file:</p>
 
-<p><code>json
-{
+<pre><code>{
   "namespace": "argo.avro",
   "type": "record",
   "name": "weight_sites",
@@ -624,7 +670,7 @@ group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
     { "name": "weight", "type": "string" }
   ]
 }
-</code></p>
+</code></pre>
 
 <p><a id="downtimes"></a></p>
 
@@ -666,8 +712,7 @@ group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
 
 <p>The full avro specification of the file is provided below</p>
 
-<p><code>json
-{
+<pre><code>{
   "namespace": "argo.avro",
   "type": "record",
   "name": "downtimes",
@@ -678,7 +723,8 @@ group: ‘Europe’, type: ‘continents’ subgroup: ‘France’
     { "name": "end_time", "type": "string" }
   ]
 }
-</code></p>
+</code></pre>
+
 
         </div><!--col-md-8-->
         <div class="col-md-2">&nbsp;</div>
