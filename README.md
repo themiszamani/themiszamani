@@ -1,3 +1,0 @@
-# themiszamani
-themiszamani
-grnetci
