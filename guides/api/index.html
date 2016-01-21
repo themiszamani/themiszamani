@@ -33,7 +33,7 @@
   <![endif]-->
 </head>
 
-<body class="api">
+<body class="documentation">
   <!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
@@ -76,8 +76,8 @@
 
   <div class='container-fluid' >
     <div class='row'>
-      <div class="col-md-2 sidebar" >
-                 <div class="list-group" >	
+        <div class="col-md-2 sidebar">
+                   <div class="list-group" >	
             <a class="list-group-item disabled blue" href="/overview/">Documentation</a>
           
             <a class="list-group-item" href="/overview/">Overview</a>
@@ -126,16 +126,10 @@
 
 	  </div>
           
-            <a class="list-group-item active" href="/guides/api/" id='caretclick' data-caret='open'>
+            <a class="list-group-item active" href="/guides/api/" >
           
           <em class="fa fa-cogs"></em> API <span class="caret" ></span></a>
 
-          <div id='caret-data'>
-            
-              <a class="list-group-item-level2"  href="/guides/api/installation/">
-            
-            <em class="fa fa-cogs"></em> API - Installation</a>
-        </div>
           
             <a class="list-group-item" href="/guides/webui/"><em class="fa fa-connectdevelop"></em> Web UI</a>
           
@@ -146,102 +140,151 @@
 
 
 
-      </div><!--sidebar-->
-      <div class="col-md-8 main">
-        	
-          <h1 class="highlight">
-          
-            <em class='fa fa-cogs'></em> 
-          
-          API documentation</h1>
-        
-        <p class="lead"> This document describes the API service, using the HTTP application protocol. This API uses XML as the primary exchange format.</p>
-        <h2 id="api-data">API Data</h2>
-
-<table>
-<tbody>
-<tr>
-<td>Base URL</td>
-<td><code>https://host:port/api/v2/</code></td>
-</tr>
-<tr>
-<td><strong>Default Port</strong></td>
-<td><code>443</code></td>
-</tr>
-<tr>
-<td><strong>Central instance of the ARGO production service</strong></td>
-<td><code>https://snf-629551.vm.okeanos.grnet.gr/api/v2/</code></td>
-</tr>
-</tbody>
-</table>
-
-
-        
-
-        <div style="padding:30px;" class="marketing">
-          <div class="row">
-            <div class="col-lg-4">
-              <h2>
-                <a  href="/guides/api/status-results/" >
-                  API - Status results</a>
-              </h2> 
-              <div class="list-group">
-                <a class="list-group-item disabled">API calls for retrieving monitoring status results</a>
-                <a class="list-group-item-level2" href='/guides/api/status-results/#1'><strong>GET: </strong>List Service Metric Status Timelines</a>
-                <a class="list-group-item-level2" href='/guides/api/status-results/#2'><strong>GET: </strong> List Service Endpoint Status Timelines </a>
-                <a class="list-group-item-level2" href='/guides/api/status-results/#3'><strong>GET: </strong>List Service Flavor Status Timelines</a>
-                <a class="list-group-item-level2" href='/guides/api/status-results/#4'><strong>GET: </strong> List Site Status timelines</a>
-              </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <h2><a href="/guides/api/avail-reliab/" >API - Availabilities & Reliabilities</a></h2> 
-              <div class="list-group">
-                <a class="list-group-item disabled">API calls for retrieving computed Availabilities and Reliabilities</a>
-                <a class="list-group-item-level2" href='/guides/api/avail-reliab/#1'><strong>GET: </strong> List Availabilities and Reliabilities for Groups</a>
-                <a class="list-group-item-level2" href='/guides/api/avail-reliab/#2'><strong>GET: </strong> List Availabilities and Reliabilities for Service Flavors </a>
-              </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <h2>
-                <a href="/guides/api/recalculationrequests/">
-                  API - Recalculation Requests</a>
-              </h2> 
-              <div class="list-group">
-                <a class="list-group-item disabled">API Calls for listing and creating new recalculation requests</a>
-                <a class="list-group-item-level2" href='/guides/api/recalculationrequests/#1'><strong>GET: </strong> List Recalculation Requests</a>
-                <a class="list-group-item-level2" href='/guides/api/recalculationrequests/#2'><strong>POST: </strong> Create a new recalculation request </a>
-              </div>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
-          <div class="row">
-            <div class="col-lg-4">
-              <h2>
-              <a href="/guides/api/availabilityprofs/"/>
-                API - Availability Profiles</a></h2> 
-              <div class="list-group">
-                <a class="list-group-item disabled">API Calls for managing Availability Profiles</a>
-                  <a class="list-group-item-level2" href='/guides/api/availabilityprofs/#1'><strong>GET: </strong> List Availability Profiles</a>
-                  <a class="list-group-item-level2" href='/guides/api/availabilityprofs/#2'><strong>POST: </strong> Create a new availability profile</a>
-                  <a class="list-group-item-level2" href='/guides/api/availabilityprofs/#3'><strong>PUT: </strong> Update an existing Availability Profile</a>
-                  <a class="list-group-item-level2" href='/guides/api/availabilityprofs/#4'><strong>DELETE: </strong> Delete an availability profile</a>
-              </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <h2>
-                <a href="/guides/api/poemprofiles/">
-                API - POEM Profiles
-                </a>
-              </h2>
-              <div class="list-group">
-                <a class="list-group-item disabled">API Calls for retrieving available POEM profiles</a>
-                <a  class="list-group-item-level2" href='/guides/api/poemprofiles/#1'><strong>GET: </strong> List POEM Profiles</a>
-              </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
         </div>
+        <div class="col-md-8 main">
+          	
+            <h1 class="highlight">
+            
+              <i class='fa fa-cogs'></i> 
+            
+            API documentation</h1>
+          
+          <p class="lead"> This document describes the API service, using the HTTP application protocol. This API uses XML as the primary exchange format.</p>
+          
+<h2 id="description">Description</h2>
 
+<p>The ARGO Web API provides the Serving Layer of ARGO. It is comprised of a high
+performance and scalable data store and a multi-tenant REST HTTP API, which is
+used for retrieving the Status, Availability and Reliability reports and the
+actual raw metric results.</p>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="rpm-install">RPM install</h3>
+
+<p>You will need a RHEL 6.x or similar (base installation) to proceed. As a first
+step make sure that on your host an ntp client service is configured properly. </p>
+
+<h4 id="software-repositories">Software Repositories</h4>
+
+<p>On your host the next step is to install (as root user) the ar-release package
+via yum:</p>
+
+<pre><code>yum install http://rpm.hellasgrid.gr/mash/centos6-arstats/x86_64/ar-release-1.0.0-3.21.el6.noarch.rpm
+</code></pre>
+
+<p>This package will configure on the host(s) the repository files under <code>/etc/yum.repos.d</code>.</p>
+
+<p>Also install the EPEL repository. This can be done by installing the
+epel-release package for the appropriate OS. For example:</p>
+
+<pre><code>yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm 
+</code></pre>
+
+<p>Then you can install the ARGO Web API using yum:</p>
+
+<pre><code>yum install argo-web-api
+</code></pre>
+
+<h3 id="manual-build">Manual build</h3>
+
+<ol>
+  <li>
+    <p>Install Golang and bzr library</p>
+  </li>
+  <li>
+    <p>Install godep tool</p>
+
+    <pre><code> go get github.com/tools/godep
+</code></pre>
+  </li>
+  <li>
+    <p>Create a new work space:</p>
+
+    <pre><code> mkdir ~/go-workspace
+ export GOPATH=~/go-workspace
+</code></pre>
+  </li>
+</ol>
+
+<p>You may add the last <code>export</code> line into the <code>~/.bashrc</code> or the
+  <code>~/.bash_profile</code> file to have <code>GOPATH</code> environment variable properly setup
+  upon  every login.</p>
+
+<ol>
+  <li>
+    <p>Get the latest version and all dependencies (Using Godep):</p>
+
+    <pre><code> godep update ...
+</code></pre>
+  </li>
+  <li>
+    <p>To build the service use the following command:</p>
+
+    <pre><code> go build
+</code></pre>
+  </li>
+  <li>
+    <p>To run the service use the following command:</p>
+
+    <pre><code> ./argo-web-api
+</code></pre>
+  </li>
+  <li>
+    <p>To run the unit-tests with coverage results:</p>
+
+    <pre><code> gocov test ./... | gocov-xml &gt; coverage.xml
+</code></pre>
+  </li>
+  <li>
+    <p>To generate and serve godoc (@port 6060)</p>
+
+    <pre><code> godoc -http=:6060
+</code></pre>
+  </li>
+</ol>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>The ARGO Web API uses TLS connections and it requires the existence of valid
+X.509v3 certificate and the corresponding private key.</p>
+
+<p>For a list of options use the following command:</p>
+
+<pre><code>./argo-web-api -h
+</code></pre>
+
+<h2 id="examples">Examples</h2>
+
+<p>With the following configuration, the API binds to TCP port 443 on all the
+available IPs and uses the certificate in <code>/etc/pki/tls/certs/cert.crt</code> and its
+corresponding private key in <code>/etc/pki/tls/certs/priv.key</code>.</p>
+
+<pre><code>[server]
+bindip = ""
+port = 443
+maxprocs = 4
+cache = false
+lrucache = 700000000
+gzip = true
+cert = /etc/pki/tls/certs/localhost.crt
+privkey = /etc/pki/tls/private/localhost.key
+reqsizelimit = 1073741824
+
+[mongodb]
+host = "127.0.0.1"
+port = 27017
+db = "argo_core"
+</code></pre>
+
+<p>And the API can be started by issuing the command:</p>
+
+<pre><code>service argo-web-api start
+</code></pre>
+
+<h2 id="links-and-further-reading">Links and further reading</h2>
+
+<p>[](TODO: Add link to swagger) </p>
 
 
         </div><!--col-md-8-->
