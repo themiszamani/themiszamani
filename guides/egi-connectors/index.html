@@ -176,7 +176,8 @@
 
 <p>Installation narrows down to simply installing the package:</p>
 
-<p><code>yum -y install argo-egi-connectors</code></p>
+<pre><code>`yum -y install argo-egi-connectors`
+</code></pre>
 
 <p><strong><code>Components require avro package to be installed/available.</code></strong></p>
 
@@ -240,16 +241,14 @@
 
 <p>Config file is read by <em>every</em> component because every component needs to, at least, fetch host certificate to authenticate to a peer and to find correct avro schema. Additionally, some connectors have default sources of data specified that can be overidden in a next configuration file. Config options are case insensitive and whole config file is splitted into a few sections:</p>
 
-<h4 id="default">[DEFAULT]</h4>
-
-<pre><code>SchemaDir = /etc/argo-egi-connectors/schemas/
+<pre><code>[DEFAULT]
+SchemaDir = /etc/argo-egi-connectors/schemas/
 </code></pre>
 
 <p>Every component generates output file in an avro binary format. This section points to a directory that holds all avro schemas. </p>
 
-<h4 id="authentication">[Authentication]</h4>
-
-<pre><code>VerifyServerCert = False
+<pre><code>[Authentication]
+VerifyServerCert = False
 CAPAth = /etc/grid-security/certificates
 HostKey = /etc/grid-security/hostkey.pem
 HostCert = /etc/grid-security/hostcert.pem
@@ -257,9 +256,8 @@ HostCert = /etc/grid-security/hostcert.pem
 
 <p>Each component that talks to GOCDB or POEM peer authenticates itself with a host certificate. <code>HostKey</code> indicates the private and <code>HostCert</code> indicates the public part of certificate. Additionally, server certificate can be validated rounding up the mutual authentication. <code>CAPath</code> contains certificates of authorities from which chain will be tried to be built upon validating.</p>
 
-<h4 id="avroschemas">[AvroSchemas]</h4>
-
-<pre><code>Downtimes = %(SchemaDir)s/downtimes.avsc
+<pre><code>[AvroSchemas]
+Downtimes = %(SchemaDir)s/downtimes.avsc
 Poem = %(SchemaDir)s/metric_profiles.avsc
 Prefilter = %(SchemaDir)s/metric_data.avsc
 TopologyGroupOfEndpoints = %(SchemaDir)s/group_endpoints.avsc
@@ -269,9 +267,8 @@ Weights = %(SchemaDir)s/weight_sites.avsc
 
 <p>This section, together with a <code>[DEFAULT]</code> section, constitutes the full path of avro schema file for each component. Avro schema files define the format of the data that each component is writing. <code>Topology*</code> schemas are common to <code>topology-gocdb-connector.py</code> and <code>topology-vo-connector.py</code> because there is a need of compute side to not make a difference between two topologies. <code>Prefilter</code> schema is taken from <code>argo-egi-consumer</code> since <code>prefilter-egi.py</code> filters its metric results and needs to write them in the same format.</p>
 
-<h4 id="output">[Output]</h4>
-
-<pre><code>Downtimes = downtimes_%s.avro
+<pre><code>[Output]
+Downtimes = downtimes_%s.avro
 Poem = poem_sync_%s.avro
 Prefilter = prefilter_%s.avro
 PrefilterConsumerFilePath = /var/lib/ar-consumer/ar-consumer_log_%s.avro
@@ -294,36 +291,26 @@ Weights = weights_%s.avro
 
 <p>Job folders for each customer are placed under the customer’s <code>OutputDir</code> directory and appropriate directory names are read from the config file. Segment of configuration file that reflects the creation of directories is for example: </p>
 
-<h5 id="customerc1">[CUSTOMER_C1]</h5>
-
-<pre><code>OutputDir = /var/lib/argo-connectors/Customer1
+<pre><code>[CUSTOMER_C1]
+OutputDir = /var/lib/argo-connectors/Customer1
 Jobs = JOB_Test1, JOB_Test2
-</code></pre>
 
-<h5 id="jobtest1">[JOB_Test1]</h5>
+[JOB_Test1]
+Dirname = C1Testing1
 
-<pre><code>Dirname = C1Testing1
-</code></pre>
+[JOB_Test2]
+Dirname = C2Testing2
 
-<h5 id="jobtest2">[JOB_Test2]</h5>
 
-<pre><code>Dirname = C2Testing2
-</code></pre>
-
-<h5 id="customerc2">[CUSTOMER_C2]</h5>
-
-<pre><code>OutputDir = /var/lib/argo-connectors/Customer2
+[CUSTOMER_C2]
+OutputDir = /var/lib/argo-connectors/Customer2
 Jobs = Job_Test3, JOB_Test4
-</code></pre>
 
-<h5 id="jobtest3">[JOB_Test3]</h5>
+[JOB_Test3]
+Dirname = C2Testing1
 
-<pre><code>Dirname = C2Testing1
-</code></pre>
-
-<h5 id="jobtest4">[JOB_Test4]</h5>
-
-<pre><code>Dirname = C2Testing2
+[JOB_Test4]
+Dirname = C2Testing2
 </code></pre>
 
 <p>This will result in the following jobs directories:</p>
@@ -344,9 +331,8 @@ Jobs = Job_Test3, JOB_Test4
 
 <h5 id="gocdb-topology">GOCDB topology</h5>
 
-<h6 id="jobegicloudmon">[JOB_EGICloudmon]</h6>
-
-<pre><code>Dirname = EGI_Cloudmon
+<pre><code>[JOB_EGICloudmon]
+Dirname = EGI_Cloudmon
 Profiles = CLOUD-MON
 TopoType = GOCDB
 TopoFeed = https://goc.egi.eu/gocdbpi/
@@ -416,15 +402,16 @@ TopoSelectGroupOfGroups = Monitored:Y, Scope:EGI
 
 <h5 id="vo-topology">VO topology</h5>
 
-<p>[DEFAULT]
-BioMed = http://kosjenka.srce.hr/~eimamagi/ops.feed.xml</p>
+<pre><code>[DEFAULT]
+BioMed = http://kosjenka.srce.hr/~eimamagi/ops.feed.xml
 
-<p>[JOB_BioMedCritical]
+[JOB_BioMedCritical]
 Dirname = BioMed_Critical
 Profiles = ROC_CRITICAL
 TopoType = VOFeed
 TopoFeed = %(BioMed)s
-TopoSelectGroupOfGroups = Type:(OPS_Tier, OPS_Site)</p>
+TopoSelectGroupOfGroups = Type:(OPS_Tier, OPS_Site)
+</code></pre>
 
 <p>This is an example of the job that is fetching topology from provided VO feed since <code>TopoType</code> attribute is set to <code>VOFeed</code>. Again, <code>Profiles</code> attribute is mandatory and is relevant to <code>poem-connector.py</code> which will write ROC_CRITICAL profile in BioMed_Critical job folder. <code>Topo*</code> attributes are relevant for <code>topology-vo-connector.py</code>. Contrary to GOCDB topology jobs, <code>TopoFeed</code> attribute for jobs dealing with the VO topology is <em>mandatory</em> and must be specified. Although same topology feed can be specified across multiple jobs, internally, data from one feed is fetched only once and is further filtered and written for every job. </p>
 
@@ -434,14 +421,15 @@ TopoSelectGroupOfGroups = Type:(OPS_Tier, OPS_Site)</p>
 
 <p>Source of the data for other connectors like <code>weights-gstat-connector.py</code> and <code>downtimes-gocdb-connector.py</code> are optional and can be specified per job. If specified, they will override their default source of data. Example:</p>
 
-<p>[JOB_BioMedCritical]
+<pre><code>[JOB_BioMedCritical]
 Dirname = BioMed_Critical
 Profiles = ROC_CRITICAL
 TopoType = VOFeed
 TopoFeed = %(BioMed)s
 TopoSelectGroupOfGroups = Type:(OPS_Tier, OPS_Site)
 WeightsFeed = http://gstat2.grid.sinica.edu.tw/gstat/summary/json/ 
-DowntimesFeed = https://goc.egi.eu/gocdbpi/</p>
+DowntimesFeed = https://goc.egi.eu/gocdbpi/
+</code></pre>
 
 <p><code>WeightsFeed</code> and <code>DowntimesFeed</code> are alternative data feeds for this job for connectors <code>weights-gstat-connector.py</code> and <code>downtimes-gocdb-connector.py</code>, respectively.</p>
 
@@ -461,44 +449,40 @@ DowntimesFeed = https://goc.egi.eu/gocdbpi/</p>
 
 <p>Config file is splitted into a few sections:</p>
 
-<h5 id="poemserver">[PoemServer]</h5>
-
-<pre><code>Host = snf-624922.vm.okeanos.grnet.gr
+<pre><code>[PoemServer]
+Host = snf-624922.vm.okeanos.grnet.gr
 VO = ops
 </code></pre>
 
 <p>This section defines the URL where POEM server is located and all VOes for which POEM profiles will be fetched. Multiple POEM servers can be specified by defining multiple POEM server sections:</p>
 
-<h5 id="poemserver1">[PoemServer1]</h5>
-
-<pre><code>Host = poem1
+<pre><code>[PoemServer1]
+Host = poem1
 VO = vo1, vo2
-</code></pre>
 
-<h5 id="poemserver2">[PoemServer2]</h5>
-
-<pre><code>Host = poem2
+[PoemServer2]
+Host = poem2
 VO = vo3, vo4
 </code></pre>
 
 <p>Same POEM profile can be defined on multiple POEM servers. Each POEM server can further extend it with a custom combinations of metrics and service flavours. To distinguish POEM profile defined on multiple POEM servers, namespace must be used. One must be aware of the namespace that POEM server exposes and specify it in <code>FetchProfiles</code> section:</p>
 
-<h5 id="fetchprofiles">[FetchProfiles]</h5>
-
-<pre><code>List = CH.CERN.SAM.ROC, CH.CERN.SAM.ROC_OPERATORS, CH.CERN.SAM.ROC_CRITICAL, CH.CERN.SAM.OPS_MONITOR, CH.CERN.SAM.OPS_MONITOR_CRITICAL, CH.CERN.SAM.GLEXEC, CH.CERN.SAM.CLOUD-MON
+<pre><code>[FetchProfiles]
+List = CH.CERN.SAM.ROC, CH.CERN.SAM.ROC_OPERATORS, CH.CERN.SAM.ROC_CRITICAL, CH.CERN.SAM.OPS_MONITOR, CH.CERN.SAM.OPS_MONITOR_CRITICAL, CH.CERN.SAM.GLEXEC, CH.CERN.SAM.CLOUD-MON
 </code></pre>
 
 <h4 id="prefilter-data">Prefilter data</h4>
 
 <p><code>poem-connector.py</code> also generates plaintext <code>PrefilterPoem</code> file (specified in <code>global.conf</code>) on a daily basis for each customer and places it under customer’s directory. Content of the file is controlled in <code>[PrefilterData]</code> section:</p>
 
-<p>[PrefilterData]
+<pre><code>[PrefilterData]
 AllowedNGI = http://mon.egi.eu/nagios-roles.conf
 AllowedNGIProfiles = ch.cern.sam.ROC, ch.cern.sam.ROC_OPERATORS, ch.cern.sam.ROC_CRITICAL, ch.cern.sam.GLEXEC
 AllNGI1 = opsmon.egi.eu
 AllNGIProfiles1 = ch.cern.sam.OPS_MONITOR, ch.cern.sam.OPS_MONITOR_CRITICAL
 AllNGI2 = cloudmon.egi.eu
-AllNGIProfiles2 = ch.cern.sam.CLOUD-MON</p>
+AllNGIProfiles2 = ch.cern.sam.CLOUD-MON
+</code></pre>
 
 <p><code>AllowedNGI</code> option defines remote config file that states all allowed NGIes and corresponding nagios boxes. All of them will be expanded and listed together with the information from <code>AllowedNGIProfiles</code> POEM profiles (metrics, service flavours, VOes). </p>
 
@@ -517,92 +501,92 @@ AllNGIProfiles2 = ch.cern.sam.CLOUD-MON</p>
 
 <div role="tabpanel">
 
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-<li role="presentation" class="active"><a href="#customer.conf" aria-controls="customer.conf" role="tab" data-toggle="tab">customer.conf</a></li>
-<li role="presentation"><a href="#customer-jobs" aria-controls="customer-jobs" role="tab" data-toggle="tab">Customer jobs</a></li>
-<li role="presentation"><a href="#prefilterdata" aria-controls="prefilterdata" role="tab" data-toggle="tab">Prefilter data</a></li>
-<li role="presentation"><a href="#JOB_Critical" aria-controls="JOB_Critical" role="tab" data-toggle="tab">EGI JOB_Critical</a></li>
-<li role="presentation"><a href="#JOB_Cloudmon" aria-controls="JOB_Cloudmon" role="tab" data-toggle="tab">EGI JOB_Cloudmon</a></li>
-<li role="presentation"><a href="#JOB_BioMedCritical" aria-controls="JOB_BioMedCritical" role="tab" data-toggle="tab">JOB_BioMedCritical</a></li>
-<li role="presentation"><a href="#JOB_BioMedCloudmon" aria-controls="JOB_BioMedCloudmon" role="tab" data-toggle="tab">VO JOB_BioMedCloudmon</a></li>
-<li role="presentation"><a href="#downtimes" aria-controls="downtimes" role="tab" data-toggle="tab">Downtimes</a></li>
-</ul>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#customer.conf" aria-controls="customer.conf" role="tab" data-toggle="tab">customer.conf</a></li>
+    <li role="presentation"><a href="#customer-jobs" aria-controls="customer-jobs" role="tab" data-toggle="tab">Customer jobs</a></li>
+    <li role="presentation"><a href="#prefilterdata" aria-controls="prefilterdata" role="tab" data-toggle="tab">Prefilter data</a></li>
+    <li role="presentation"><a href="#JOB_Critical" aria-controls="JOB_Critical" role="tab" data-toggle="tab">EGI JOB_Critical</a></li>
+    <li role="presentation"><a href="#JOB_Cloudmon" aria-controls="JOB_Cloudmon" role="tab" data-toggle="tab">EGI JOB_Cloudmon</a></li>
+    <li role="presentation"><a href="#JOB_BioMedCritical" aria-controls="JOB_BioMedCritical" role="tab" data-toggle="tab">JOB_BioMedCritical</a></li>
+    <li role="presentation"><a href="#JOB_BioMedCloudmon" aria-controls="JOB_BioMedCloudmon" role="tab" data-toggle="tab">VO JOB_BioMedCloudmon</a></li>
+    <li role="presentation"><a href="#downtimes" aria-controls="downtimes" role="tab" data-toggle="tab">Downtimes</a></li>
+  </ul>
 
-<!-- Tab panes -->
-<div class="tab-content">
-<div role="tabpanel" class="tab-pane active" id="customer.conf">
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="customer.conf">
 <p> </p>
 <strong>customer.conf:</strong>
 <p> </p>
 <pre>
-[DEFAULT]
-BioMed = http://kosjenka.srce.hr/~eimamagi/ops.feed.xml
+	[DEFAULT]
+	BioMed = http://kosjenka.srce.hr/~eimamagi/ops.feed.xml
 
-[DIR]
-OutputDir = /var/lib/argo-connectors/EGI/
+	[DIR]
+	OutputDir = /var/lib/argo-connectors/EGI/
 
-[CUSTOMER_EGI]
-Jobs = JOB_EGICritical, JOB_EGICloudmon, JOB_BioMedCloudmon, JOB_BioMedCritical
+	[CUSTOMER_EGI]
+	Jobs = JOB_EGICritical, JOB_EGICloudmon, JOB_BioMedCloudmon, JOB_BioMedCritical
 
-[JOB_EGICritical]
-Dirname = EGI_Critical
-Profiles = ROC_CRITICAL
-TopoType = GOCDB
-TopoFetchType = Sites
-#TopoSelectGroupOfEndpoints = Production:Y, Monitored:Y, Scope:EGI
-TopoSelectGroupOfGroups = Certification:Uncertified, Infrastructure:Test, Scope:EGI
+	[JOB_EGICritical]
+	Dirname = EGI_Critical
+	Profiles = ROC_CRITICAL
+	TopoType = GOCDB
+	TopoFetchType = Sites
+	#TopoSelectGroupOfEndpoints = Production:Y, Monitored:Y, Scope:EGI
+	TopoSelectGroupOfGroups = Certification:Uncertified, Infrastructure:Test, Scope:EGI
 
-[JOB_EGICloudmon]
-Dirname = EGI_Cloudmon
-Profiles = CLOUD-MON
-TopoType = GOCDB
-TopoFetchType = ServiceGroups
-TopoSelectGroupOfEndpoints = Monitored:Y, Scope:EGI, Production:N
-#TopoSelectGroupOfGroups = Monitored:Y, Scope:EGI, Certification:(Certified,Candidate)
+	[JOB_EGICloudmon]
+	Dirname = EGI_Cloudmon
+	Profiles = CLOUD-MON
+	TopoType = GOCDB
+	TopoFetchType = ServiceGroups
+	TopoSelectGroupOfEndpoints = Monitored:Y, Scope:EGI, Production:N
+	#TopoSelectGroupOfGroups = Monitored:Y, Scope:EGI, Certification:(Certified,Candidate)
 
-[JOB_BioMedCritical]
-Dirname = BioMed_Critical
-Profiles = ROC_CRITICAL
-TopoType = VOFeed
-TopoFeed = %(BioMed)s
-TopoSelectGroupOfGroups = Type:OPS_Site
+	[JOB_BioMedCritical]
+	Dirname = BioMed_Critical
+	Profiles = ROC_CRITICAL
+	TopoType = VOFeed
+	TopoFeed = %(BioMed)s
+	TopoSelectGroupOfGroups = Type:OPS_Site
 
-[JOB_BioMedCloudmon]
-Dirname = BioMed_Cloudmon
-Profiles = CLOUD-MON
-TopoType = VOFeed
-TopoFeed = %(BioMed)s
-#TopoSelectGroupOfGroups = Type:OPS_Tier
+	[JOB_BioMedCloudmon]
+	Dirname = BioMed_Cloudmon
+	Profiles = CLOUD-MON
+	TopoType = VOFeed
+	TopoFeed = %(BioMed)s
+	#TopoSelectGroupOfGroups = Type:OPS_Tier
 </pre>
 
-</div>
-<div role="tabpanel" class="tab-pane" id="customer-jobs">
+    </div>
+    <div role="tabpanel" class="tab-pane" id="customer-jobs">
 
 <p> </p>
 <strong>Customer jobs:</strong>
 <p> </p>
 <pre>
-/var/lib/argo-connectors/EGI/BioMed_Cloudmon/group_endpoints_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Cloudmon/group_groups_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Cloudmon/poem_sync_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Cloudmon/weights_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Critical/group_endpoints_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Critical/group_groups_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Critical/poem_sync_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Critical/weights_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Cloudmon/group_endpoints_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Cloudmon/group_groups_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Cloudmon/poem_sync_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Cloudmon/weights_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Critical/group_endpoints_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Critical/group_groups_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Critical/poem_sync_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Critical/weights_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/group_endpoints_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/group_groups_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/poem_sync_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/weights_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/group_endpoints_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/group_groups_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/poem_sync_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/weights_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/group_endpoints_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/group_groups_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/poem_sync_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/weights_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/group_endpoints_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/group_groups_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/poem_sync_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/weights_2015_04_07.avro
 </pre>
 
-</div>
-<div role="tabpanel" class="tab-pane" id="prefilterdata">
+    </div>
+    <div role="tabpanel" class="tab-pane" id="prefilterdata">
 
 <p> </p>
 
@@ -611,60 +595,60 @@ TopoFeed = %(BioMed)s
 <p> </p>
 <pre>
 
-/var/lib/argo-connectors/EGI/poem_sync_2015_04_07.out
-/var/lib/argo-connectors/EGI/prefilter_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/poem_sync_2015_04_07.out
+	/var/lib/argo-connectors/EGI/prefilter_2015_04_07.avro
 
 </pre>
 </div>
-<div role="tabpanel" class="tab-pane" id="JOB_Critical">
+ <div role="tabpanel" class="tab-pane" id="JOB_Critical">
 
 <p> </p>
 For customer's job JOB_EGICritical, we are selecting only those sites that match `Certification:Uncertified`,  `Infrastructure:Test` and `Scope:EGI`, so in `TopologyGroupOfGroups` file there will be only those sites listed:
 <p> </p>
 <pre>
-% avro cat /var/lib/argo-connectors/EGI/EGI_Critical/group_groups_2015_04_07.avro | tail -n 1
-{"group": "Russia", "tags": {"scope": "EGI", "infrastructure": "Test", "certification": "Uncertified"}, "type": "NGI", "subgroup": "SU-Protvino-IHEP"}
+	 % avro cat /var/lib/argo-connectors/EGI/EGI_Critical/group_groups_2015_04_07.avro | tail -n 1
+	 {"group": "Russia", "tags": {"scope": "EGI", "infrastructure": "Test", "certification": "Uncertified"}, "type": "NGI", "subgroup": "SU-Protvino-IHEP"}
 </pre>
 <p> </p>
-</div>
-<div role="tabpanel" class="tab-pane" id="JOB_Cloudmon">
+    </div>
+    <div role="tabpanel" class="tab-pane" id="JOB_Cloudmon">
 <p> </p>
-For customer's JOB_EGICloudmon, we are selecting only those service endpoints that match `Monitored:Y`, `Scope:EGI`, `Production:N`:
+ For customer's JOB_EGICloudmon, we are selecting only those service endpoints that match `Monitored:Y`, `Scope:EGI`, `Production:N`:
 
 <p> </p>
 
 <pre>	 % avro cat /var/lib/argo-connectors/EGI/EGI_Cloudmon/group_endpoints_2015_04_07.avro
-{"group": "ROC_RU_SERVICE", "hostname": "ce.ngc6475.ihep.su", "type": "SERVICEGROUPS", "service": "Top-BDII", "tags": {"scope": "EGI", "production": 0, "monitored": 1}}
+	 {"group": "ROC_RU_SERVICE", "hostname": "ce.ngc6475.ihep.su", "type": "SERVICEGROUPS", "service": "Top-BDII", "tags": {"scope": "EGI", "production": 0, "monitored": 1}}
 </pre>
 
 <p> </p>
 </div>
-<div role="tabpanel" class="tab-pane" id="JOB_BioMedCritical">
+    <div role="tabpanel" class="tab-pane" id="JOB_BioMedCritical">
 <p> </p>
 JOB_BioMedCritical is taking into account only OPS\_Site VO groups:
 <p> </p>
 <pre>
-% avro cat /var/lib/argo-connectors/EGI/BioMed_Critical/group_groups_2015_04_07.avro | tail -n 5
-{"group": "SAMPA", "tags": null, "type": "OPS_Site", "subgroup": "SAMPA"}
-{"group": "UPJS-Kosice", "tags": null, "type": "OPS_Site", "subgroup": "UPJS-Kosice"}
-{"group": "GR-06-IASA", "tags": null, "type": "OPS_Site", "subgroup": "GR-06-IASA"}
-{"group": "FI_HIP_T2", "tags": null, "type": "OPS_Site", "subgroup": "FI_HIP_T2"}
-{"group": "UKI-SOUTHGRID-RALPP", "tags": null, "type": "OPS_Site", "subgroup": "UKI-SOUTHGRID-RALPP"}
+	% avro cat /var/lib/argo-connectors/EGI/BioMed_Critical/group_groups_2015_04_07.avro | tail -n 5
+	{"group": "SAMPA", "tags": null, "type": "OPS_Site", "subgroup": "SAMPA"}
+	{"group": "UPJS-Kosice", "tags": null, "type": "OPS_Site", "subgroup": "UPJS-Kosice"}
+	{"group": "GR-06-IASA", "tags": null, "type": "OPS_Site", "subgroup": "GR-06-IASA"}
+	{"group": "FI_HIP_T2", "tags": null, "type": "OPS_Site", "subgroup": "FI_HIP_T2"}
+	{"group": "UKI-SOUTHGRID-RALPP", "tags": null, "type": "OPS_Site", "subgroup": "UKI-SOUTHGRID-RALPP"}
 
 </pre>
 <p> </p>
 </div>
-<div role="tabpanel" class="tab-pane" id="JOB_BioMedCloudmon">
+   <div role="tabpanel" class="tab-pane" id="JOB_BioMedCloudmon">
 <p> </p>
 JOB_BioMedCloudmon requires only CLOUD-MON POEM profile so in `Poem` file you have:
 <p> </p>
 <pre>
-% avro cat  /var/lib/argo-connectors/EGI/BioMed_Cloudmon/poem_sync_2015_04_07.avro | tail -n 5
-{"profile": "ch.cern.sam.CLOUD-MON", "metric": "eu.egi.cloud.Perun-Check", "service": "egi.Perun", "tags": {"fqan": "", "vo": "ops"}}
-{"profile": "ch.cern.sam.CLOUD-MON", "metric": "eu.egi.cloud.APEL-Pub", "service": "eu.egi.cloud.accounting", "tags": {"fqan": "", "vo": "ops"}}
-{"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.compss", "tags": {"fqan": "", "vo": "ops"}}
-{"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.proprietary.slipstream", "tags": {"fqan": "", "vo": "ops"}}
-{"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.vmdirac", "tags": {"fqan": "", "vo": "ops"}}
+	 % avro cat  /var/lib/argo-connectors/EGI/BioMed_Cloudmon/poem_sync_2015_04_07.avro | tail -n 5
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "eu.egi.cloud.Perun-Check", "service": "egi.Perun", "tags": {"fqan": "", "vo": "ops"}}
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "eu.egi.cloud.APEL-Pub", "service": "eu.egi.cloud.accounting", "tags": {"fqan": "", "vo": "ops"}}
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.compss", "tags": {"fqan": "", "vo": "ops"}}
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.proprietary.slipstream", "tags": {"fqan": "", "vo": "ops"}}
+	 {"profile": "ch.cern.sam.CLOUD-MON", "metric": "org.nagios.Broker-TCP", "service": "eu.egi.cloud.broker.vmdirac", "tags": {"fqan": "", "vo": "ops"}}
 </pre>
 <p> </p>
 </div>
@@ -674,15 +658,15 @@ JOB_BioMedCloudmon requires only CLOUD-MON POEM profile so in `Poem` file you ha
 <strong>Downtimes:</strong>
 <p> </p>
 <pre>
-% /usr/libexec/argo-egi-connectors/downtimes-gocdb-connector.py -d 2015-04-07
-% find /var/lib/argo-connectors -name '*downtimes*'
-/var/lib/argo-connectors/EGI/EGI_Cloudmon/downtimes_2015_04_07.avro
-/var/lib/argo-connectors/EGI/EGI_Critical/downtimes_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Cloudmon/downtimes_2015_04_07.avro
-/var/lib/argo-connectors/EGI/BioMed_Critical/downtimes_2015_04_07.avro
+	% /usr/libexec/argo-egi-connectors/downtimes-gocdb-connector.py -d 2015-04-07
+	% find /var/lib/argo-connectors -name '*downtimes*'
+	/var/lib/argo-connectors/EGI/EGI_Cloudmon/downtimes_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/EGI_Critical/downtimes_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Cloudmon/downtimes_2015_04_07.avro
+	/var/lib/argo-connectors/EGI/BioMed_Critical/downtimes_2015_04_07.avro
 </pre>
 </div>
-</div>
+  </div>
 
 </div>
 
